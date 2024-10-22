@@ -1,3 +1,4 @@
+
 //====================================================================================
 // Definicion del package e importacion de modulos
 //====================================================================================
@@ -9,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import LearningManagementSystem.mainManagementSystem.LearningPath;
+import LearningManagementSystem.mainManagementSystem.activities.Actividad;
 
 // import Usuario;
 
@@ -22,17 +26,12 @@ public class Profesor extends Usuario  {
 	//----------------------------------------------------------------------
 	// Definicion de atributos
 	
-    String username;
-    String password;
-    String email;
 
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
     
     public Profesor(String username, String password, String email) {
-
         super(username, password,email);
-
     }
 
 	//----------------------------------------------------------------------
@@ -54,9 +53,11 @@ public class Profesor extends Usuario  {
 
     }
 
-    public void cambiarEstadoActividad() {
-
+    public void cambiarEstadoActividad(Actividad actividad, String estado) {
+        actividad.setEstado(estado); // impelementar setEstado
+        System.out.println("El estado de la actividad ha sido cambiado a: " + estado);
     }
+
 
     public void visualizarEncuestas() {
 
@@ -69,11 +70,18 @@ public class Profesor extends Usuario  {
     public void addFeedBack(){
 
     }
-        
 
 
+    
+    public LearningPath crearLearningPath(String titulo, String descripcion) {
+        return new LearningPath(titulo, descripcion);
+    }
+    
+    // Clonacion -- Falta 
 
-
+    public void cambiarEstadoActividad(Actividad actividad, String estado) {
+        actividad.setEstado(estado);
+    }
 
 
 

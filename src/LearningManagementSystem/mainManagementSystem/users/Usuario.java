@@ -1,3 +1,4 @@
+
 //====================================================================================
 // Definicion del package e importacion de modulos
 //====================================================================================
@@ -9,6 +10,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import LearningManagementSystem.mainManagementSystem.LearningPath;
+import LearningManagementSystem.mainManagementSystem.activities.Actividad;
+import LearningManagementSystem.mainManagementSystem.activities.activityElements.Review;
 
 // import Usuario;
 
@@ -60,33 +65,32 @@ public abstract class Usuario  {
 
     // Metodos
 
-    public void viewReviews (){
 
+
+    public void addRatingToActivity(Actividad actividad, int rating) {
+        
     }
 
-    public void addRatingToActivity(){
-
-    }
-
-    public void addReviewToActivity(){
-
+    public void addReviewToActivity(Actividad actividad, String review) {
+        actividad.agregarReview(new Review(review)); // agregar review deberia de estar en Actividad
     }
 
 
-    public void logIn(String username, String password){
-
-
+    public void logIn(String username, String password) {
+        if (this.username.equals(username) && this.password.equals(password)) {
+            System.out.println("Login exitoso.");
+        } else {
+            System.out.println("Credenciales incorrectas.");
+        }
     }
 
-    public void signUp(String username, String password){
-
-
+    public void signUp(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        System.out.println("Registro exitoso.");
     }
     
-
-
-
-
-
+    
 
 }

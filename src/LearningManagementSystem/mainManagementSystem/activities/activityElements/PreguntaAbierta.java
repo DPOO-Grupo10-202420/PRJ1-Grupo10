@@ -13,37 +13,36 @@ import java.lang.String;
 
 
 //====================================================================================
-//Definicion de la clase Quiz
+//Definicion de la clase PREGUNTA
 //====================================================================================
 
 public class PreguntaAbierta extends Pregunta {
 	
 	//----------------------------------------------------------------------
 	// Definicion de atributos
-	    
+
+	private String respuestaEstudiante;
+
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
     
     public PreguntaAbierta(String enunciado, String retroalimentacion, boolean isAbierta) {
         
-        super(enunciado, retroalimentacion, isAbierta);
+        super(enunciado, retroalimentacion, true);
+		this.respuestaEstudiante = "";
 
     }
-    
-    
-	//----------------------------------------------------------------------
+		//----------------------------------------------------------------------
     // Definicion de metodos de la clase
-    
 
+    public void agregarRespuesta(String respuesta) {
+        this.respuestaEstudiante = respuesta;
+    }
 
-
-
-
-
-
+    public String getRespuesta() {
+        return this.respuestaEstudiante;
+    }
+    public boolean esRespondida() {
+        return !this.respuestaEstudiante.isEmpty();
+    }
 }
-
-
-
-
-
