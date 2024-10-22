@@ -25,8 +25,7 @@ public abstract class Pregunta {
         this.retroalimentacion = retroalimentacion;
         this.isAbierta = isAbierta;
     }
-    
-    
+
 	//----------------------------------------------------------------------
     // Definicion de metodos de la clase
     

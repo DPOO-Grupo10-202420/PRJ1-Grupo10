@@ -17,8 +17,7 @@ public class PreguntaAbierta extends Pregunta {
     public PreguntaAbierta(String enunciado, String retroalimentacion, boolean isAbierta) {
         super(enunciado, retroalimentacion, true);
     }
-    
-    
+
 	//----------------------------------------------------------------------
     // Definicion de metodos de la clase
 

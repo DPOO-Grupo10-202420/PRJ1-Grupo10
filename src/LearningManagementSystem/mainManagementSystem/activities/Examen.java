@@ -10,9 +10,6 @@ import LearningManagementSystem.mainManagementSystem.activities.activityElements
 //Estructuras de datos
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-
-
 //====================================================================================
 //Definicion de la clase Examen
 //====================================================================================

@@ -1,7 +1,6 @@
 
 
 package LearningManagementSystem.mainManagementSystem.activities.activityElements;
-import LearningManagementSystem.mainManagementSystem.activities.activityElements.Pregunta;
 import java.util.HashMap;
 
 public class PreguntaMultiple extends Pregunta {

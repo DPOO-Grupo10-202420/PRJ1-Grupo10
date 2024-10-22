@@ -8,15 +8,12 @@ import LearningManagementSystem.mainManagementSystem.activities.activityElements
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 //====================================================================================
 //Definicion de la clase Encuesta
 //====================================================================================
 public class Encuesta extends Actividad {
 
-	private HashMap<String, ArrayList<PreguntaAbierta> > preguntas = new HashMap<String, ArrayList<PreguntaAbierta>>();
-
-	
+	private List<Pregunta> preguntas = new ArrayList<Pregunta>();
     //----------------------------------------------------------------------
 	// Metodo constructor de la clase.
 	public Encuesta (String descripcion, String objetivo, String dificultad, int tiempoEstimado, Date fechaDeCierre, boolean obligatoria, String creador) {
@@ -24,20 +21,23 @@ public class Encuesta extends Actividad {
     }
 
     //Getters
-    public ArrayList<PreguntaAbierta> getRespuestasDePregunta (){
-        
-
-    }	
+    public String getRespuestasDePregunta (Pregunta pregunta){
+        if (pregunta instanceof PreguntaAbierta){
+            return ((PreguntaAbierta) pregunta).getRespuesta();
+        } else {
+            return ((PreguntaMultiple) pregunta).getRespuestaCorrecta();
+        }
+    }
 
     //Metodos
-    public void agregarPregunta(String pregunta) {
-        this.preguntas.put(pregunta);
+    public void agregarPregunta(Pregunta pregunta) {
+        this.preguntas.add(pregunta);
     }
 
-    public agregarRespuesta(String pregunta, String respuesta) {
-        Pregunta pregunta = this.preguntas.get(pregunta).add(respuesta);
-    }
+    // public void agregarRespuesta(String pregunta, String respuesta) {
+    //     Pregunta pregunta = this.preguntas.get(pregunta).add(respuesta); // Este metodo es de pregunta
+    // }
 
-    public void completarEncuesta () {}
+    public void enviarEncuesta () {}
 }
 
