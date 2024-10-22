@@ -16,13 +16,9 @@ import java.util.Map;
 //====================================================================================
 //Definicion de la clase Actividad
 //====================================================================================
-
 public abstract class Actividad  {
-    
-	
 	//----------------------------------------------------------------------
 	// Definicion de atributos
-	
     // private String id; // id de la Actividad (generado por el sistema)
     private String descripcion;
     private String objetivo;
