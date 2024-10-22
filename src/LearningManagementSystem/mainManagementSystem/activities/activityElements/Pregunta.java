@@ -42,4 +42,7 @@ public abstract class Pregunta {
         return this.isAbierta;
     }
 
+    public void cambiarEnunciado(String newEnunciado) {
+        this.enunciado = newEnunciado;
+    }
 }

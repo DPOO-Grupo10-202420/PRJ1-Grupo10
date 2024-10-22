@@ -21,27 +21,20 @@ public class Examen extends Actividad {
 	
     //----------------------------------------------------------------------
 	// Definicion de atributos
-
 	private ArrayList<PreguntaAbierta> preguntas = new ArrayList<PreguntaAbierta>();
-    double calificacionMinima = 3;
-    double calificacionObtenida;
+    private double calificacionMinima = 3;
+    private double calificacionObtenida;
 
-
-	
     //----------------------------------------------------------------------
 	// Metodo constructor de la clase.
 	
 	public Examen (String descripcion, String objetivo, String dificultad, int tiempoEstimado, Date fechaDeCierre, boolean obligatoria, String creador) {
-
         super(descripcion, objetivo, dificultad,  tiempoEstimado, fechaDeCierre, obligatoria, creador);
-
     }
-
 
     //Getters
     public double getCalificacionObtenida (){
         return this.calificacionObtenida;
-
     }
 
     //Setters
@@ -49,9 +42,11 @@ public class Examen extends Actividad {
         this.calificacionObtenida = newCalificacion;
     }
 
-    //Metodos
-    public void enviarExamen(){
+    public void agregarPregunta(PreguntaAbierta pregunta) {
+        this.preguntas.add(pregunta);
     }
 
+    //Metodos
+    public void enviarExamen(){}
 }
 

@@ -1,25 +1,14 @@
-//====================================================================================
-// Definicion del package e importacion de modulos
-//====================================================================================
-
-package LearningManagementSystem.mainManagementSystem.activities;
-
+package learningPath.actividades;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
 // import Usuario;
 
-
-//====================================================================================
-//Definicion de la clase Actividad
-//====================================================================================
-public abstract class Actividad  {
-	//----------------------------------------------------------------------
-	// Definicion de atributos
-    // private String id; // id de la Actividad (generado por el sistema)
+public abstract class actividad  {
+    
+    // private String id; // id de la actividad (generado por el sistema)
     private String descripcion;
     private String objetivo;
     private String dificultad;
@@ -28,18 +17,16 @@ public abstract class Actividad  {
     private boolean obligatoria;
     private String creador;
 
-    private List<Actividad> ActividadesPrevias = new ArrayList<Actividad>();
-    private List<Actividad> ActividadesDeSeguimiento = new ArrayList<Actividad>();
+    private List<actividad> actividadesPrevias = new ArrayList<actividad>();
+    private List<actividad> actividadesDeSeguimiento = new ArrayList<actividad>();
 
     private String resultado;
     private double rating;
     private List<String> comentarios = new ArrayList<String>();
-    // private String feedback; //feedback de la Actividad
+    // private String feedback; //feedback de la actividad
 
-	//----------------------------------------------------------------------
-	// Metodo constructor de la clase.
-    
-    public Actividad(String descripcion, String objetivo, String dificultad, int tiempoEstimado, Date fechaDeCierre, boolean obligatoria, String creador) {
+
+    public actividad(String descripcion, String objetivo, String dificultad, int tiempoEstimado, Date fechaDeCierre, boolean obligatoria, String creador) {
         this.descripcion = descripcion;
         this.objetivo = objetivo;
         this.dificultad = dificultad;
@@ -49,9 +36,6 @@ public abstract class Actividad  {
         this.creador = creador;
     }
 
-	//----------------------------------------------------------------------
-    // Definicion de metodos de la clase
-    
     private Map<String,Object> getInfoActividad () {
         HashMap<String, Object> infoActividad = new HashMap<String, Object>();
         infoActividad.put("descripcion", this.descripcion);
@@ -83,12 +67,13 @@ public abstract class Actividad  {
         this.comentarios.add(comentario);
     }
 
-    private void addActividadPrevia(Actividad Actividad) {
-        this.ActividadesPrevias.add(Actividad);
+    private void addActividadPrevia(actividad actividad) {
+        this.actividadesPrevias.add(actividad);
     }
 
-    private void addActividadDeSeguimiento(Actividad Actividad) {
-        this.ActividadesDeSeguimiento.add(Actividad);
+    private void addActividadDeSeguimiento(actividad actividad) {
+        this.actividadesDeSeguimiento.add(actividad);
     }
 
 }
+
