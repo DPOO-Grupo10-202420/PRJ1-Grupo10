@@ -20,17 +20,13 @@ public class PreguntaAbierta extends Pregunta {
 	
 	//----------------------------------------------------------------------
 	// Definicion de atributos
-
 	private String respuestaEstudiante;
 
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
-    
     public PreguntaAbierta(String enunciado, String retroalimentacion, boolean isAbierta) {
-        
         super(enunciado, retroalimentacion, true);
 		this.respuestaEstudiante = "";
-
     }
 		//----------------------------------------------------------------------
     // Definicion de metodos de la clase

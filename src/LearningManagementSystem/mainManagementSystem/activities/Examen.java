@@ -44,24 +44,14 @@ public class Examen extends Actividad {
 
     }
 
-
     //Setters
     public void setCalificacionObtenida (Double newCalificacion){
-
         this.calificacionObtenida = newCalificacion;
     }
 
-
     //Metodos
-
     public void enviarExamen(){
-
-
     }
 
-
-
-	
-	
 }
 
