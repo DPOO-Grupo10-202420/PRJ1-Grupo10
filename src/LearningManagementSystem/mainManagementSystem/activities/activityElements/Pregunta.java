@@ -13,9 +13,10 @@ public abstract class Pregunta {
 	
 	//----------------------------------------------------------------------
 	// Definicion de atributos
-    private String enunciado;
-    private String retroalimentacion;
-    private boolean isAbierta; 
+    protected String enunciado;
+    protected String respuesta;
+    protected String retroalimentacion;
+    protected boolean isAbierta; 
 
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
@@ -23,6 +24,7 @@ public abstract class Pregunta {
     public Pregunta(String enunciado, String retroalimentacion, boolean isAbierta) {
         this.enunciado = enunciado;
         this.retroalimentacion = retroalimentacion;
+        this.respuesta = "";
         this.isAbierta = isAbierta;
     }
     

@@ -28,7 +28,7 @@ public class Estudiante extends Usuario  {
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
     
-    public Profesor(String username, String password, String email) {
+    public Estudiante(String username, String password, String email) {
 
         super(username, password,email);
 
