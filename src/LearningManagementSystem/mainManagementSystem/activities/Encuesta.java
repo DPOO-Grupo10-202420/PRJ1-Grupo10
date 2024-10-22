@@ -23,7 +23,7 @@ public class Encuesta extends Actividad {
     //----------------------------------------------------------------------
 	// Definicion de atributos
 
-	private HashMap<String, ArrayList<String> > preguntas = new HashMap<String, PreguntaAbierta>();
+	private HashMap<String, ArrayList<PreguntaAbierta> > preguntas = new HashMap<String, ArrayList<PreguntaAbierta>>();
 
 	
     //----------------------------------------------------------------------
@@ -40,7 +40,7 @@ public class Encuesta extends Actividad {
     //Getters
 
     public ArrayList<PreguntaAbierta> getRespuestasDePregunta (){
-
+        
 
     }
 	

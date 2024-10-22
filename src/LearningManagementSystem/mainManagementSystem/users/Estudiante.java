@@ -4,6 +4,8 @@
 
 package LearningManagementSystem.mainManagementSystem.users;
 
+import LearningManagementSystem.mainManagementSystem.*;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,9 +30,9 @@ public class Estudiante extends Usuario  {
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
     
-    public Profesor(String username, String password, String email) {
+    public Estudiante (String username, String password, String email) {
 
-        super(username, password,email);
+        super(username, password, email);
 
     }
 
@@ -41,36 +43,34 @@ public class Estudiante extends Usuario  {
     // Getters
 
 
-    public void crearActividad(){
 
-    }
 
-    public void crearLearingPath(){
+    // Metodos
+
+    public void verActividades (){
 
     }
     
-    public void clonarActividad(){
+    public void completarActividad(){
 
     }
 
-    public void cambiarEstadoActividad() {
+    public void inscribirseLearningPath(){
 
     }
 
-    public void visualizarEncuestas() {
+    public void subirEncuesta(){
 
     }
 
-    public void addPreguntaEncuesta(){
+    public void mirarProgreso(){
 
     }
 
-    public void addFeedBack(){
+    public void getPathsDisponibles(){
 
     }
         
-
-
 
 
 
