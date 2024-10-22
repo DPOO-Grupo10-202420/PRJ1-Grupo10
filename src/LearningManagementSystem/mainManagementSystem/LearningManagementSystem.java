@@ -56,38 +56,27 @@ public class LearningManagementSystem {
 	
 	// Metodos
 	
-	public void addNewLearningPath() {
-		
-		
-	}
+    public void addNewLearningPath(LearningPath path) {
+        
+    }
 	
-	public void addNewUser() {
-		
-		
-	}
+    public void addNewUser(Usuario usuario) {
+        usuarios.put(usuario.getUsername(), usuario);
+    }
 	
 	
 	
-	public void deleteLearningPath() {
-		
-		
-	}
+    public void deleteLearningPath(String titulo) {
+        learningPaths.remove(titulo);
+    }
 	
-	public void deleteUser() {
-		
-		
-	}
+    public void deleteUser(String username) {
+        usuarios.remove(username);
+    }
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	
