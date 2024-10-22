@@ -146,10 +146,27 @@ public abstract class LearningPath  {
 
 
 
+    // meotodos
 
+    public void addActivity(Actividad actividad) {
+        secuenciaActividades.add(actividad);
+        calcularDuracion();
+    }
 
+    public void removeActivity(Actividad actividad) {
+        secuenciaActividades.remove(actividad);
+        calcularDuracion();
+    }
 
+    public int calcularDuracion() {
+        duracion = 0;
+        for (Actividad actividad : secuenciaActividades) {
+            duracion += 30; // No hay meotdo que se llame getDuracionEsperada // Solamente un get
+        }
+        return duracion;
+    }
 
-
-
+    public List<Actividad> getsecuenciaActividades() {
+        return secuenciaActividades;
+    }
 }
