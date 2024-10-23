@@ -5,9 +5,9 @@ import java.util.HashMap;
 
 public class PreguntaMultiple extends Pregunta {
     private HashMap<String, String> opciones;
-    private String respuestaCorrecta; 
+    private String respuestaCorrecta;
+    private String respuestaEstudiante;
 
-    
     public PreguntaMultiple(String enunciado, String retroalimentacion, boolean isAbierta) {
         super(enunciado, retroalimentacion, false);
         this.opciones = new HashMap<>();

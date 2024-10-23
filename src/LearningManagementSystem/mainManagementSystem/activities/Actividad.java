@@ -38,7 +38,6 @@ public abstract class Actividad  {
 
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
-    
     public Actividad(String descripcion, String objetivo, String dificultad, int tiempoEstimado, Date fechaDeCierre, boolean obligatoria, String creador) {
         this.descripcion = descripcion;
         this.objetivo = objetivo;
@@ -67,27 +66,31 @@ public abstract class Actividad  {
         return infoActividad;
     }
 
-    private void setResultado(String resultado) {
+    public void setResultado(String resultado) {
         this.resultado = resultado;
     }
 
-    private String getResultado() {
+    public String getResultado() {
         return this.resultado;
     }
 
-    private double getRating() {
+    public double getRating() {
         return this.rating;
     }
 
-    private void setComentario (String comentario) {
+    public int getTiempoEstimado() {
+        return this.tiempoEstimado;
+    }
+
+    public void setComentario (String comentario) {
         this.comentarios.add(comentario);
     }
 
-    private void addActividadPrevia(Actividad Actividad) {
+    public void addActividadPrevia(Actividad Actividad) {
         this.ActividadesPrevias.add(Actividad);
     }
 
-    private void addActividadDeSeguimiento(Actividad Actividad) {
+    public void addActividadDeSeguimiento(Actividad Actividad) {
         this.ActividadesDeSeguimiento.add(Actividad);
     }
 

@@ -20,7 +20,7 @@ import java.util.Date;
 // Definicion de la clase LearningPath
 //====================================================================================
 
-public abstract class LearningPath  {
+public class LearningPath  {
     
 	//----------------------------------------------------------------------
 	// Definicion de atributos
@@ -33,26 +33,21 @@ public abstract class LearningPath  {
     Date fechaCreacion;
     Date fechaModificacion;
     String version;
-
+    List<Actividad> secuenciaActividades = new ArrayList<Actividad>();
 
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
-    
     public LearningPath (String titulo, String descripcion, String nivelDificultad, int duracion) {
-
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.nivelDificultad = nivelDificultad;
         this.duracion = duracion;
-
     }
 
 	//----------------------------------------------------------------------
     // Definicion de metodos de la clase
-    
 
     // Getters
-
     public String getTitulo() {
         return this.titulo;
     }
@@ -131,10 +126,6 @@ public abstract class LearningPath  {
 
     }
 
-    public int calcularDuracion(){
-        return 0;
-    }
-
     public void calcularProgreso(){
 
     }
@@ -161,7 +152,7 @@ public abstract class LearningPath  {
     public int calcularDuracion() {
         duracion = 0;
         for (Actividad actividad : secuenciaActividades) {
-            duracion += 30; // No hay meotdo que se llame getDuracionEsperada // Solamente un get
+            duracion += actividad.getTiempoEstimado(); // No hay meotdo que se llame getDuracionEsperada // Solamente un get
         }
         return duracion;
     }

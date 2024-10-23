@@ -14,13 +14,14 @@ import java.util.Date;
 public class Encuesta extends Actividad {
 
 	private List<Pregunta> preguntas = new ArrayList<Pregunta>();
+
     //----------------------------------------------------------------------
 	// Metodo constructor de la clase.
 	public Encuesta (String descripcion, String objetivo, String dificultad, int tiempoEstimado, Date fechaDeCierre, boolean obligatoria, String creador) {
         super(descripcion, objetivo, dificultad,  tiempoEstimado, fechaDeCierre, obligatoria, creador);
     }
 
-    //Getters
+    // Getters
     public String getRespuestasDePregunta (Pregunta pregunta){
         if (pregunta instanceof PreguntaAbierta){
             return ((PreguntaAbierta) pregunta).getRespuesta();
