@@ -1,14 +1,14 @@
+
+
 package LearningManagementSystem.mainManagementSystem.activities.activityElements;
-import LearningManagementSystem.mainManagementSystem.activities.activityElements.Pregunta;
 import java.util.HashMap;
 
 public class PreguntaMultiple extends Pregunta {
     private HashMap<String, String> opciones;
-    private String respuestaCorrecta; 
+    private String respuestaCorrecta;
+    private String respuestaEstudiante;
 
-    
     public PreguntaMultiple(String enunciado, String retroalimentacion, boolean isAbierta) {
-
         super(enunciado, retroalimentacion, false);
         this.opciones = new HashMap<>();
         this.respuestaCorrecta  = ""; 
@@ -47,7 +47,6 @@ public class PreguntaMultiple extends Pregunta {
     public boolean esCorrecta(String respuesta) {
         return respuesta.equals(respuestaCorrecta);
     }
-
 
     public void mostrarOpciones() {
         System.out.println("Opciones disponibles:");
