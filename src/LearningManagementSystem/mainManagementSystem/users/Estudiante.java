@@ -11,7 +11,10 @@ import java.util.HashMap;
 import java.util.Map;
 import LearningManagementSystem.mainManagementSystem.*;
 import LearningManagementSystem.mainManagementSystem.activities.Actividad;
-
+import LearningManagementSystem.mainManagementSystem.activities.Quiz;
+import LearningManagementSystem.mainManagementSystem.activities.activityElements.Pregunta;
+import LearningManagementSystem.mainManagementSystem.activities.activityElements.PreguntaMultiple;
+import java.util.Scanner;
 // import Usuario;
 
 
@@ -60,4 +63,32 @@ public class Estudiante extends Usuario  {
     public void terminarActividad(){
         this.studenCurrenteActivity = null;
     }
+
+    // NUEVOOOOO Para QUI
+    public void responderQuiz(Quiz quiz) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Respondiendo el quiz: " + quiz.getDescripcion());
+
+        for (Pregunta pregunta : quiz.getPreguntas()) {
+            if (pregunta instanceof PreguntaMultiple) {
+                PreguntaMultiple preguntaMultiple = (PreguntaMultiple) pregunta;
+                System.out.println(preguntaMultiple.getEnunciado());
+                preguntaMultiple.mostrarOpciones();
+                
+                System.out.print("Ingresa tu respuesta (a, b, c, d): ");
+                String respuestaEstudiante = scanner.nextLine();
+                preguntaMultiple.setRespuestaEstudiante(respuestaEstudiante);
+            }
+            scanner.close();
+        }
+
+        // Verificar si aprobó el quiz
+        if (quiz.aprobado()) {
+            System.out.println("¡Felicidades, aprobaste el quiz!");
+        } else {
+            System.out.println("Lo siento, no aprobaste el quiz.");
+        }
+    }
+        
+
 }

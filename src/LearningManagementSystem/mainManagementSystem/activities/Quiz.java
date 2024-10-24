@@ -23,8 +23,9 @@ public class Quiz extends Actividad {
 
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
-    public Quiz(String descripcion, String objetivo, String dificultad, int tiempoEstimado, Date fechaDeCierre, boolean obligatoria, String creador, double calificacionMinima) {
-        super(descripcion, objetivo, dificultad,  tiempoEstimado, fechaDeCierre, obligatoria, creador);
+    public Quiz(String nombre, String descripcion, String objetivo, String dificultad, int tiempoEstimado, Date fechaDeCierre, boolean obligatoria, String creador, double calificacionMinima) {
+        super(nombre, descripcion, objetivo, dificultad, tiempoEstimado, fechaDeCierre, obligatoria, creador);
+        this.Preguntas = new ArrayList<>();
         this.calificacionMinima = calificacionMinima;
     }
 
@@ -42,6 +43,7 @@ public class Quiz extends Actividad {
         return this.calificacionMinima;
     }
 
+    // NUEVOOOOOOO
     public double calificar() {
         int respuestasCorrectas = 0;
         int totalPreguntas = Preguntas.size();
@@ -55,9 +57,14 @@ public class Quiz extends Actividad {
             }
         }
 
-        return (double) respuestasCorrectas / totalPreguntas * 100;  // Calificación en porcentaje
+        return (double) respuestasCorrectas / totalPreguntas * 100;  
     }
 
+
+    public boolean aprobado() {
+        double calificacionEstudiante = calificar();
+        return calificacionEstudiante >= this.calificacionMinima;
+    }
 
 }
 

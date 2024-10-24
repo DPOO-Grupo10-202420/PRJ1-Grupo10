@@ -71,6 +71,10 @@ public abstract class Actividad  {
         return this.nombre;
     }
 
+    public String getDescripcion() {
+        return this.descripcion;
+    }
+
     public void setResultado(String resultado) {
         this.resultado = resultado;
     }
