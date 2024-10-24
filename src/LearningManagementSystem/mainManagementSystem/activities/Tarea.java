@@ -30,9 +30,9 @@ public class Tarea extends Actividad {
     //----------------------------------------------------------------------
 	// Metodo constructor de la clase.
 	
-	public Tarea (String descripcion, String objetivo, String dificultad, int tiempoEstimado, Date fechaDeCierre, boolean obligatoria, String creador, String NewMetodoEnvio) {
+	public Tarea (String nombre,String descripcion, String objetivo, String dificultad, int tiempoEstimado, Date fechaDeCierre, boolean obligatoria, String creador, String NewMetodoEnvio) {
 
-        super(descripcion, objetivo, dificultad,  tiempoEstimado, fechaDeCierre, obligatoria, creador);
+        super(nombre, descripcion, objetivo, dificultad,  tiempoEstimado, fechaDeCierre, obligatoria, creador);
         this.metodoEnvio = NewMetodoEnvio;
 
     }
