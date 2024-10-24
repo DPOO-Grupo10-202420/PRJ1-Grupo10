@@ -16,7 +16,7 @@ import LearningManagementSystem.mainManagementSystem.activities.Actividad;
 
 
 //====================================================================================
-// Definicion de la clase Estudiante
+// Definicion de la clase Profesor
 //====================================================================================
 
 public class Estudiante extends Usuario  {
@@ -54,10 +54,10 @@ public class Estudiante extends Usuario  {
     }
 
     public void iniciarActividad(Actividad actividad){
-        this.studenCurrenteActivity = actividad;
+        this.studentCurrentActivity = actividad;
     }
 
     public void terminarActividad(){
-        this.studenCurrenteActivity = null;
+        this.studentCurrentActivity = null;
     }
 }

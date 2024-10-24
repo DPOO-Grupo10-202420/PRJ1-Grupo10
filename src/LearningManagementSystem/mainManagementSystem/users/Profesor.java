@@ -79,9 +79,7 @@ public class Profesor extends Usuario  {
     
     // Clonacion -- Falta 
 
-    public void cambiarEstadoActividad(Actividad actividad, String estado) {
-        actividad.setEstado(estado);
-    }
+
 
 
 

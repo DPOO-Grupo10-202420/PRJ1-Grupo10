@@ -10,7 +10,7 @@ public class PreguntaAbierta extends Pregunta {
 	
 	//----------------------------------------------------------------------
 	// Definicion de atributos
-	private String respuestaEstudiante;
+	private String respuestaProfesor;
 
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
@@ -22,13 +22,13 @@ public class PreguntaAbierta extends Pregunta {
     // Definicion de metodos de la clase
 
     public void agregarRespuesta(String respuesta) {
-        this.respuestaEstudiante = respuesta;
+        this.respuestaProfesor = respuesta;
     }
 
     public String getRespuesta() {
-        return this.respuestaEstudiante;
+        return this.respuestaProfesor;
     }
     public boolean esRespondida() {
-        return this.respuestaEstudiante == "";
+        return this.respuestaProfesor == "";
     }
 }
