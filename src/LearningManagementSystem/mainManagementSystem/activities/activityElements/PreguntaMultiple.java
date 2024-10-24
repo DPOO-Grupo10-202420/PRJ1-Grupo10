@@ -12,6 +12,7 @@ public class PreguntaMultiple extends Pregunta {
         super(enunciado, retroalimentacion, false);
         this.opciones = new HashMap<>();
         this.respuestaCorrecta  = ""; 
+        this.respuestaEstudiante = "";
     }
 
 
@@ -43,10 +44,18 @@ public class PreguntaMultiple extends Pregunta {
             System.out.println("La clave no existe en las opciones disponibles.");
         }
     }
-
-    public boolean esCorrecta(String respuesta) {
-        return respuesta.equals(respuestaCorrecta);
+    public boolean esCorrecta() {
+        return respuestaEstudiante.equals(respuestaCorrecta);
     }
+
+    public void setRespuestaEstudiante(String clave) {
+        if (opciones.containsKey(clave)) {
+            this.respuestaEstudiante = clave;
+        } else {
+            System.out.println("La clave no existe en las opciones disponibles.");
+        }
+    }
+
 
     public void mostrarOpciones() {
         System.out.println("Opciones disponibles:");

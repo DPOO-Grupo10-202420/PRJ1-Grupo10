@@ -4,6 +4,7 @@
 
 package LearningManagementSystem.mainManagementSystem.activities;
 import LearningManagementSystem.mainManagementSystem.activities.activityElements.Pregunta;
+import LearningManagementSystem.mainManagementSystem.activities.activityElements.PreguntaMultiple;
 
 //Estructuras de datos
 import java.util.List;
@@ -51,6 +52,24 @@ public class Quiz extends Actividad {
     public double getCalificacionMinima() {
         return this.calificacionMinima;
     }
+
+    public double calificar() {
+        int respuestasCorrectas = 0;
+        int totalPreguntas = Preguntas.size();
+
+        for (Pregunta pregunta : Preguntas) {
+            if (pregunta instanceof PreguntaMultiple) {
+                PreguntaMultiple handle = (PreguntaMultiple) pregunta;
+                if (handle.esCorrecta()) {
+                    respuestasCorrectas++;
+                }
+            }
+        }
+
+        return (double) respuestasCorrectas / totalPreguntas * 100;  // Calificación en porcentaje
+    }
+
+
 }
 
 
