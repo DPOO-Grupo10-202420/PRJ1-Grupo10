@@ -71,13 +71,18 @@ public class LearningManagementSystem {
         usuarios.remove(username);
     }
 
-	public void terminarActividad(String username, String tituloLearningPath, actividad tituloActividad) {
+	public void terminarActividad(String username, Actividad tituloActividad) {
 		Usuario usuario = usuarios.get(username);
 		if (usuario instanceof Estudiante) {
 			Estudiante estudiante = (Estudiante) usuario;
 			estudiante.terminarActividad();
-			LearningPath learningPath = learningPaths.get(tituloLearningPath);
-			// Actividad actividad = learningPath.getActividad(tituloActividad);
+			String nombreActividad = tituloActividad.getNombre();
+			HashMap<String, Actividad> usuarios = actividadesHechas.get(nombreActividad);
+			if (usuarios == null) {
+				usuarios = new HashMap<String, Actividad>();
+				actividadesHechas.put(nombreActividad, usuarios);
+			}
+			usuarios.put(username, tituloActividad);
 		}
 	}
 

@@ -19,7 +19,7 @@ import java.util.Map;
 public abstract class Actividad  {
 	//----------------------------------------------------------------------
 	// Definicion de atributos
-    // private String id; // id de la Actividad (generado por el sistema)
+    private String nombre; // no puede estar repetido en un learningPath
     private String descripcion;
     private String objetivo;
     private String dificultad;
@@ -38,7 +38,8 @@ public abstract class Actividad  {
 
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
-    public Actividad(String descripcion, String objetivo, String dificultad, int tiempoEstimado, Date fechaDeCierre, boolean obligatoria, String creador) {
+    public Actividad(String nombre, String descripcion, String objetivo, String dificultad, int tiempoEstimado, Date fechaDeCierre, boolean obligatoria, String creador) {
+        this.nombre = nombre;
         this.descripcion = descripcion;
         this.objetivo = objetivo;
         this.dificultad = dificultad;
@@ -64,6 +65,10 @@ public abstract class Actividad  {
         infoActividad.put("rating", this.rating);
         infoActividad.put("comentarios", this.comentarios);
         return infoActividad;
+    }
+
+    public String getNombre() {
+        return this.nombre;
     }
 
     public void setResultado(String resultado) {
