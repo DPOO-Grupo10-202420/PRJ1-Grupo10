@@ -3,16 +3,8 @@
 //====================================================================================
 package LearningManagementSystem.console;
 
-import java.io.IOException;
-
-import LearningManagementSystem.Exceptions.UsuarioDuplicadoException;
-import LearningManagementSystem.mainManagementSystem.*;
-import LearningManagementSystem.mainManagementSystem.users.*;
-
 import LearningManagementSystem.mainManagementSystem.LearningManagementSystem;
-
-import LearningManagementSystem.persistence.*;
-
+import LearningManagementSystem.mainManagementSystem.users.*;
 //====================================================================================
 //Definicion de la clase MainConsole
 //====================================================================================
@@ -38,25 +30,18 @@ public class MainConsole extends ConsolaBasica
 
     //------------------------------------------------------
     // Llama los modulos de persisitencia de datos.
-
     public void cargarInformacion(){
-
         //CentralPersistencia centPers = new CentralPersistencia();
         //LentPers.cargarInformacion(LearningManagementSystem());
-
     };
 
 
     public void saveInformation(){
-
         //CentralPersistencia centPers = new CentralPersistencia();
         //LentPers.cargarInformacion(LearningManagementSystem());
-
     }
 
-
     //==================================================================================================================
-
     // Inicia sesion.  
 
     public void iniciarSesion() {
@@ -73,26 +58,22 @@ public class MainConsole extends ConsolaBasica
             System.out.println("Bienvenido/a " + usuario.getUsername() + "! ");
         
             if (usuario instanceof Profesor){
-                estCon.ejecutarConsolaProfesor();
+                estCon.ejecutarConsolaProfesor(currentLearningManagementSystem, usuario);
             }
             else if (usuario instanceof Profesor) {
-                profCon.ejecutarConsolaProfesor();
+                profCon.ejecutarConsolaProfesor(currentLearningManagementSystem, usuario);
             }
 
         }
-
         else {
-
             System.out.println("------------------------------------------------------------");
             System.out.println("El nombre de usuario no está registrado en la base de datos.");
 
         }
-        
 
     }
 
     //==================================================================================================================
-   
     // Se registra un nuevo usuario. 
 
     public void registrarNuevoUsuario(){
@@ -136,16 +117,10 @@ public class MainConsole extends ConsolaBasica
 
     }
 
-
-
-    //==================================================================================================================
-
-
+    //==================================================================================================================//
     //public void ingresarComoAdmin(){}
-
     public void ejecutarAplicacion( )
     {
-       
         System.out.println("================================================================================");
         System.out.println("              WELCOME TO THE LEARNING PATH RECOMMENDATION SYSTEM                ");
         System.out.println("================================================================================");
@@ -155,13 +130,9 @@ public class MainConsole extends ConsolaBasica
         // Se carga la informacion antes de usar la aplicacion.
         cargarInformacion();
 
-
-
         //------------------------------------------------------
         // Muestra el menu principal
-
         while (appExecution){
-
             int opcionSeleccionada = mostrarMenu( "MENÚ PRINCIPAL DEL SISTEMA", opcionesMenuPrincipal );
             if( opcionSeleccionada == 1 )
             {
@@ -187,9 +158,6 @@ public class MainConsole extends ConsolaBasica
                 System.exit( 0 );
             }
         }
-
-
-        
     }
     
     //==================================================================================================================
