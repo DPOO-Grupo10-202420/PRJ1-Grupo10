@@ -5,7 +5,6 @@
 package LearningManagementSystem.mainManagementSystem;
 
 import LearningManagementSystem.mainManagementSystem.users.*;
-import learningPath.actividades.actividad;
 import LearningManagementSystem.mainManagementSystem.*;
 import LearningManagementSystem.mainManagementSystem.activities.Actividad;
 
@@ -78,9 +77,9 @@ public class LearningManagementSystem {
 
 	public void terminarActividad(String username, Actividad tituloActividad) {
 		Usuario usuario = usuarios.get(username);
-		if (usuario instanceof Estudiante) {
-			Estudiante estudiante = (Estudiante) usuario;
-			estudiante.terminarActividad();
+		if (usuario instanceof Profesor) {
+			Profesor Profesor = (Profesor) usuario;
+			//Profesor.terminarActividad();
 			String nombreActividad = tituloActividad.getNombre();
 			HashMap<String, Actividad> usuarios = actividadesHechas.get(nombreActividad);
 			if (usuarios == null) {

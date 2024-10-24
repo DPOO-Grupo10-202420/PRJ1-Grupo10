@@ -16,51 +16,63 @@ public class consolaEstudiante extends ConsolaBasica {
     //------------------------------------------------------
     // Definicion de los atributos
 
-    private final String[] opcionesMenuEstudiante = new String[]{ "Iniciar sesión", "Registrarse", "Salir" };
+    public boolean appExecutionProfesor = true;
 
 
+    //Opciones
+    private final String[] opcionesMenuProfesor = new String[]{ "Visualizar LearinigPath en curso", "Inscribirse a LearnignPath", "Visualizar Actividades del LearningPath", "LLevar a cabo Actividad", "Cerrar sesión." };
 
 
+    //==================================================================================================================
+
+    // Funciones del Profesor.
 
 
+    public void visualizarLearningPathEnCurso (){}
+
+    public void inscribirseALearningPath () {}
+
+    public void visualizarActividadesDeLearningPathInscrito () {}
+
+    public void realizarActividad () {}
 
 
+    //==================================================================================================================
 
+    // Definicion del metodo que ejecuta la consola del Profesor.
 
-
-
-
-
-
-
-    //------------------------------------------------------
-    // Definicion del metodo que ejecuta la consola del estudiante.
-
-    public void ejecutarConsolaEstudiante(){
+    public void ejecutarConsolaProfesor(){
         
-        
+        appExecutionProfesor = true;
+
+        while (appExecutionProfesor){
+
+            int opcionSeleccionada = mostrarMenu( "MENÚ PRINCIPAL DEL Profesor", opcionesMenuProfesor );
+
+            if( opcionSeleccionada == 1 )
+            {
+                visualizarLearningPathEnCurso( );
+            }
+
+            else if( opcionSeleccionada == 2 )
+            {
+                inscribirseALearningPath( );
+            }
+
+            else if( opcionSeleccionada == 3 )
+            {
+                realizarActividad( );
+            }
+
+            else if( opcionSeleccionada == 5 )
+            {
+               
+                appExecutionProfesor = false;
 
 
+            }
 
-        int opcionSeleccionada = mostrarMenu( "MENÚ PRINCIPAL DEL SISTEMA", opcionesMenuEstudiante );
-        if( opcionSeleccionada == 1 )
-        {
-            ingresarComoEstudiante( );
-        }
-        else if( opcionSeleccionada == 2 )
-        {
-            ingresarComoProfesor( );
-        }
-        //else if( opcionSeleccionada == 3 )
-        //{
-            //ingresarComoAdmin( );
-        //}
-        else if( opcionSeleccionada == 3 )
-        {
-            System.out.println( "Saliendo ..." );
-            System.exit( 0 );
-        }
-
+    }
 
     }
 
