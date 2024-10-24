@@ -22,44 +22,22 @@ public class Tarea extends Actividad {
 	
     //----------------------------------------------------------------------
 	// Definicion de atributos
-
     private String metodoEnvio;
 
-
-	
     //----------------------------------------------------------------------
 	// Metodo constructor de la clase.
 	
-	public Tarea (String descripcion, String objetivo, String dificultad, int tiempoEstimado, Date fechaDeCierre, boolean obligatoria, String creador, String NewMetodoEnvio) {
-
-        super(descripcion, objetivo, dificultad,  tiempoEstimado, fechaDeCierre, obligatoria, creador);
+	public Tarea (String nombre, String descripcion, String objetivo, String dificultad, int tiempoEstimado, Date fechaDeCierre, boolean obligatoria, String creador, String NewMetodoEnvio) {
+        super(nombre ,descripcion, objetivo, dificultad, tiempoEstimado, fechaDeCierre, obligatoria, creador);
         this.metodoEnvio = NewMetodoEnvio;
-
     }
-
 
     //Getters
     public String getMetodoEnvio (){
         return this.metodoEnvio;
-
     }
-
-
-
     //Setters
-
-
-
     //Metodos
-
-    public void enviarExamen(){
-
-
-    }
-
-
-
-	
-	
+    // public void enviarExamen(){}
 }
 

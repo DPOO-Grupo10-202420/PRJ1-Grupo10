@@ -22,8 +22,8 @@ public class Quiz extends Actividad {
 
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
-    public Quiz(String descripcion, String objetivo, String dificultad, int tiempoEstimado, Date fechaDeCierre, boolean obligatoria, String creador, double calificacionMinima) {
-        super(descripcion, objetivo, dificultad,  tiempoEstimado, fechaDeCierre, obligatoria, creador);
+    public Quiz(String nombre, String descripcion, String objetivo, String dificultad, int tiempoEstimado, Date fechaDeCierre, boolean obligatoria, String creador, double calificacionMinima) {
+        super(nombre ,descripcion, objetivo, dificultad, tiempoEstimado, fechaDeCierre, obligatoria, creador);
         this.calificacionMinima = calificacionMinima;
     }
 

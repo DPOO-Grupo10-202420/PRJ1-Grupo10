@@ -53,13 +53,13 @@ public class LearningManagementSystem {
 	} 
 
 	// Metodos
-    public void addNewLearningPath(String titulo, String descripcion, String nivelDificultad, int duracion) throws Exception {
+    public void addNewLearningPath(String titulo, String descripcion, String nivelDificultad) throws Exception {
 		
 		if (learningPaths.containsKey(titulo)) {
 			throw new Exception("Ya existe un learning path con ese titulo");
 		}
 
-		LearningPath path = new LearningPath(titulo, descripcion, nivelDificultad, duracion);
+		LearningPath path = new LearningPath(titulo, descripcion, nivelDificultad);
 		learningPaths.put(titulo, path);
     }
 

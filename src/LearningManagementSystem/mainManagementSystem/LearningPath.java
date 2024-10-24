@@ -5,13 +5,14 @@
 package LearningManagementSystem.mainManagementSystem;
 
 import LearningManagementSystem.mainManagementSystem.activities.*;
+import LearningManagementSystem.mainManagementSystem.activities.activityElements.*;
+import learningPath.actividades.pregunta;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Date;
 
 // import Usuario;
 
@@ -37,11 +38,10 @@ public class LearningPath  {
 
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
-    public LearningPath (String titulo, String descripcion, String nivelDificultad, int duracion) {
+    public LearningPath (String titulo, String descripcion, String nivelDificultad) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.nivelDificultad = nivelDificultad;
-        this.duracion = duracion;
     }
 
 	//----------------------------------------------------------------------
@@ -117,9 +117,46 @@ public class LearningPath  {
 
 
     // Metodos
+    public void addActividad(Actividad actividad) {
+        secuenciaActividades.add(actividad);
+        calcularDuracion();
+    }
 
-    public void addActividad(){
+    public Actividad addRecurso(String nombre , String descripcion, String objetivo, String nivelDificultad, int tiempoEstimado, Date fechaCierre, boolean obligatoria, String creador, String tipoRecurso, String URLRecurso){
+        Recurso recurso = new Recurso(nombre ,descripcion, objetivo, nivelDificultad, tiempoEstimado, fechaCierre, obligatoria, descripcion, tipoRecurso, URLRecurso);
+        return recurso;
+    }
 
+    public Actividad addTarea(String nombreActividad, String descripcionActividad, String objetivoActividad, String dificultadActividad, int tiempoEstimadoActividad, Date fechaCierreActividad, boolean obligatoriaActividad, String creadorActividad, String tipoTarea) {
+        Tarea tarea = new Tarea(nombreActividad ,descripcionActividad, objetivoActividad, dificultadActividad, tiempoEstimadoActividad, fechaCierreActividad, obligatoriaActividad, creadorActividad, tipoTarea);
+        return tarea;
+    }
+
+    public Actividad addExamen(String nombreActividad, String descripcionActividad, String objetivoActividad, String dificultadActividad, int tiempoEstimadoActividad, Date fechaCierreActividad, boolean obligatoriaActividad, String creadorActividad, double calificacionMinima) {
+        Examen examen = new Examen(nombreActividad ,descripcionActividad, objetivoActividad, dificultadActividad, tiempoEstimadoActividad, fechaCierreActividad, obligatoriaActividad, creadorActividad, calificacionMinima);
+        return examen;
+    }
+    
+    public void addPregunta(Actividad actividad, String enunciado, String retroalimentacion, boolean isAbierta) {
+        if(isAbierta){
+            PreguntaAbierta preguntaNueva = new PreguntaAbierta(enunciado, retroalimentacion, isAbierta);
+            if (actividad instanceof Examen){
+                Examen examen = (Examen) actividad;
+                examen.agregarPregunta(preguntaNueva);
+            } else if (actividad instanceof Encuesta){
+                Encuesta encuesta = (Encuesta) actividad;
+                encuesta.agregarPregunta(preguntaNueva);
+            }
+        }else{
+            PreguntaMultiple preguntaNueva = new PreguntaMultiple(enunciado, retroalimentacion, isAbierta);
+            if (actividad instanceof Quiz){
+                Quiz examen = (Quiz) actividad;
+                examen.agregarPregunta(preguntaNueva);
+            } else if (actividad instanceof Encuesta){
+                Encuesta encuesta = (Encuesta) actividad;
+                encuesta.agregarPregunta(preguntaNueva);
+            }
+        }
     }
 
     public void removeActividad(){
@@ -134,17 +171,7 @@ public class LearningPath  {
 
     }
 
-
-
-
-    // meotodos
-
-    public void addActivity(Actividad actividad) {
-        secuenciaActividades.add(actividad);
-        calcularDuracion();
-    }
-
-    public void removeActivity(Actividad actividad) {
+    public void removeActividad(Actividad actividad) {
         secuenciaActividades.remove(actividad);
         calcularDuracion();
     }

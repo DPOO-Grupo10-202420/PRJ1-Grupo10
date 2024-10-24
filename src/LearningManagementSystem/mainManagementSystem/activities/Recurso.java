@@ -8,11 +8,7 @@ import LearningManagementSystem.mainManagementSystem.activities.activityElements
 
 
 //Estructuras de datos
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-
-
 //====================================================================================
 //Definicion de la clase Recurso
 //====================================================================================
@@ -25,8 +21,10 @@ public class Recurso extends Actividad {
 
     //----------------------------------------------------------------------
 	// Metodo constructor de la clase.
-	public Recurso (String descripcion, String objetivo, String dificultad, int tiempoEstimado, Date fechaDeCierre, boolean obligatoria, String creador) {
-        super(descripcion, objetivo, dificultad,  tiempoEstimado, fechaDeCierre, obligatoria, creador);
+    public Recurso (String nombre ,String descripcion, String objetivo, String dificultad, int tiempoEstimado, Date fechaDeCierre, boolean obligatoria, String creador, String tiporecurso, String URLRecurso) {
+        super(nombre ,descripcion, objetivo, dificultad, tiempoEstimado, fechaDeCierre, obligatoria, creador);
+        this.tipoRecurso = tipoRecurso;
+        this.URLRecurso = URLRecurso;
     }
 
     //Getters
