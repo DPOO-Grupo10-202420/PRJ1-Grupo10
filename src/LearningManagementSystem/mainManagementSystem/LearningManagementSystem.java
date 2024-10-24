@@ -5,6 +5,7 @@
 package LearningManagementSystem.mainManagementSystem;
 
 import LearningManagementSystem.mainManagementSystem.users.*;
+import learningPath.actividades.actividad;
 import LearningManagementSystem.mainManagementSystem.*;
 import LearningManagementSystem.mainManagementSystem.activities.Actividad;
 
@@ -70,11 +71,15 @@ public class LearningManagementSystem {
     public void deleteUser(String username) {
         usuarios.remove(username);
     }
-	
-	
-	
 
-	
-	
-	
+	public void terminarActividad(String username, String tituloLearningPath, actividad tituloActividad) {
+		Usuario usuario = usuarios.get(username);
+		if (usuario instanceof Estudiante) {
+			Estudiante estudiante = (Estudiante) usuario;
+			estudiante.terminarActividad();
+			LearningPath learningPath = learningPaths.get(tituloLearningPath);
+			// Actividad actividad = learningPath.getActividad(tituloActividad);
+		}
+	}
+
 }
