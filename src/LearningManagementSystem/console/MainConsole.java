@@ -28,11 +28,11 @@ public class MainConsole extends ConsolaBasica
 
     // Opciones de texto
     private final String[] opcionesMenuPrincipal = new String[]{"INICIAR SESIÓN", "REGISTRARSE", "Salir de la aplicación." };
-    private final String[] opcionesResgistrarNuevoUsuario = new String[]{"PROFESOR", "ESTUDIANTE", "Volver al menu principal."};
+    private final String[] opcionesResgistrarNuevoUsuario = new String[]{"PROFESOR", "Profesor", "Volver al menu principal."};
 
     public boolean appExecution = true;
 
-    consolaEstudiante estCon = new consolaEstudiante();
+    consolaProfesor estCon = new consolaProfesor();
     consolaProfesor profCon = new consolaProfesor();
 
 
@@ -47,8 +47,16 @@ public class MainConsole extends ConsolaBasica
     };
 
 
+    public void saveInformation(){
+
+        //CentralPersistencia centPers = new CentralPersistencia();
+        //LentPers.cargarInformacion(LearningManagementSystem());
+
+    }
+
+
     //==================================================================================================================
-    //------------------------------------------------------
+
     // Inicia sesion.  
 
     public void iniciarSesion() {
@@ -64,8 +72,8 @@ public class MainConsole extends ConsolaBasica
             System.out.println("------------------------------------------------------------");
             System.out.println("Bienvenido/a " + usuario.getUsername() + "! ");
         
-            if (usuario instanceof Estudiante){
-                estCon.ejecutarConsolaEstudiante();
+            if (usuario instanceof Profesor){
+                estCon.ejecutarConsolaProfesor();
             }
             else if (usuario instanceof Profesor) {
                 profCon.ejecutarConsolaProfesor();
@@ -84,6 +92,8 @@ public class MainConsole extends ConsolaBasica
     }
 
     //==================================================================================================================
+   
+    // Se registra un nuevo usuario. 
 
     public void registrarNuevoUsuario(){
 
@@ -115,9 +125,9 @@ public class MainConsole extends ConsolaBasica
         }
         else if (opcionSeleccionada == 2) {
 
-            Estudiante newEstudiante = new Estudiante(username, password, email);
+            Profesor newProfesor = new Profesor(username, password, email);
 
-            currentLearningManagementSystem.addNewUser(newEstudiante);
+            currentLearningManagementSystem.addNewUser(newProfesor);
 
         }
         else if (opcionSeleccionada == 3) {
@@ -128,19 +138,8 @@ public class MainConsole extends ConsolaBasica
 
 
 
-
-
-
-
-
-
-
-
-
     //==================================================================================================================
 
-    //------------------------------------------------------
-    // Llama los modulos de persisitencia de datos.
 
     //public void ingresarComoAdmin(){}
 
@@ -178,6 +177,11 @@ public class MainConsole extends ConsolaBasica
             //}
             else if( opcionSeleccionada == 3 )
             {
+                System.out.println( "Guardando información en la base de datos ..." );
+                
+                // Guarda la informacion en la base de datos.
+                saveInformation();
+
                 System.out.println( "Saliendo ..." );
                 appExecution = false;
                 System.exit( 0 );
