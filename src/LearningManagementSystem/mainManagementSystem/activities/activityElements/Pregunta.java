@@ -20,18 +20,15 @@ public abstract class Pregunta {
 
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
-    
     public Pregunta(String enunciado, String retroalimentacion, boolean isAbierta) {
         this.enunciado = enunciado;
         this.retroalimentacion = retroalimentacion;
         this.respuesta = "";
         this.isAbierta = isAbierta;
     }
-    
-    
+
 	//----------------------------------------------------------------------
     // Definicion de metodos de la clase
-    
     public String getEnunciado() {
         return this.enunciado;
     }
@@ -44,4 +41,7 @@ public abstract class Pregunta {
         return this.isAbierta;
     }
 
+    public void cambiarEnunciado(String newEnunciado) {
+        this.enunciado = newEnunciado;
+    }
 }

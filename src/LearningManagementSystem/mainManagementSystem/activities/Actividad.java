@@ -16,14 +16,10 @@ import java.util.Map;
 //====================================================================================
 //Definicion de la clase Actividad
 //====================================================================================
-
 public abstract class Actividad  {
-    
-	
 	//----------------------------------------------------------------------
 	// Definicion de atributos
-	
-    // private String id; // id de la Actividad (generado por el sistema)
+    private String nombre; // no puede estar repetido en un learningPath
     private String descripcion;
     private String objetivo;
     private String dificultad;
@@ -42,8 +38,8 @@ public abstract class Actividad  {
 
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
-    
-    public Actividad(String descripcion, String objetivo, String dificultad, int tiempoEstimado, Date fechaDeCierre, boolean obligatoria, String creador) {
+    public Actividad(String nombre, String descripcion, String objetivo, String dificultad, int tiempoEstimado, Date fechaDeCierre, boolean obligatoria, String creador) {
+        this.nombre = nombre;
         this.descripcion = descripcion;
         this.objetivo = objetivo;
         this.dificultad = dificultad;
@@ -71,27 +67,35 @@ public abstract class Actividad  {
         return infoActividad;
     }
 
-    private void setResultado(String resultado) {
+    public String getNombre() {
+        return this.nombre;
+    }
+
+    public void setResultado(String resultado) {
         this.resultado = resultado;
     }
 
-    private String getResultado() {
+    public String getResultado() {
         return this.resultado;
     }
 
-    private double getRating() {
+    public double getRating() {
         return this.rating;
     }
 
-    private void setComentario (String comentario) {
+    public int getTiempoEstimado() {
+        return this.tiempoEstimado;
+    }
+
+    public void setComentario (String comentario) {
         this.comentarios.add(comentario);
     }
 
-    private void addActividadPrevia(Actividad Actividad) {
+    public void addActividadPrevia(Actividad Actividad) {
         this.ActividadesPrevias.add(Actividad);
     }
 
-    private void addActividadDeSeguimiento(Actividad Actividad) {
+    public void addActividadDeSeguimiento(Actividad Actividad) {
         this.ActividadesDeSeguimiento.add(Actividad);
     }
 
