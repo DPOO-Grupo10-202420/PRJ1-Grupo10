@@ -4,8 +4,13 @@
 package LearningManagementSystem.console;
 
 import java.io.IOException;
+
+import LearningManagementSystem.Exceptions.UsuarioDuplicadoException;
 import LearningManagementSystem.mainManagementSystem.*;
 import LearningManagementSystem.mainManagementSystem.users.*;
+
+import LearningManagementSystem.mainManagementSystem.LearningManagementSystem;
+
 import LearningManagementSystem.persistence.*;
 
 //====================================================================================
@@ -19,7 +24,16 @@ public class MainConsole extends ConsolaBasica
     // Definicion de los atributos
 
     private LearningManagementSystem currentLearningManagementSystem = new LearningManagementSystem();
-    private final String[] opcionesMenuPrincipal = new String[]{ "Ingresar como ESTUDIANTE", "Ingresar como PROFESOR", "Salir" };
+    private Usuario currentUser;
+
+    // Opciones de texto
+    private final String[] opcionesMenuPrincipal = new String[]{"INICIAR SESIÓN", "REGISTRARSE", "Salir de la aplicación." };
+    private final String[] opcionesResgistrarNuevoUsuario = new String[]{"PROFESOR", "ESTUDIANTE", "Volver al menu principal."};
+
+    public boolean appExecution = true;
+
+    consolaEstudiante estCon = new consolaEstudiante();
+    consolaProfesor profCon = new consolaProfesor();
 
 
     //------------------------------------------------------
@@ -33,34 +47,102 @@ public class MainConsole extends ConsolaBasica
     };
 
 
-
+    //==================================================================================================================
     //------------------------------------------------------
-    // Crea la consola del estudiante. 
+    // Inicia sesion.  
 
-    public void ingresarComoEstudiante(){
+    public void iniciarSesion() {
 
-        consolaEstudiante estCon = new consolaEstudiante();
-        estCon.ejecutarConsolaEstudiante();
+        String nombreUsuario = pedirCadenaAlUsuario("Digite su nombre de usuario");
 
+        // Revisa si existe el usuario. 
+        if (currentLearningManagementSystem.existeUsuario(nombreUsuario)){
 
-    }
-
-    
-    //------------------------------------------------------
-    // Crea la consola del profesor 
-
-    public void ingresarComoProfesor(){
+            Usuario usuario = currentLearningManagementSystem.getUsuario(nombreUsuario);
+            currentUser = usuario;
+            
+            System.out.println("------------------------------------------------------------");
+            System.out.println("Bienvenido/a " + usuario.getUsername() + "! ");
         
-        consolaProfesor profCon = new consolaProfesor();
-        profCon.ejecutarConsolaProfesor();
+            if (usuario instanceof Estudiante){
+                estCon.ejecutarConsolaEstudiante();
+            }
+            else if (usuario instanceof Profesor) {
+                profCon.ejecutarConsolaProfesor();
+            }
+
+        }
+
+        else {
+
+            System.out.println("------------------------------------------------------------");
+            System.out.println("El nombre de usuario no está registrado en la base de datos.");
+
+        }
+        
+
     }
 
+    //==================================================================================================================
+
+    public void registrarNuevoUsuario(){
+
+        int opcionSeleccionada = mostrarMenu( "Inicio de sesión", opcionesResgistrarNuevoUsuario );
+
+        System.out.println("------------------------------------------------------------");
+        System.out.println("¿Cómo desea registrarse? ");
+        String username = pedirCadenaAlUsuario("Digite el nombre de usuario que desea usar");
+
+        while (!currentLearningManagementSystem.existeUsuario(username)){
+
+            System.out.println("El nombre de usuario elegido ya esta en uso. Digite uno distinto.");
+            username = pedirCadenaAlUsuario("Digite el nombre de usuario que desea usar");
+
+        }
+
+        System.out.println("------------------------------------------------------------");
+        String password = pedirCadenaAlUsuario("Digite su contraseña");
+        System.out.println("------------------------------------------------------------");
+        String email = pedirCadenaAlUsuario("Digite su correo electrónico");
+        System.out.println("------------------------------------------------------------");
+
+        if (opcionSeleccionada == 1) {
+
+            Profesor newProfesor = new Profesor(username, password, email);
+
+            currentLearningManagementSystem.addNewUser(newProfesor);
+
+        }
+        else if (opcionSeleccionada == 2) {
+
+            Estudiante newEstudiante = new Estudiante(username, password, email);
+
+            currentLearningManagementSystem.addNewUser(newEstudiante);
+
+        }
+        else if (opcionSeleccionada == 3) {
+            // Volver al menu principal.
+        }   
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    //==================================================================================================================
 
     //------------------------------------------------------
     // Llama los modulos de persisitencia de datos.
 
     //public void ingresarComoAdmin(){}
-
 
     public void ejecutarAplicacion( )
     {
@@ -79,37 +161,41 @@ public class MainConsole extends ConsolaBasica
         //------------------------------------------------------
         // Muestra el menu principal
 
-        int opcionSeleccionada = mostrarMenu( "MENÚ PRINCIPAL DEL SISTEMA", opcionesMenuPrincipal );
-        if( opcionSeleccionada == 1 )
-        {
-            ingresarComoEstudiante( );
-        }
-        else if( opcionSeleccionada == 2 )
-        {
-            ingresarComoProfesor( );
-        }
-        //else if( opcionSeleccionada == 3 )
-        //{
-            //ingresarComoAdmin( );
-        //}
-        else if( opcionSeleccionada == 3 )
-        {
-            System.out.println( "Saliendo ..." );
-            System.exit( 0 );
+        while (appExecution){
+
+            int opcionSeleccionada = mostrarMenu( "MENÚ PRINCIPAL DEL SISTEMA", opcionesMenuPrincipal );
+            if( opcionSeleccionada == 1 )
+            {
+                iniciarSesion( );
+            }
+            else if( opcionSeleccionada == 2 )
+            {
+                registrarNuevoUsuario();
+            }
+            //else if( opcionSeleccionada == 3 )
+            //{
+                //ingresarComoAdmin( );
+            //}
+            else if( opcionSeleccionada == 3 )
+            {
+                System.out.println( "Saliendo ..." );
+                appExecution = false;
+                System.exit( 0 );
+            }
         }
 
 
         
     }
     
-
+    //==================================================================================================================
     public static void main( String[] args )
     {
         MainConsole mainCon = new MainConsole( );
         mainCon.ejecutarAplicacion( );
     }
 
-
+    //==================================================================================================================
 
 //Final MainConsole
 }
