@@ -24,7 +24,7 @@ public class Estudiante extends Usuario  {
 	//----------------------------------------------------------------------
 	// Definicion de atributos
     private LearningPath studentCurrentLearningPath;
-    private Actividad studenCurrenteActivity;
+    private Actividad studentCurrentActivity;
     private HashMap<String, LearningPath> completedLearningPaths;
 
 	//----------------------------------------------------------------------

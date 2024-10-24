@@ -40,8 +40,13 @@ public class LearningManagementSystem {
     // Definicion de metodos de la clase
 
     // Getters
-	public HashMap<String ,Usuario> getUsuarios(){
-		return this.usuarios;
+
+	public Usuario getUsuario(String nombre){
+		return usuarios.get(nombre);
+	} 
+
+	public boolean existeUsuario (String nombre){
+		return usuarios.containsKey(nombre);
 	} 
 		
 	public HashMap<String, LearningPath> getLearningPaths(){
