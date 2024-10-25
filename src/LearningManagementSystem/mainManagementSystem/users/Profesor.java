@@ -14,6 +14,8 @@ import java.util.Map;
 import LearningManagementSystem.mainManagementSystem.LearningPath;
 import LearningManagementSystem.mainManagementSystem.activities.Actividad;
 
+import LearningManagementSystem.mainManagementSystem.activities.*;
+
 // import Usuario;
 
 
@@ -63,8 +65,10 @@ public class Profesor extends Usuario  {
 
     }
 
-    public void addPreguntaEncuesta(){
+    public void addPreguntaEncuesta(Encuesta encuesta){
+        
 
+        encuesta.agregarPregunta()
     }
 
     public void addFeedBack(){

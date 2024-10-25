@@ -39,6 +39,9 @@ public class Encuesta extends Actividad {
     //     Pregunta pregunta = this.preguntas.get(pregunta).add(respuesta); // Este metodo es de pregunta
     // }
 
-    public void enviarEncuesta () {}
+    public void enviarEncuesta () {
+        // Se envia a un diccionario de encuesta
+
+    }
 }
 
