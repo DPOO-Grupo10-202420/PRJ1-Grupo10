@@ -183,14 +183,10 @@ public class LearningPath  {
         }
     }
 
-
-    public void clonarActividad(Actividad actividad) {
+    public void clonarActividad(Actividad actividad, String nuevoNombre) {
         try{
             Actividad actividadClonada = actividad.clone();
             secuenciaActividades.add(actividadClonada);
-
-
-            
         }catch(CloneNotSupportedException e){
             System.out.println("Error al clonar la actividad");
         }

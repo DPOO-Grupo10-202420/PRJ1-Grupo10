@@ -22,11 +22,14 @@ public class consolaProfesor extends ConsolaBasica {
     public Profesor currentUser;
 
     //Opciones
-    private final String[] opcionesMenuProfesor = new String[]{ "Crear LearningPath", "Agregar Actividad en un LearningPath", "Clonar Actividad de un LearnignPath existente", "Modificar LearningPath", "Modificar Actividad de un LearningPath", "Visualizar los resultados de las Encuestas", "Calificar Actividad de Estudiante", "Cerrar sesión."};
+    private final String[] opcionesMenuProfesor = new String[]{ "Crear LearningPath", "Agregar Actividad en un LearningPath", "Clonar Actividad de un LearnignPath existente", "Modificar LearningPath", "Visualizar reseñas", "Crear reseña", "Calificar Actividad de Estudiante", "Cerrar sesión."};
     private final String[] opcionesPostCrearLeaningPath = new String[]{ "Crear Actividad", "Eliminar Actividad", "Volver a menu anterior."};
 
     //==================================================================================================================
     // Funciones del Profesor.
+
+    //------------------------------------------------------------------------------------------------------------//
+    // OPCION 1 - CREAR LEARNING PATH
     public void crearLearningPath () {
 
         String nombreLearningPath = pedirCadenaAlUsuario("Digite el nombre del LearningPath");
@@ -38,7 +41,7 @@ public class consolaProfesor extends ConsolaBasica {
             System.out.println(e.getMessage());
             return;
         }
-        
+
         LearningPath nuevoLearningPath = new LearningPath(nombreLearningPath, descripcionLearningPath, nivelDificultad);
         System.out.println("LearningPath creado con éxito.");
         boolean continuar = true;
@@ -63,6 +66,8 @@ public class consolaProfesor extends ConsolaBasica {
         return;
     }
 
+    //------------------------------------------------------------------------------------------------------------//
+    // OPCION 2 - AGREGAR ACTIVIDAD EN UN LEARNING PATH
     public void crearActividadEnLearningPath (LearningPath nuevoLearningPath) {
         //------------------------------------------------------//
         // ATRIBUTOS DEL CONTRUCTOR DE ACTIVIDAD
@@ -71,6 +76,11 @@ public class consolaProfesor extends ConsolaBasica {
 
         String creadorActividad = currentUser.getUsername();
         String nombreActividad = pedirCadenaAlUsuario("Digite el nombre de la actividad");
+        if(currentLearningManagementSystem.existeActividad(nombreActividad)){
+            System.out.println("Ya existe una actividad con ese nombre.");
+            return;
+        }
+
         String descripcionActividad = pedirCadenaAlUsuario("Digite la descripción de la actividad");
         String objetivoActividad = pedirCadenaAlUsuario("Digite el objetivo de la actividad");
         String dificultadActividad = pedirCadenaAlUsuario("Digite la dificultad de la actividad (BASICO, INTERMEDIO, AVANZADO)");
@@ -194,26 +204,8 @@ public class consolaProfesor extends ConsolaBasica {
         }
     }
 
-    public void eliminarActividadDeLearningPath (LearningPath nuevoLearningPath) {
-        if (nuevoLearningPath.getsecuenciaActividades().size() == 0){
-            System.out.println("No hay actividades para eliminar.");
-            return;
-        }else if (nuevoLearningPath.getsecuenciaActividades().size() == 1){
-            System.out.println("Este learningPath solo tiene una actividad. No se puede eliminar.");
-            return;
-        }
-
-        String[] actividades = new String[nuevoLearningPath.getsecuenciaActividades().size()];
-        for (int i = 0; i < nuevoLearningPath.getsecuenciaActividades().size(); i++){
-            actividades[i] = nuevoLearningPath.getsecuenciaActividades().get(i).getNombre();
-        }
-
-        int opcionSeleccionada = mostrarMenu( "Seleccione la actividad que desea eliminar", actividades );
-        nuevoLearningPath.removeActividad(nuevoLearningPath.getsecuenciaActividades().get(opcionSeleccionada));
-        System.out.println("Actividad eliminada con éxito.");
-        return;
-    }
-
+    //------------------------------------------------------------------------------------------------------------//
+    // OPCION 3 - CLONAR ACTIVIDAD DE UN LEARNING PATH EXISTENTE
     public void clonarActividadDeLearningPath() {
         //------------------------------------------------------//
         // LISTAMOS LOS LEARNING PATHS PARA QUE ESCOJA DE CUAL CLONAR
@@ -240,8 +232,12 @@ public class consolaProfesor extends ConsolaBasica {
         //------------------------------------------------------//
         // CLONAMOS LA ACTIVIDAD
         try{
-            Actividad actividadClonada = actividadSeleccionada.clone();
-            currentLearningManagementSystem.addNewActivity(actividadClonada);
+            String nuevoNombre = pedirCadenaAlUsuario("Digite el nombre de la actividad clonada");
+            if(currentLearningManagementSystem.existeActividad(nuevoNombre)){
+                System.out.println("Ya existe una actividad con ese nombre.");
+                return;
+            }
+            learningPathSeleccionado.clonarActividad(actividadSeleccionada, nuevoNombre);
             System.out.println("Actividad clonada con éxito.");
         } catch (Exception e){
             System.out.println(e.getMessage());
@@ -249,14 +245,123 @@ public class consolaProfesor extends ConsolaBasica {
         }
     }
 
-    public void visualizarResultadosEncuestas () {}
+    //------------------------------------------------------------------------------------------------------------//
+    // OPCION 4 - MODIFICAR LEARNING PATH
+    public void modificarLearningPath() {
+        String[] learningPaths = new String[currentLearningManagementSystem.getLearningPaths().size()];
+        int i = 0;
+        for (LearningPath learningPath : currentLearningManagementSystem.getLearningPaths()){
+            learningPaths[i] = learningPath.getTitulo();
+            i++;
+        }
+
+        int opcionSeleccionada = mostrarMenu( "Seleccione el LearningPath que desea modificar", learningPaths );
+        LearningPath learningPathSeleccionado = currentLearningManagementSystem.getLearningPath(learningPaths[opcionSeleccionada]);
+
+        String[] opcionesModificarLearningPath = new String[]{ "Cambiar título", "Cambiar descripción", "Cambiar nivel de dificultad", "Agregar actividad", "Eliminar actividad", "Volver al menú anterior"};
+        boolean continuar = true;
+        while(continuar){
+            opcionSeleccionada = mostrarMenu( "Seleccione la opción que desea modificar", opcionesModificarLearningPath );
+            switch(opcionSeleccionada){
+                case 1:
+                    String nuevoTitulo = pedirCadenaAlUsuario("Digite el nuevo título del LearningPath");
+                    learningPathSeleccionado.setTitulo(nuevoTitulo);
+                    System.out.println("Título modificado con éxito.");
+                break;
+                case 2:
+                    String nuevaDescripcion = pedirCadenaAlUsuario("Digite la nueva descripción del LearningPath");
+                    learningPathSeleccionado.setDescripcion(nuevaDescripcion);
+                    System.out.println("Descripción modificada con éxito.");
+                break;
+                case 3:
+                    String nuevoNivelDificultad = pedirCadenaAlUsuario("Digite el nuevo nivel de dificultad del LearningPath");
+                    learningPathSeleccionado.setNivelDificultad(nuevoNivelDificultad);
+                    System.out.println("Nivel de dificultad modificado con éxito.");
+                break;
+                case 4:
+                    crearActividadEnLearningPath(learningPathSeleccionado);
+                break;
+                case 5:
+                    eliminarActividadDeLearningPath(learningPathSeleccionado);
+                break;
+                case 6:
+                    continuar = false;
+                    return;
+            }
+        }
+    }
+
+    public void visualizarReviews () {
+        // LISTAR LOS NOMBRES DE LOS LEARNING PATHS
+        String[] learningPaths = new String[currentLearningManagementSystem.getLearningPaths().size()];
+        int i = 0;
+        for (LearningPath learningPath : currentLearningManagementSystem.getLearningPaths()){
+            learningPaths[i] = learningPath.getTitulo();
+            i++;
+        }
+        int opcionSeleccionada = mostrarMenu( "Seleccione el LearningPath que desea visualizar", learningPaths );
+
+        // IMPRIMIR LOS DETALLES DEL LEARNING PATH
+        LearningPath learningPathSeleccionado = currentLearningManagementSystem.getLearningPath(learningPaths[opcionSeleccionada]);
+
+        // ------------------------------------------------------------------------------------ //
+        // IMPRIMIR LAS REVIEWS POR ACTIVIDAD - ENCABEZANDO EL TITULO DE LA ACTIVIDAD
+        for (Actividad actividad : learningPathSeleccionado.getsecuenciaActividades()){
+            System.out.println("Actividad: " + actividad.getNombre());
+            System.out.println("Reviews:");
+            for (String review : actividad.getReviews()){
+                System.out.println(review);
+            }
+        }
+
+        System.out.println("Título: " + learningPathSeleccionado.getTitulo());
+        System.out.println("Descripción: " + learningPathSeleccionado.getDescripcion());
+        System.out.println("Nivel de dificultad: " + learningPathSeleccionado.getNivelDificultad());
+        System.out.println("Duración: " + learningPathSeleccionado.getDuracion());
+    }
 
     public void calificarActividadDeEstudiante () {}
 
-    public void visualizarMisLearingPaths () {}
+    public void visualizarMisLearingPaths () {
+        // LISTAR LOS NOMBRES DE LOS LEARNING PATHS
+        String[] learningPaths = new String[currentLearningManagementSystem.getLearningPaths().size()];
+        int i = 0;
+        for (LearningPath learningPath : currentLearningManagementSystem.getLearningPaths()){
+            learningPaths[i] = learningPath.getTitulo();
+            i++;
+        }
+        int opcionSeleccionada = mostrarMenu( "Seleccione el LearningPath que desea visualizar", learningPaths );
+
+        // IMPRIMIR LOS DETALLES DEL LEARNING PATH
+        LearningPath learningPathSeleccionado = currentLearningManagementSystem.getLearningPath(learningPaths[opcionSeleccionada]);
+        System.out.println("Título: " + learningPathSeleccionado.getTitulo());
+        System.out.println("Descripción: " + learningPathSeleccionado.getDescripcion());
+        System.out.println("Nivel de dificultad: " + learningPathSeleccionado.getNivelDificultad());
+        System.out.println("Duración: " + learningPathSeleccionado.getDuracion());
 
 
-    public void modificarLearningPath() {}
+    }
+
+
+    public void eliminarActividadDeLearningPath (LearningPath nuevoLearningPath) {
+        if (nuevoLearningPath.getsecuenciaActividades().size() == 0){
+            System.out.println("No hay actividades para eliminar.");
+            return;
+        }else if (nuevoLearningPath.getsecuenciaActividades().size() == 1){
+            System.out.println("Este learningPath solo tiene una actividad. No se puede eliminar.");
+            return;
+        }
+
+        String[] actividades = new String[nuevoLearningPath.getsecuenciaActividades().size()];
+        for (int i = 0; i < nuevoLearningPath.getsecuenciaActividades().size(); i++){
+            actividades[i] = nuevoLearningPath.getsecuenciaActividades().get(i).getNombre();
+        }
+
+        int opcionSeleccionada = mostrarMenu( "Seleccione la actividad que desea eliminar", actividades );
+        nuevoLearningPath.removeActividad(nuevoLearningPath.getsecuenciaActividades().get(opcionSeleccionada));
+        System.out.println("Actividad eliminada con éxito.");
+        return;
+    }
 
     private int pedirNumeroPreguntas(){
         int numeroPreguntas = pedirEnteroAlUsuario("Digite el número de preguntas de la actividad");
@@ -278,6 +383,7 @@ public class consolaProfesor extends ConsolaBasica {
         while (appExecutionProfesor){
 
             int opcionSeleccionada = mostrarMenu( "MENÚ PRINCIPAL DEL PROFESOR", opcionesMenuProfesor );
+
             if( opcionSeleccionada == 1 ){
                 crearLearningPath ();
             }
@@ -285,7 +391,6 @@ public class consolaProfesor extends ConsolaBasica {
             else if( opcionSeleccionada == 2 ){
                 String nombreLearningPath = pedirCadenaAlUsuario("Digite el nombre del LearningPath al que quiere agregar la actividad");
                 if (!currentLearningManagementSystem.existeLearningPath(nombreLearningPath)){
-                    
                     while (!currentLearningManagementSystem.existeLearningPath(nombreLearningPath)){
                         nombreLearningPath = pedirCadenaAlUsuario("El LearningPath digitado no existe. Digito otro que si se encuentre en la base de datos");
                     }
@@ -298,33 +403,21 @@ public class consolaProfesor extends ConsolaBasica {
                 clonarActividadDeLearningPath();
             }
 
-            else if( opcionSeleccionada == 4 )
-            {
+            else if( opcionSeleccionada == 4 ){
                 modificarLearningPath();
             }
 
-            else if( opcionSeleccionada == 5 )
-            {
+            else if( opcionSeleccionada == 5 ){
                 visualizarResultadosEncuestas();
             }
 
-            else if( opcionSeleccionada == 6 )
-            {
+            else if( opcionSeleccionada == 6 ){
                 calificarActividadDeEstudiante();
             }
 
-            else if( opcionSeleccionada == 7 )
-            {
+            else if( opcionSeleccionada == 7 ){
                 appExecutionProfesor = false;
             }
-            else if( opcionSeleccionada == 8 )
-            {
-                appExecutionProfesor = false;
-            }
-
         }
-
     }
-
-
 }
