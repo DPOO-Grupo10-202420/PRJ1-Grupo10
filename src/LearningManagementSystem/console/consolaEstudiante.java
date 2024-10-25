@@ -28,7 +28,12 @@ public class consolaEstudiante extends ConsolaBasica {
     // Funciones del Profesor.
 
 
-    public void visualizarLearningPathEnCurso (){}
+    public void visualizarLearningPathEnCurso (){
+
+        
+
+
+    }
 
     public void inscribirseALearningPath () {}
 

@@ -6,12 +6,13 @@ import java.util.HashMap;
 public class PreguntaMultiple extends Pregunta {
     private HashMap<String, String> opciones;
     private String respuestaCorrecta;
-    private String respuestaProfesor;
+    private String respuestaEstudiante;
 
     public PreguntaMultiple(String enunciado, String retroalimentacion, boolean isAbierta) {
         super(enunciado, retroalimentacion, false);
         this.opciones = new HashMap<>();
         this.respuestaCorrecta  = ""; 
+        this.respuestaEstudiante = "";
     }
 
 
@@ -26,10 +27,10 @@ public class PreguntaMultiple extends Pregunta {
     
     public void addRespuesta(String clave, String valor) {
         if (opciones.size() < 4) {
-            if (clave.equals("a") || clave.equals("b") || clave.equals("c") || clave.equals("d")) {
+            if (clave.equals("A") || clave.equals("B") || clave.equals("C") || clave.equals("D")) {
                 opciones.put(clave, valor);
             } else {
-                System.out.println("Clave de opción inválida. Debe ser a, b, c o d.");
+                System.out.println("Clave de opción inválida. Debe ser 'A', 'B', 'C' o 'D'.");
             }
         } else {
             System.out.println("No se pueden agregar más de 4 opciones.");
@@ -43,11 +44,17 @@ public class PreguntaMultiple extends Pregunta {
             System.out.println("La clave no existe en las opciones disponibles.");
         }
     }
-
-    public boolean esCorrecta(String respuesta) {
-        return respuesta.equals(respuestaCorrecta);
+    public boolean esCorrecta() {
+        return respuestaEstudiante.equals(respuestaCorrecta);
     }
 
+    public void setRespuestaEstudiante(String clave) {
+        if (opciones.containsKey(clave)) {
+            this.respuestaEstudiante = clave;
+        } else {
+            System.out.println("La clave no existe en las opciones disponibles.");
+        }
+    }
     public void mostrarOpciones() {
         System.out.println("Opciones disponibles:");
         for (String clave : opciones.keySet()) {
