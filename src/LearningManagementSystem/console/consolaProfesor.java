@@ -19,10 +19,10 @@ public class consolaProfesor extends ConsolaBasica {
     // Definicion de los atributos
     public boolean appExecutionProfesor = true;
     public LearningManagementSystem currentLearningManagementSystem;
-    public Usuario currentUser;
+    public Profesor currentUser;
 
     //Opciones
-    private final String[] opcionesMenuProfesor = new String[]{ "Crear LearningPath", "Crear Actividad en un LearningPath", "Clonar Actividad de un LearnignPath existente", "Modificar LearningPath", "Modificar Actividad de un LearningPath", "Visualizar los resultados de las Encuestas", "Calificar Actividad de Estudiante", "Cerrar sesión."};
+    private final String[] opcionesMenuProfesor = new String[]{ "Crear LearningPath", "Agregar Actividad en un LearningPath", "Clonar Actividad de un LearnignPath existente", "Modificar LearningPath", "Modificar Actividad de un LearningPath", "Visualizar los resultados de las Encuestas", "Calificar Actividad de Estudiante", "Cerrar sesión."};
     private final String[] opcionesPostCrearLeaningPath = new String[]{ "Crear Actividad", "Eliminar Actividad", "Volver a menu anterior."};
 
     //==================================================================================================================
@@ -48,7 +48,7 @@ public class consolaProfesor extends ConsolaBasica {
                     crearActividadEnLearningPath(nuevoLearningPath);
                     break;
                 case 2:
-                    eliminarActividadDeLearningPath();
+                    eliminarActividadDeLearningPath(nuevoLearningPath);
                     break;
                 case 3:
                     if (nuevoLearningPath.getsecuenciaActividades().size() == 0){
@@ -111,7 +111,7 @@ public class consolaProfesor extends ConsolaBasica {
                 }
             break;
             case 3:
-                String metodoEnvio = pedirCadenaAlUsuario("Digite el método de envío");
+                //String metodoEnvio = pedirCadenaAlUsuario("Digite el método de envío");
                 try{
                     int numeroPreguntas = pedirEnteroAlUsuario("Digite el número de preguntas del examen");
                     double calificionMinima = (double) pedirEnteroAlUsuario("Digite la calificación mínima del examen");
@@ -134,14 +134,17 @@ public class consolaProfesor extends ConsolaBasica {
         }
     }
 
-    
-
-    public void eliminarActividadDeLearningPath () {}
+    public void eliminarActividadDeLearningPath (LearningPath nuevoLearningPath) {}
 
     public void visualizarResultadosEncuestas () {}
 
     public void calificarActividadDeEstudiante () {}
 
+    public void visualizarMisLearingPaths () {}
+
+    public void clonarActividadDeLearningPath() {}
+
+    public void modificarLearningPath() {}
 
 
     //==================================================================================================================
@@ -150,7 +153,7 @@ public class consolaProfesor extends ConsolaBasica {
 
     public void ejecutarConsolaProfesor(LearningManagementSystem LearningManagementSystem, Usuario usuario){
         this.currentLearningManagementSystem = LearningManagementSystem;
-        this.currentUser = usuario;
+        this.currentUser = (Profesor) usuario;
         appExecutionProfesor = true;
 
         while (appExecutionProfesor){
@@ -164,7 +167,22 @@ public class consolaProfesor extends ConsolaBasica {
 
             else if( opcionSeleccionada == 2 )
             {
-                crearActividadEnLearningPath();
+
+                String nombreLearningPath = pedirCadenaAlUsuario("Digite el nombre del LearningPath al que quiere agregar la actividad");
+
+                if (!currentLearningManagementSystem.existeLearningPath(nombreLearningPath)){
+                    
+                    while (!currentLearningManagementSystem.existeLearningPath(nombreLearningPath)){
+        
+                        nombreLearningPath = pedirCadenaAlUsuario("El LearningPath digitado no existe. Digito otro que si se encuentre en la base de datos");
+            
+                    }
+        
+                }
+        
+                LearningPath nuevoLearningPath = currentLearningManagementSystem.getLearningPath(nombreLearningPath);
+
+                crearActividadEnLearningPath(nuevoLearningPath);
             }
 
             else if( opcionSeleccionada == 3 )

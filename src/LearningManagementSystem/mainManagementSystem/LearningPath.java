@@ -6,7 +6,6 @@ package LearningManagementSystem.mainManagementSystem;
 
 import LearningManagementSystem.mainManagementSystem.activities.*;
 import LearningManagementSystem.mainManagementSystem.activities.activityElements.*;
-import learningPath.actividades.pregunta;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -34,7 +33,7 @@ public class LearningPath  {
     Date fechaCreacion;
     Date fechaModificacion;
     String version;
-    List<Actividad> secuenciaActividades = new ArrayList<Actividad>();
+    ArrayList<Actividad> secuenciaActividades = new ArrayList<Actividad>();
 
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
@@ -78,6 +77,10 @@ public class LearningPath  {
 
     public String getVersion() {
         return this.version;
+    }
+
+    public List<Actividad> getSecuenciaActividades() {
+        return this.secuenciaActividades;
     }
 
 
