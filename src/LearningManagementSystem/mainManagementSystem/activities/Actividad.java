@@ -164,6 +164,10 @@ public abstract class Actividad implements Cloneable {
         reviews.add(review);
     }
 
+    public List<Review> getReviews() {
+        return this.reviews;
+    }
+
     @Override
     public Actividad clone() throws CloneNotSupportedException {
         Actividad clon = (Actividad) super.clone();

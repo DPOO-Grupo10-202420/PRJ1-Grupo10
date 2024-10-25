@@ -3,7 +3,7 @@ package LearningManagementSystem.mainManagementSystem.activities.activityElement
 public class Review {
     private String contenido;
     private int rating;
-
+    private String autor;
 
     public Review(String contenido, int rating) {
         this.contenido = contenido;
@@ -18,6 +18,13 @@ public class Review {
         return rating;
     }
 
+    public String getAutor() {
+        return this.autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
 
     public void setContenido(String contenido) {
         this.contenido = contenido;

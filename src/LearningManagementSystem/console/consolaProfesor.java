@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 
 import LearningManagementSystem.mainManagementSystem.*;
 import LearningManagementSystem.mainManagementSystem.activities.Actividad;
+import LearningManagementSystem.mainManagementSystem.activities.activityElements.Review;
 import LearningManagementSystem.console.*;
 import LearningManagementSystem.console.ConsolaBasica;
 import LearningManagementSystem.mainManagementSystem.users.*;
@@ -22,7 +23,7 @@ public class consolaProfesor extends ConsolaBasica {
     public Profesor currentUser;
 
     //Opciones
-    private final String[] opcionesMenuProfesor = new String[]{ "Crear LearningPath", "Agregar Actividad en un LearningPath", "Clonar Actividad de un LearnignPath existente", "Modificar LearningPath", "Visualizar reseñas", "Crear reseña", "Calificar Actividad de Estudiante", "Cerrar sesión."};
+    private final String[] opcionesMenuProfesor = new String[]{ "Crear LearningPath", "Agregar Actividad en un LearningPath", "Clonar Actividad de un LearnignPath existente", "Modificar LearningPath", "Visualizar reseñas", "Crear reseña", "Calificar Actividad de Estudiante", "Visualisar mis LearningPaths","Cerrar sesión."};
     private final String[] opcionesPostCrearLeaningPath = new String[]{ "Crear Actividad", "Eliminar Actividad", "Volver a menu anterior."};
 
     //==================================================================================================================
@@ -309,8 +310,10 @@ public class consolaProfesor extends ConsolaBasica {
         for (Actividad actividad : learningPathSeleccionado.getsecuenciaActividades()){
             System.out.println("Actividad: " + actividad.getNombre());
             System.out.println("Reviews:");
-            for (String review : actividad.getReviews()){
-                System.out.println(review);
+            for (Review review : actividad.getReviews()){
+                System.out.println("Usuario: " + review.getUsuario());
+                System.out.println("Calificación: " + review.getRating());
+                System.out.println("Comentario: " + review.getContenido());
             }
         }
 
@@ -338,10 +341,7 @@ public class consolaProfesor extends ConsolaBasica {
         System.out.println("Descripción: " + learningPathSeleccionado.getDescripcion());
         System.out.println("Nivel de dificultad: " + learningPathSeleccionado.getNivelDificultad());
         System.out.println("Duración: " + learningPathSeleccionado.getDuracion());
-
-
     }
-
 
     public void eliminarActividadDeLearningPath (LearningPath nuevoLearningPath) {
         if (nuevoLearningPath.getsecuenciaActividades().size() == 0){
