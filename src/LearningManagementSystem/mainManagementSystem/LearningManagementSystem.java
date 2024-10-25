@@ -26,7 +26,8 @@ public class LearningManagementSystem {
 	// Definicion de atributos
 	private HashMap<String, Usuario > usuarios;
 	private HashMap<String, LearningPath > learningPaths;
-	private HashMap<String, HashMap<String, Actividad> > actividadesHechas; 
+	private HashMap<String, HashMap<String, Actividad> > actividadesHechasPorEstudiantes;
+	private HashMap<String, Actividad> actividadesEnElSistema;
 
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
@@ -85,10 +86,10 @@ public class LearningManagementSystem {
 			Profesor Profesor = (Profesor) usuario;
 			//Profesor.terminarActividad();
 			String nombreActividad = tituloActividad.getNombre();
-			HashMap<String, Actividad> usuarios = actividadesHechas.get(nombreActividad);
+			HashMap<String, Actividad> usuarios = actividadesHechasPorEstudiantes.get(nombreActividad);
 			if (usuarios == null) {
 				usuarios = new HashMap<String, Actividad>();
-				actividadesHechas.put(nombreActividad, usuarios);
+				actividadesHechasPorEstudiantes.put(nombreActividad, usuarios);
 			}
 			usuarios.put(username, tituloActividad);
 		}
