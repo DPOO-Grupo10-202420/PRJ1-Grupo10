@@ -9,7 +9,7 @@ package LearningManagementSystem.mainManagementSystem.activities.activityElement
 //Definicion de la clase Pregunta
 //====================================================================================
 
-public abstract class Pregunta {
+public abstract class Pregunta implements Cloneable {
 	
 	//----------------------------------------------------------------------
 	// Definicion de atributos
@@ -42,4 +42,10 @@ public abstract class Pregunta {
     public void cambiarEnunciado(String newEnunciado) {
         this.enunciado = newEnunciado;
     }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
 }

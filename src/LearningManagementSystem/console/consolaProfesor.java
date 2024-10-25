@@ -92,31 +92,38 @@ public class consolaProfesor extends ConsolaBasica {
         boolean obligatoriaActividad = obligatoriaActividadString.equals("si") ? true : false;
 
         switch(opcionSeleccionada){
+            // ================================================================================================ //
+            // RECURSO
             case 1:
                 
                 String tipoRecurso = pedirCadenaAlUsuario("Digite el tipo de recurso");
                 String URLRecurso = pedirCadenaAlUsuario("Digite la URL del recurso");
 
                 try{
-                    nuevoLearningPath.addRecurso(nombreActividad ,  descripcionActividad,  objetivoActividad,  dificultadActividad, tiempoEstimadoActividad, fechaCierreActividad, obligatoriaActividad, creadorActividad, tipoRecurso, URLRecurso);
+                    Actividad recurso = nuevoLearningPath.addRecurso(nombreActividad ,  descripcionActividad,  objetivoActividad,  dificultadActividad, tiempoEstimadoActividad, fechaCierreActividad, obligatoriaActividad, creadorActividad, tipoRecurso, URLRecurso);
+                    currentLearningManagementSystem.addNewActivity(recurso);
                 } catch (Exception e){
                     System.out.println(e.getMessage());
                     return;
                 }
             break;
+            // ================================================================================================ //
+            // TAREA
             case 2:
                 String tipoTarea = pedirCadenaAlUsuario("Digite el tipo de tarea");
                 try{
-                    nuevoLearningPath.addTarea(nombreActividad ,  descripcionActividad,  objetivoActividad,  dificultadActividad, tiempoEstimadoActividad, fechaCierreActividad, obligatoriaActividad, creadorActividad, tipoTarea);
+                    Actividad tarea = nuevoLearningPath.addTarea(nombreActividad ,  descripcionActividad,  objetivoActividad,  dificultadActividad, tiempoEstimadoActividad, fechaCierreActividad, obligatoriaActividad, creadorActividad, tipoTarea);
+                    currentLearningManagementSystem.addNewActivity(tarea);
                 } catch (Exception e){
                     System.out.println(e.getMessage());
                     return;
                 }
-            break;
+            break; 
+            // ================================================================================================ //
+            // EXAMEN
             case 3:
-                //String metodoEnvio = pedirCadenaAlUsuario("Digite el método de envío");
                 try{
-                    int numeroPreguntas = pedirEnteroAlUsuario("Digite el número de preguntas del examen");
+                    int numeroPreguntas = pedirNumeroPreguntas();
                     double calificionMinima = (double) pedirEnteroAlUsuario("Digite la calificación mínima del examen");
 
                     Actividad examen = nuevoLearningPath.addExamen(nombreActividad ,  descripcionActividad,  objetivoActividad,  dificultadActividad, tiempoEstimadoActividad, fechaCierreActividad, obligatoriaActividad, creadorActividad, calificionMinima);
@@ -128,18 +135,22 @@ public class consolaProfesor extends ConsolaBasica {
                         nuevoLearningPath.addPregunta(examen, enunciadoPregunta, retroalimentacion,true);
                         i++;
                     }
+
+                    currentLearningManagementSystem.addNewActivity(examen);
                     
                 } catch (Exception e){
                     System.out.println(e.getMessage());
                     return;
                 }
+            break;
+            // ================================================================================================ //
+            // QUIZ
             case 4:
-                //String metodoEnvio = pedirCadenaAlUsuario("Digite el método de envío");
                 try{
-                    int numeroPreguntas = pedirEnteroAlUsuario("Digite el número de preguntas del quiz");
+                    int numeroPreguntas = pedirNumeroPreguntas();
                     double calificionMinima = (double) pedirEnteroAlUsuario("Digite la calificación mínima del quiz");
 
-                    Actividad quiz = nuevoLearningPath.addQuiz(nombreActividad ,  descripcionActividad,  objetivoActividad,  dificultadActividad, tiempoEstimadoActividad, fechaCierreActividad, obligatoriaActividad, creadorActividad);
+                    Actividad quiz = nuevoLearningPath.addQuiz(nombreActividad ,  descripcionActividad,  objetivoActividad,  dificultadActividad, tiempoEstimadoActividad, fechaCierreActividad, obligatoriaActividad, creadorActividad, calificionMinima);
 
                     int i = 0;
                     while(i < numeroPreguntas){
@@ -148,15 +159,95 @@ public class consolaProfesor extends ConsolaBasica {
                         nuevoLearningPath.addPregunta(quiz, enunciadoPregunta, retroalimentacion,false);
                         i++;
                     }
-                    
+
+                    currentLearningManagementSystem.addNewActivity(quiz);
+
                 } catch (Exception e){
                     System.out.println(e.getMessage());
                     return;
                 }
+            break;
+            // ================================================================================================ //
+            // ENCUESTA
+            case 5:
+                try{
+                    int numeroPreguntas = pedirNumeroPreguntas();
+
+                    Actividad encuesta = nuevoLearningPath.addEncuesta(nombreActividad ,  descripcionActividad,  objetivoActividad,  dificultadActividad, tiempoEstimadoActividad, fechaCierreActividad, obligatoriaActividad, creadorActividad);
+
+                    int i = 0;
+                    while(i < numeroPreguntas){
+                        String enunciadoPregunta = pedirCadenaAlUsuario("Digite la pregunta " + (i+1));
+                        String retroalimentacion = pedirCadenaAlUsuario("Digite la retroalimentación de la pregunta " + (i+1));
+                        nuevoLearningPath.addPregunta(encuesta, enunciadoPregunta, retroalimentacion,false);
+                        i++;
+                    }
+                    currentLearningManagementSystem.addNewActivity(encuesta);
+                } catch (Exception e){
+                    System.out.println(e.getMessage());
+                    return;
+                }
+            break;
+            default:
+                System.out.println("Opción no válida");
+                return;
         }
     }
 
-    public void eliminarActividadDeLearningPath (LearningPath nuevoLearningPath) {}
+    public void eliminarActividadDeLearningPath (LearningPath nuevoLearningPath) {
+        if (nuevoLearningPath.getsecuenciaActividades().size() == 0){
+            System.out.println("No hay actividades para eliminar.");
+            return;
+        }else if (nuevoLearningPath.getsecuenciaActividades().size() == 1){
+            System.out.println("Este learningPath solo tiene una actividad. No se puede eliminar.");
+            return;
+        }
+
+        String[] actividades = new String[nuevoLearningPath.getsecuenciaActividades().size()];
+        for (int i = 0; i < nuevoLearningPath.getsecuenciaActividades().size(); i++){
+            actividades[i] = nuevoLearningPath.getsecuenciaActividades().get(i).getNombre();
+        }
+
+        int opcionSeleccionada = mostrarMenu( "Seleccione la actividad que desea eliminar", actividades );
+        nuevoLearningPath.removeActividad(nuevoLearningPath.getsecuenciaActividades().get(opcionSeleccionada));
+        System.out.println("Actividad eliminada con éxito.");
+        return;
+    }
+
+    public void clonarActividadDeLearningPath() {
+        //------------------------------------------------------//
+        // LISTAMOS LOS LEARNING PATHS PARA QUE ESCOJA DE CUAL CLONAR
+        String[] learningPaths = new String[currentLearningManagementSystem.getLearningPaths().size()];
+        int i = 0;
+        for (LearningPath learningPath : currentLearningManagementSystem.getLearningPaths()){
+            learningPaths[i] = learningPath.getTitulo();
+            i++;
+        }
+        int opcionSeleccionada = mostrarMenu( "Seleccione el LearningPath del cual desea clonar la actividad", learningPaths );
+        LearningPath learningPathSeleccionado = currentLearningManagementSystem.getLearningPath(learningPaths[opcionSeleccionada]);
+
+        //------------------------------------------------------//
+        // LISTAMOS LAS ACTIVIDADES PARA QUE ESCOJA CUAL CLONAR
+        String[] actividades = new String[learningPathSeleccionado.getsecuenciaActividades().size()];
+        i = 0;
+        for (Actividad actividad : learningPathSeleccionado.getsecuenciaActividades()){
+            actividades[i] = actividad.getNombre();
+            i++;
+        }
+        opcionSeleccionada = mostrarMenu("Seleccione la actividad que desea clonar", actividades );
+        Actividad actividadSeleccionada = learningPathSeleccionado.getsecuenciaActividades().get(opcionSeleccionada);
+
+        //------------------------------------------------------//
+        // CLONAMOS LA ACTIVIDAD
+        try{
+            Actividad actividadClonada = actividadSeleccionada.clone();
+            currentLearningManagementSystem.addNewActivity(actividadClonada);
+            System.out.println("Actividad clonada con éxito.");
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return;
+        }
+    }
 
     public void visualizarResultadosEncuestas () {}
 
@@ -164,13 +255,19 @@ public class consolaProfesor extends ConsolaBasica {
 
     public void visualizarMisLearingPaths () {}
 
-    public void clonarActividadDeLearningPath() {}
 
     public void modificarLearningPath() {}
 
+    private int pedirNumeroPreguntas(){
+        int numeroPreguntas = pedirEnteroAlUsuario("Digite el número de preguntas de la actividad");
+        while (numeroPreguntas <= 0){
+            numeroPreguntas = pedirEnteroAlUsuario("El número de preguntas debe ser mayor a 0. Digite el número de preguntas de la actividad");
+        }
+        return numeroPreguntas;
+    }
+
 
     //==================================================================================================================
-
     // Definicion del metodo que ejecuta la consola del Profesor.
 
     public void ejecutarConsolaProfesor(LearningManagementSystem LearningManagementSystem, Usuario usuario){
@@ -181,34 +278,23 @@ public class consolaProfesor extends ConsolaBasica {
         while (appExecutionProfesor){
 
             int opcionSeleccionada = mostrarMenu( "MENÚ PRINCIPAL DEL PROFESOR", opcionesMenuProfesor );
-
-            if( opcionSeleccionada == 1 )
-            {
+            if( opcionSeleccionada == 1 ){
                 crearLearningPath ();
             }
 
-            else if( opcionSeleccionada == 2 )
-            {
-
+            else if( opcionSeleccionada == 2 ){
                 String nombreLearningPath = pedirCadenaAlUsuario("Digite el nombre del LearningPath al que quiere agregar la actividad");
-
                 if (!currentLearningManagementSystem.existeLearningPath(nombreLearningPath)){
                     
                     while (!currentLearningManagementSystem.existeLearningPath(nombreLearningPath)){
-        
                         nombreLearningPath = pedirCadenaAlUsuario("El LearningPath digitado no existe. Digito otro que si se encuentre en la base de datos");
-            
                     }
-        
                 }
-        
                 LearningPath nuevoLearningPath = currentLearningManagementSystem.getLearningPath(nombreLearningPath);
-
                 crearActividadEnLearningPath(nuevoLearningPath);
             }
 
-            else if( opcionSeleccionada == 3 )
-            {
+            else if( opcionSeleccionada == 3 ) {
                 clonarActividadDeLearningPath();
             }
 
@@ -236,7 +322,7 @@ public class consolaProfesor extends ConsolaBasica {
                 appExecutionProfesor = false;
             }
 
-    }
+        }
 
     }
 

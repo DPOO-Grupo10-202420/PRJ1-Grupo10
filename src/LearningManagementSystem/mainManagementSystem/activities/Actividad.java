@@ -4,6 +4,7 @@
 
 package LearningManagementSystem.mainManagementSystem.activities;
 import LearningManagementSystem.mainManagementSystem.users.*;
+import LearningManagementSystem.mainManagementSystem.activities.activityElements.*;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.Map;
 //====================================================================================
 //Definicion de la clase Actividad
 //====================================================================================
-public abstract class Actividad  {
+public abstract class Actividad implements Cloneable {
 	//----------------------------------------------------------------------
 	// Definicion de atributos
     private String nombre; // no puede estar repetido en un learningPath
@@ -122,12 +123,7 @@ public abstract class Actividad  {
         return this.comentarios;
     }
 
-
-
-
-
     // Metodos
-
     public void setResultado(String resultado) {
         this.resultado = resultado;
     }
@@ -165,7 +161,27 @@ public abstract class Actividad  {
         this.estado = "NO EXITOSA";
     }
 
+    @Override
+    public Actividad clone() throws CloneNotSupportedException {
+        Actividad clon = (Actividad) super.clone();
+        for (Actividad actividad : ActividadesPrevias) {
+            clon.addActividadPrevia(actividad);
+        }
+        for (Actividad actividad : ActividadesDeSeguimiento) {
+            clon.addActividadDeSeguimiento(actividad);
+        }
 
+        if(this instanceof Quiz) {
+            // CLONAMOS LAS PREUGNTAS
+            Quiz quiz = (Quiz) this;
+            Quiz clonQuiz = (Quiz) clon;
+            for (Pregunta pregunta : quiz.getPreguntas()) {
+                clonQuiz.agregarPregunta(pregunta.clone());
+            }
+        }
+
+        return clon;
+    }
 
 
 

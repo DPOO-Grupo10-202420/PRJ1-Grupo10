@@ -40,7 +40,6 @@ public class LearningManagementSystem {
     // Definicion de metodos de la clase
 
     // Getters
-
 	public Usuario getUsuario(String nombre){
 		return usuarios.get(nombre);
 	} 
@@ -51,7 +50,11 @@ public class LearningManagementSystem {
 		
 	public LearningPath getLearningPath(String nombre){
 		return learningPaths.get(nombre);
-	} 
+	}
+
+	public Collection<LearningPath> getLearningPaths(){
+		return learningPaths.values();
+	}
 
 	public boolean existeLearningPath(String name){
 		return learningPaths.containsKey(name);
@@ -79,6 +82,10 @@ public class LearningManagementSystem {
     public void deleteUser(String username) {
         usuarios.remove(username);
     }
+
+	public void addNewActivity(Actividad actividad) {
+		actividadesEnElSistema.put(actividad.getNombre(), actividad);
+	}
 
 	public void terminarActividad(String username, Actividad tituloActividad) {
 		Usuario usuario = usuarios.get(username);

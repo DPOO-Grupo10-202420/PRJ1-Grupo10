@@ -9,6 +9,7 @@ import LearningManagementSystem.mainManagementSystem.activities.activityElements
 
 //Estructuras de datos
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
 //====================================================================================
 //Definicion de la clase Examen
@@ -17,7 +18,7 @@ import java.util.Date;
 public class Examen extends Actividad {
     //----------------------------------------------------------------------
 	// Definicion de atributos
-	private ArrayList<PreguntaAbierta> preguntas = new ArrayList<PreguntaAbierta>();
+	private List<Pregunta> preguntas = new ArrayList<Pregunta>();
     private double calificacionMinima;
     private double calificacionObtenida;
 

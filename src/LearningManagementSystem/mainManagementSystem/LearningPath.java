@@ -146,8 +146,22 @@ public class LearningPath  {
         return examen;
     }
 
+    public Actividad addQuiz(String nombreActividad, String descripcionActividad, String objetivoActividad, String dificultadActividad, int tiempoEstimadoActividad, Date fechaCierreActividad, boolean obligatoriaActividad, String creadorActividad, double calificacionMinima) {
+        Quiz quiz = new Quiz(nombreActividad ,descripcionActividad, objetivoActividad, dificultadActividad, tiempoEstimadoActividad, fechaCierreActividad, obligatoriaActividad, creadorActividad, calificacionMinima);
+        // Agregar a secuencia de actividades
+        secuenciaActividades.add(quiz);
+        return quiz;
+    }
+
+    public Actividad addEncuesta(String nombreActividad, String descripcionActividad, String objetivoActividad, String dificultadActividad, int tiempoEstimadoActividad, Date fechaCierreActividad, boolean obligatoriaActividad, String creadorActividad) {
+        Encuesta encuesta = new Encuesta(nombreActividad ,descripcionActividad, objetivoActividad, dificultadActividad, tiempoEstimadoActividad, fechaCierreActividad, obligatoriaActividad, creadorActividad);
+        // Agregar a secuencia de actividades
+        secuenciaActividades.add(encuesta);
+        return encuesta;
+    }
+
     public void addPregunta(Actividad actividad, String enunciado, String retroalimentacion, boolean isAbierta) {
-        // TODO: cambiar implementacion de las preguntas
+        // DEJAR ASI POR SI SE NECESITA ALGUN CAMBIO PARA LA PROXIMA ENTREGA
         if(isAbierta){
             PreguntaAbierta preguntaNueva = new PreguntaAbierta(enunciado, retroalimentacion, isAbierta);
             if (actividad instanceof Examen){
@@ -168,6 +182,20 @@ public class LearningPath  {
             }
         }
     }
+
+
+    public void clonarActividad(Actividad actividad) {
+        try{
+            Actividad actividadClonada = actividad.clone();
+            secuenciaActividades.add(actividadClonada);
+
+
+            
+        }catch(CloneNotSupportedException e){
+            System.out.println("Error al clonar la actividad");
+        }
+    }
+
 
     public void removeActividad(){
 
@@ -197,4 +225,5 @@ public class LearningPath  {
     public List<Actividad> getsecuenciaActividades() {
         return secuenciaActividades;
     }
+
 }

@@ -6,13 +6,6 @@ import java.io.InputStreamReader;
 import java.util.Collection;
 import java.util.Iterator;
 
-
-
-
-
-
-
-
 /**
  * Esta es una clase abstracta que implementa métodos útiles para todas las consolas de la aplicación.
  */
