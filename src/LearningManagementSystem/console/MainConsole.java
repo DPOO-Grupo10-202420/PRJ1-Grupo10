@@ -21,7 +21,7 @@ public class MainConsole extends ConsolaBasica
 
     // Opciones de texto
     private final String[] opcionesMenuPrincipal = new String[]{"INICIAR SESIÓN", "REGISTRARSE", "Salir de la aplicación." };
-    private final String[] opcionesResgistrarNuevoUsuario = new String[]{"PROFESOR", "Profesor", "Volver al menu principal."};
+    private final String[] opcionesResgistrarNuevoUsuario = new String[]{"PROFESOR", "ESTUDIANTE", "Volver al menu principal."};
 
     public boolean appExecution = true;
 
@@ -53,13 +53,27 @@ public class MainConsole extends ConsolaBasica
     public void iniciarSesion() {
 
         String nombreUsuario = pedirCadenaAlUsuario("Digite su nombre de usuario");
-
         // Revisa si existe el usuario. 
         if (currentLearningManagementSystem.existeUsuario(nombreUsuario)){
 
             Usuario usuario = currentLearningManagementSystem.getUsuario(nombreUsuario);
+            String password = pedirCadenaAlUsuario("Digite su contraseña");
+            int intentos = 0;
+            boolean Error = false;
+            while(!usuario.getPassword().equals(password) && intentos <= 3){
+                System.out.println("La contraseña es incorrecta. Intente de nuevo.");
+                password = pedirCadenaAlUsuario("Digite su contraseña");
+                intentos++;
+                if(intentos == 3){
+                    Error = true;
+                }
+            }
+            if(Error){
+                System.out.println("Ha excedido el número de intentos permitidos. Intente de nuevo más tarde.");
+                return;
+            }
+
             currentUser = usuario;
-            
             System.out.println("------------------------------------------------------------");
             System.out.println("Bienvenido/a " + usuario.getUsername() + "! ");
         
@@ -84,13 +98,13 @@ public class MainConsole extends ConsolaBasica
 
     public void registrarNuevoUsuario(){
 
-        int opcionSeleccionada = mostrarMenu( "Inicio de sesión", opcionesResgistrarNuevoUsuario );
+        int opcionSeleccionada = mostrarMenu( "Registro de usuario", opcionesResgistrarNuevoUsuario );
 
         System.out.println("------------------------------------------------------------");
         System.out.println("¿Cómo desea registrarse? ");
         String username = pedirCadenaAlUsuario("Digite el nombre de usuario que desea usar");
 
-        while (!currentLearningManagementSystem.existeUsuario(username)){
+        while (currentLearningManagementSystem.existeUsuario(username)){
 
             System.out.println("El nombre de usuario elegido ya esta en uso. Digite uno distinto.");
             username = pedirCadenaAlUsuario("Digite el nombre de usuario que desea usar");

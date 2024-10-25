@@ -11,16 +11,17 @@ public class PreguntaAbierta extends Pregunta {
 	//----------------------------------------------------------------------
 	// Definicion de atributos
 	private String respuestaProfesor;
+    private String respuestaAlumno;
 
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
     public PreguntaAbierta(String enunciado, String retroalimentacion, boolean isAbierta) {
         super(enunciado, retroalimentacion, true);
+        this.respuestaAlumno = "";
     }
 
 	//----------------------------------------------------------------------
     // Definicion de metodos de la clase
-
     public void agregarRespuesta(String respuesta) {
         this.respuestaProfesor = respuesta;
     }
@@ -30,5 +31,13 @@ public class PreguntaAbierta extends Pregunta {
     }
     public boolean esRespondida() {
         return this.respuestaProfesor == "";
+    }
+
+    public void responder(String respuesta) {
+        this.respuestaAlumno = respuesta;
+    }
+
+    public String getRespuestaAlumno() {
+        return this.respuestaAlumno;
     }
 }

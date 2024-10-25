@@ -11,7 +11,7 @@ import LearningManagementSystem.mainManagementSystem.activities.Actividad;
 import LearningManagementSystem.console.*;
 import LearningManagementSystem.console.ConsolaBasica;
 import LearningManagementSystem.mainManagementSystem.users.*;
-import LearningManagementSystem.persistence.*;
+// import LearningManagementSystem.persistence.*;
 
 public class consolaProfesor extends ConsolaBasica {
 
@@ -41,7 +41,8 @@ public class consolaProfesor extends ConsolaBasica {
         
         LearningPath nuevoLearningPath = new LearningPath(nombreLearningPath, descripcionLearningPath, nivelDificultad);
         System.out.println("LearningPath creado con éxito.");
-        while(nuevoLearningPath.getsecuenciaActividades().size() == 0){
+        boolean continuar = true;
+        while(nuevoLearningPath.getsecuenciaActividades().size() == 0 && continuar){
             int opcionSeleccionada = mostrarMenu( "¿Qué desea hacer ahora?", opcionesPostCrearLeaningPath );
             switch(opcionSeleccionada){
                 case 1:
@@ -53,10 +54,12 @@ public class consolaProfesor extends ConsolaBasica {
                 case 3:
                     if (nuevoLearningPath.getsecuenciaActividades().size() == 0){
                         System.out.println("Debe agregar al menos una actividad al LearningPath.");
+                    }else{
+                        continuar = false;
+                        return;
                     }
             }
         }
-
         return;
     }
 
@@ -130,7 +133,26 @@ public class consolaProfesor extends ConsolaBasica {
                     System.out.println(e.getMessage());
                     return;
                 }
+            case 4:
+                //String metodoEnvio = pedirCadenaAlUsuario("Digite el método de envío");
+                try{
+                    int numeroPreguntas = pedirEnteroAlUsuario("Digite el número de preguntas del quiz");
+                    double calificionMinima = (double) pedirEnteroAlUsuario("Digite la calificación mínima del quiz");
 
+                    Actividad quiz = nuevoLearningPath.addQuiz(nombreActividad ,  descripcionActividad,  objetivoActividad,  dificultadActividad, tiempoEstimadoActividad, fechaCierreActividad, obligatoriaActividad, creadorActividad);
+
+                    int i = 0;
+                    while(i < numeroPreguntas){
+                        String enunciadoPregunta = pedirCadenaAlUsuario("Digite la pregunta " + (i+1));
+                        String retroalimentacion = pedirCadenaAlUsuario("Digite la retroalimentación de la pregunta " + (i+1));
+                        nuevoLearningPath.addPregunta(quiz, enunciadoPregunta, retroalimentacion,false);
+                        i++;
+                    }
+                    
+                } catch (Exception e){
+                    System.out.println(e.getMessage());
+                    return;
+                }
         }
     }
 
@@ -207,10 +229,11 @@ public class consolaProfesor extends ConsolaBasica {
 
             else if( opcionSeleccionada == 7 )
             {
-                
                 appExecutionProfesor = false;
-
-
+            }
+            else if( opcionSeleccionada == 8 )
+            {
+                appExecutionProfesor = false;
             }
 
     }

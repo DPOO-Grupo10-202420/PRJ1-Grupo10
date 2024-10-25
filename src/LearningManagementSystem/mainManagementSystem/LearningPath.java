@@ -127,20 +127,27 @@ public class LearningPath  {
 
     public Actividad addRecurso(String nombre , String descripcion, String objetivo, String nivelDificultad, int tiempoEstimado, Date fechaCierre, boolean obligatoria, String creador, String tipoRecurso, String URLRecurso){
         Recurso recurso = new Recurso(nombre ,descripcion, objetivo, nivelDificultad, tiempoEstimado, fechaCierre, obligatoria, descripcion, tipoRecurso, URLRecurso);
+        // Agregar a secuencia de actividades
+        secuenciaActividades.add(recurso);
         return recurso;
     }
 
     public Actividad addTarea(String nombreActividad, String descripcionActividad, String objetivoActividad, String dificultadActividad, int tiempoEstimadoActividad, Date fechaCierreActividad, boolean obligatoriaActividad, String creadorActividad, String tipoTarea) {
         Tarea tarea = new Tarea(nombreActividad ,descripcionActividad, objetivoActividad, dificultadActividad, tiempoEstimadoActividad, fechaCierreActividad, obligatoriaActividad, creadorActividad, tipoTarea);
+        // Agregar a secuencia de actividades
+        secuenciaActividades.add(tarea);
         return tarea;
     }
 
     public Actividad addExamen(String nombreActividad, String descripcionActividad, String objetivoActividad, String dificultadActividad, int tiempoEstimadoActividad, Date fechaCierreActividad, boolean obligatoriaActividad, String creadorActividad, double calificacionMinima) {
         Examen examen = new Examen(nombreActividad ,descripcionActividad, objetivoActividad, dificultadActividad, tiempoEstimadoActividad, fechaCierreActividad, obligatoriaActividad, creadorActividad, calificacionMinima);
+        // Agregar a secuencia de actividades
+        secuenciaActividades.add(examen);
         return examen;
     }
-    
+
     public void addPregunta(Actividad actividad, String enunciado, String retroalimentacion, boolean isAbierta) {
+        // TODO: cambiar implementacion de las preguntas
         if(isAbierta){
             PreguntaAbierta preguntaNueva = new PreguntaAbierta(enunciado, retroalimentacion, isAbierta);
             if (actividad instanceof Examen){

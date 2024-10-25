@@ -27,7 +27,7 @@ public class LearningManagementSystem {
 	private HashMap<String, Usuario > usuarios;
 	private HashMap<String, LearningPath > learningPaths;
 	private HashMap<String, HashMap<String, Actividad> > actividadesHechasPorEstudiantes;
-	private HashMap<String, Actividad> actividadesEnElSistema;
+	private HashMap<String, Actividad> actividadesEnElSistema; // String = Id actividad
 
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.

@@ -35,8 +35,7 @@ public abstract class Actividad  {
     private List<String> comentarios = new ArrayList<String>();
     // private String feedback; //feedback de la Actividad
 
-    private HashMap<String, Boolean> estudiantesQueCompletaronActividad = new HashMap<String, Boolean>();
-
+    private List<String> estudiantesQueCompletaronActividad = new ArrayList<String>();
 
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
