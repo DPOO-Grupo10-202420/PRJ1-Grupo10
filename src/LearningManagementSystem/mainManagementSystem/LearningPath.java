@@ -193,16 +193,26 @@ public class LearningPath  {
     }
 
 
-    public void removeActividad(){
-
-    }
-
-    public void calcularProgreso(){
-
+    public int calcularProgreso() {
+        int actividadesExitosas = 0;
+    
+        for (Actividad actividad : secuenciaActividades) {
+            String estado = actividad.getEstado();
+            // "EXITOSA" - "COMPLETADA"
+            if (estado.equals("EXITOSA") || estado.equals("COMPLETADA")) {
+                actividadesExitosas += 1;
+            }
+        }
+    
+        int totalActividades = secuenciaActividades.size();
+        int progreso = (totalActividades > 0) ? (actividadesExitosas * 100) / totalActividades : 0;
+    
+        System.out.println("Progreso del estudiante: " + progreso + "%");
+        return progreso;
     }
 
     public void getSiguienteActividad(){
-
+        
     }
 
     public void removeActividad(Actividad actividad) {

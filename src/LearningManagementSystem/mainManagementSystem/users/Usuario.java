@@ -71,8 +71,9 @@ public abstract class Usuario  {
         
     }
 
-    public void addReviewToActivity(Actividad actividad, String review) {
-        actividad.agregarReview(new Review(review)); // agregar review deberia de estar en Actividad
+    public void addReviewToActivity(Actividad actividad, String review, String contenido, int rating) {
+        
+        actividad.addReview(contenido, rating); // agregar review deberia de estar en Actividad
     }
 
 

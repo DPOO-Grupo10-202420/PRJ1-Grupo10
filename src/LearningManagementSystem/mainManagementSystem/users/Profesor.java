@@ -13,6 +13,9 @@ import java.util.Map;
 
 import LearningManagementSystem.mainManagementSystem.LearningPath;
 import LearningManagementSystem.mainManagementSystem.activities.Actividad;
+import LearningManagementSystem.mainManagementSystem.activities.Encuesta;
+import LearningManagementSystem.mainManagementSystem.activities.activityElements.Pregunta;
+import LearningManagementSystem.mainManagementSystem.activities.activityElements.PreguntaAbierta;
 
 // import Usuario;
 
@@ -58,14 +61,17 @@ public class Profesor extends Usuario  {
         System.out.println("El estado de la actividad ha sido cambiado a: " + estado);
     }
 
+    public void addPreguntaEncuesta(Encuesta encuesta, String enunciado, String retroalimentacion){
+        Pregunta pregunta = new PreguntaAbierta(enunciado, retroalimentacion, true);
+        
+        encuesta.agregarPregunta(pregunta);
+    }
+
 
     public void visualizarEncuestas() {
 
     }
 
-    public void addPreguntaEncuesta(){
-
-    }
 
     public void addFeedBack(){
 

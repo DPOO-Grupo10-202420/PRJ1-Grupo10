@@ -29,6 +29,7 @@ public abstract class Actividad implements Cloneable {
 
     private List<Actividad> ActividadesPrevias = new ArrayList<Actividad>();
     private List<Actividad> ActividadesDeSeguimiento = new ArrayList<Actividad>();
+    private List<Review> reviews;
 
     private String resultado;
     private String estado; // EXITOSA - NO EXITOSA - ENVIADA - NO ENVIADA - COMPLETADA
@@ -145,9 +146,6 @@ public abstract class Actividad implements Cloneable {
     }
 
 
-    public void marcarComoCompletada() {
-        this.estado = "COMPLETADA";
-    }
 
     public void marcarComoEnviada() {
         this.estado = "ENVIADA";
@@ -159,6 +157,11 @@ public abstract class Actividad implements Cloneable {
 
     public void marcarComoNoExitosa() {
         this.estado = "NO EXITOSA";
+    }
+
+    public void addReview(String contenido, int rating) {
+        Review review = new Review(contenido, rating);
+        reviews.add(review);
     }
 
     @Override

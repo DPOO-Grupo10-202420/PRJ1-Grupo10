@@ -61,20 +61,11 @@ public class Quiz extends Actividad {
 
     public boolean aprobado() {
         double calificacionEstudiante = calificar();
+        if (calificacionEstudiante >= this.calificacionMinima) {
+            marcarComoExitosa();
+        }
         return calificacionEstudiante >= this.calificacionMinima;
     }
 
-
-
-
-
-
-
-
-
 }
-
-
-
-
 
