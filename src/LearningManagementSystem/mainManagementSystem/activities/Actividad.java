@@ -29,7 +29,7 @@ public abstract class Actividad  {
     private List<Actividad> ActividadesDeSeguimiento = new ArrayList<Actividad>();
 
     private String resultado;
-    private String estado;
+    private String estado; // EXITOSA - NO EXITOSA - ENVIADA - NO ENVIADA - COMPLETADA
     private double rating;
     private List<String> comentarios = new ArrayList<String>();
     // private String feedback; //feedback de la Actividad
@@ -50,6 +50,8 @@ public abstract class Actividad  {
 	//----------------------------------------------------------------------
     // Definicion de metodos de la clase
     
+    //Getters
+
     private Map<String,Object> getInfoActividad () {
         HashMap<String, Object> infoActividad = new HashMap<String, Object>();
         infoActividad.put("descripcion", this.descripcion);
@@ -69,24 +71,66 @@ public abstract class Actividad  {
         return this.nombre;
     }
 
-    public void setResultado(String resultado) {
-        this.resultado = resultado;
+    public String getDescripcion() {
+        return this.descripcion;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public String getObjetivo() {
+        return this.objetivo;
+    }
+
+    public String getDificultad() {
+        return this.dificultad;
+    }
+
+    public int getTiempoEstimado() {
+        return this.tiempoEstimado;
+    }
+
+    public Date getFechaDeCierre() {
+        return this.fechaDeCierre;
+    }
+
+    public boolean getIsObligatoria() {
+        return this.obligatoria;
+    }
+
+    public String getCreador() {
+        return this.creador;
+    }
+
+    public List<Actividad> getActividadesPrevias() {
+        return this.ActividadesDeSeguimiento;
     }
 
     public String getResultado() {
         return this.resultado;
     }
 
+    public String getEstado() {
+        return this.estado;
+    }
+
     public double getRating() {
         return this.rating;
     }
 
-    public int getTiempoEstimado() {
-        return this.tiempoEstimado;
+    public List<String> getComentaros() {
+        return this.comentarios;
+    }
+
+
+
+
+
+    // Metodos
+
+    public void setResultado(String resultado) {
+        this.resultado = resultado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public void setComentario (String comentario) {

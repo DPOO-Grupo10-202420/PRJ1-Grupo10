@@ -28,6 +28,11 @@ public class MainConsole extends ConsolaBasica
     consolaProfesor profCon = new consolaProfesor();
 
 
+    
+    public Usuario getCurrentUser (){
+        return this.currentUser;
+    }
+
     //------------------------------------------------------
     // Llama los modulos de persisitencia de datos.
     public void cargarInformacion(){
@@ -142,10 +147,6 @@ public class MainConsole extends ConsolaBasica
             {
                 registrarNuevoUsuario();
             }
-            //else if( opcionSeleccionada == 3 )
-            //{
-                //ingresarComoAdmin( );
-            //}
             else if( opcionSeleccionada == 3 )
             {
                 System.out.println( "Guardando información en la base de datos ..." );

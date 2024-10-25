@@ -3,6 +3,7 @@
 //====================================================================================
 
 package LearningManagementSystem.mainManagementSystem.users;
+import LearningManagementSystem.mainManagementSystem.*;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class Estudiante extends Usuario  {
 	//----------------------------------------------------------------------
 	// Definicion de atributos
     private LearningPath studentCurrentLearningPath;
+    private HashMap<String, Actividad> studentCompletedActivities;
     private Actividad studentCurrentActivity;
     private HashMap<String, LearningPath> completedLearningPaths;
 
@@ -35,6 +37,8 @@ public class Estudiante extends Usuario  {
 
 	//----------------------------------------------------------------------
     // Definicion de metodos de la clase
+
+
     // Getters
     public void addFeedBack(){
         // TODO implementar donde se que vaya el feedback
@@ -43,6 +47,18 @@ public class Estudiante extends Usuario  {
     public void iniciarLearningPath(LearningPath learningPath){
         this.studentCurrentLearningPath = learningPath;
     }
+
+    public boolean estaEscritoEnUnLearningPath () {
+        return (studentCurrentLearningPath != null);
+    }
+
+    public LearningPath getStudentCurrentLearningPath (){
+        return this.studentCurrentLearningPath;
+    }
+
+
+
+    // Metodos
 
     public void salirseLearningPath(){
         this.studentCurrentLearningPath = null;

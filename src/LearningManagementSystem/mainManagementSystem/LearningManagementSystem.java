@@ -48,8 +48,12 @@ public class LearningManagementSystem {
 		return usuarios.containsKey(nombre);
 	} 
 		
-	public HashMap<String, LearningPath> getLearningPaths(){
-		return this.learningPaths;
+	public LearningPath getLearningPath(String nombre){
+		return learningPaths.get(nombre);
+	} 
+
+	public boolean existeLearningPath(String name){
+		return learningPaths.containsKey(name);
 	} 
 
 	// Metodos

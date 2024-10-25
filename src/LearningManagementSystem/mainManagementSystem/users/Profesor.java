@@ -41,7 +41,7 @@ public class Profesor extends Usuario  {
     // Getters
 
 
-    public void crearActividad(){
+    public void crearActividadEnLearningPath(){
 
     }
 
