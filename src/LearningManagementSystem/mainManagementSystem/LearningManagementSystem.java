@@ -21,13 +21,12 @@ import java.util.Collection;
 //====================================================================================
 
 public class LearningManagementSystem {
-	
 	//----------------------------------------------------------------------
 	// Definicion de atributos
 	private HashMap<String, Usuario > usuarios;
 	private HashMap<String, LearningPath > learningPaths;
 	private HashMap<String, HashMap<String, Actividad> > actividadesHechasPorEstudiantes;
-	private HashMap<String, Actividad> actividadesEnElSistema; // String = Id actividad
+	private HashMap<String, Actividad> actividadesEnElSistema; // String = Id actividad;
 
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
@@ -61,17 +60,15 @@ public class LearningManagementSystem {
 	} 
 
 	// Metodos
-    public void addNewLearningPath(String titulo, String descripcion, String nivelDificultad) throws Exception {
+    public LearningPath addNewLearningPath(String titulo, String descripcion, String nivelDificultad, String creador) throws Exception {
 		if (learningPaths.containsKey(titulo)) {
 			throw new Exception("Ya existe un learning path con ese titulo");
 		}
 
-		LearningPath path = new LearningPath(titulo, descripcion, nivelDificultad);
+		LearningPath path = new LearningPath(titulo, descripcion, nivelDificultad, creador);
 		path.setFechaCreacion(new Date());
-
-		
-
 		learningPaths.put(titulo, path);
+		return path;
     }
 
     public void addNewUser(Usuario usuario) {
@@ -96,6 +93,23 @@ public class LearningManagementSystem {
 
 	public boolean existeActividad(String nombre) {
 		return actividadesEnElSistema.containsKey(nombre);
+	}
+
+	public Actividad getActividad(String nombre) {
+		return actividadesEnElSistema.get(nombre);
+	}
+
+	public HashMap<String, Actividad> getActividadesHechasPorEstudiantes(String nombreActividad) {
+		return actividadesHechasPorEstudiantes.get(nombreActividad);
+	}
+
+	public Collection<Actividad> getActividadesEnElSistema() {
+		return actividadesEnElSistema.values();
+	}
+	
+
+	public Actividad getActividadPorNombre(String nombre) {
+		return actividadesEnElSistema.get(nombre);
 	}
 
 	public void terminarActividad(String username, Actividad tituloActividad) {

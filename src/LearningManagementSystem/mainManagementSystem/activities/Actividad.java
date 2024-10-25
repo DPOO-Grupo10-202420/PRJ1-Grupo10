@@ -3,7 +3,6 @@
 //====================================================================================
 
 package LearningManagementSystem.mainManagementSystem.activities;
-import LearningManagementSystem.mainManagementSystem.users.*;
 import LearningManagementSystem.mainManagementSystem.activities.activityElements.*;
 
 import java.util.List;
@@ -57,7 +56,7 @@ public abstract class Actividad implements Cloneable {
     
     //Getters
 
-    private Map<String,Object> getInfoActividad () {
+    public Map<String,Object> getInfoActividad () {
         HashMap<String, Object> infoActividad = new HashMap<String, Object>();
         infoActividad.put("descripcion", this.descripcion);
         infoActividad.put("objetivo", this.objetivo);

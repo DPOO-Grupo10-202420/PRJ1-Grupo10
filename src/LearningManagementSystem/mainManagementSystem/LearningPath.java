@@ -10,8 +10,6 @@ import LearningManagementSystem.mainManagementSystem.activities.activityElements
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 // import Usuario;
 
@@ -33,14 +31,16 @@ public class LearningPath  {
     Date fechaCreacion;
     Date fechaModificacion;
     String version;
+    String creador;
     ArrayList<Actividad> secuenciaActividades = new ArrayList<Actividad>();
 
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
-    public LearningPath (String titulo, String descripcion, String nivelDificultad) {
+    public LearningPath (String titulo, String descripcion, String nivelDificultad, String creador) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.nivelDificultad = nivelDificultad;
+        this.creador = creador;
     }
 
 	//----------------------------------------------------------------------
@@ -79,13 +79,15 @@ public class LearningPath  {
         return this.version;
     }
 
+    public String getCreador() {
+        return this.creador;
+    }
+
     public List<Actividad> getSecuenciaActividades() {
         return this.secuenciaActividades;
     }
 
-
     // Setters
-
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
@@ -118,6 +120,9 @@ public class LearningPath  {
         this.version = version;
     }
 
+    public void setCreador(String creador) {
+        this.creador = creador;
+    }
 
     // Metodos
     public void addActividad(Actividad actividad) {
@@ -192,10 +197,8 @@ public class LearningPath  {
         }
     }
 
-
     public int calcularProgreso() {
         int actividadesExitosas = 0;
-    
         for (Actividad actividad : secuenciaActividades) {
             String estado = actividad.getEstado();
             // "EXITOSA" - "COMPLETADA"
@@ -203,10 +206,9 @@ public class LearningPath  {
                 actividadesExitosas += 1;
             }
         }
-    
+
         int totalActividades = secuenciaActividades.size();
         int progreso = (totalActividades > 0) ? (actividadesExitosas * 100) / totalActividades : 0;
-    
         System.out.println("Progreso del estudiante: " + progreso + "%");
         return progreso;
     }

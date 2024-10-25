@@ -4,12 +4,11 @@
 //====================================================================================
 
 package LearningManagementSystem.mainManagementSystem.users;
-
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+// import java.util.List;
+// import java.util.ArrayList;
+// import java.util.Date;
+// import java.util.HashMap;
+// import java.util.Map;
 
 import LearningManagementSystem.mainManagementSystem.LearningPath;
 import LearningManagementSystem.mainManagementSystem.activities.Actividad;
@@ -77,8 +76,8 @@ public class Profesor extends Usuario  {
 
     }
 
-    public LearningPath crearLearningPath(String titulo, String descripcion, String duracion) {
-        return new LearningPath(titulo, descripcion, duracion);
+    public LearningPath crearLearningPath(String titulo, String descripcion, String duracion, String creador) {
+        return new LearningPath(titulo, descripcion, duracion, creador);
     }
 
     // Clonacion -- Falta 

@@ -2,17 +2,17 @@
 // Importacion de modulos
 //====================================================================================
 package LearningManagementSystem.console;
-import java.io.IOException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
 import LearningManagementSystem.mainManagementSystem.*;
-import LearningManagementSystem.mainManagementSystem.activities.Actividad;
+import LearningManagementSystem.mainManagementSystem.activities.*;
 import LearningManagementSystem.mainManagementSystem.activities.activityElements.Review;
-import LearningManagementSystem.console.*;
-import LearningManagementSystem.console.ConsolaBasica;
+// import LearningManagementSystem.console.*;
+// import LearningManagementSystem.console.ConsolaBasica;
 import LearningManagementSystem.mainManagementSystem.users.*;
 // import LearningManagementSystem.persistence.*;
+// import learningPath.actividades.actividad;
 
 public class consolaProfesor extends ConsolaBasica {
 
@@ -36,14 +36,14 @@ public class consolaProfesor extends ConsolaBasica {
         String nombreLearningPath = pedirCadenaAlUsuario("Digite el nombre del LearningPath");
         String descripcionLearningPath = pedirCadenaAlUsuario("Digite la descripción del LearningPath");
         String nivelDificultad = pedirCadenaAlUsuario("Digite el nivel de dificultad del LearningPath (BASICO, INTERMEDIO, AVANZADO)");
+        LearningPath nuevoLearningPath;
         try{
-            currentLearningManagementSystem.addNewLearningPath(nombreLearningPath, descripcionLearningPath, nivelDificultad);
+            nuevoLearningPath = currentLearningManagementSystem.addNewLearningPath(nombreLearningPath, descripcionLearningPath, nivelDificultad, currentUser.getUsername());
         } catch (Exception e){
             System.out.println(e.getMessage());
             return;
         }
 
-        LearningPath nuevoLearningPath = new LearningPath(nombreLearningPath, descripcionLearningPath, nivelDificultad);
         System.out.println("LearningPath creado con éxito.");
         boolean continuar = true;
         while(nuevoLearningPath.getsecuenciaActividades().size() == 0 && continuar){
@@ -292,13 +292,17 @@ public class consolaProfesor extends ConsolaBasica {
         }
     }
 
+    //------------------------------------------------------------------------------------------------------------//
+    // OPCION 5 - VISUALIZAR RESEÑAS
     public void visualizarReviews () {
-        // LISTAR LOS NOMBRES DE LOS LEARNING PATHS
+        // LISTAR LOS NOMBRES DE LOS LEARNING PATHS QUE SON DEL CREADOR ACTUAL
         String[] learningPaths = new String[currentLearningManagementSystem.getLearningPaths().size()];
         int i = 0;
         for (LearningPath learningPath : currentLearningManagementSystem.getLearningPaths()){
-            learningPaths[i] = learningPath.getTitulo();
-            i++;
+            if (learningPath.getCreador().equals(currentUser.getUsername())){
+                learningPaths[i] = learningPath.getTitulo();
+                i++;
+            }
         }
         int opcionSeleccionada = mostrarMenu( "Seleccione el LearningPath que desea visualizar", learningPaths );
 
@@ -311,7 +315,7 @@ public class consolaProfesor extends ConsolaBasica {
             System.out.println("Actividad: " + actividad.getNombre());
             System.out.println("Reviews:");
             for (Review review : actividad.getReviews()){
-                System.out.println("Usuario: " + review.getUsuario());
+                System.out.println("Usuario: " + review.getAutor());
                 System.out.println("Calificación: " + review.getRating());
                 System.out.println("Comentario: " + review.getContenido());
             }
@@ -323,8 +327,70 @@ public class consolaProfesor extends ConsolaBasica {
         System.out.println("Duración: " + learningPathSeleccionado.getDuracion());
     }
 
-    public void calificarActividadDeEstudiante () {}
+    //------------------------------------------------------------------------------------------------------------//
+    // OPCION 6 - CREAR RESEÑA
+    public void crearReview() {
+        // PINTA TODAS LAS ACTIVIDADES QUE NO SEAN DE CREADAS POR EL USUARIO ACTUAL
+        String[] actividades = new String[currentLearningManagementSystem.getActividadesEnElSistema().size()];
+        int i = 0;
+        for (Actividad actividad : currentLearningManagementSystem.getActividadesEnElSistema()){
+            if (!actividad.getCreador().equals(currentUser.getUsername())){
+                actividades[i] = actividad.getNombre();
+                i++;
+            }
+        }
 
+        int opcionSeleccionada = mostrarMenu( "Seleccione la actividad a la que desea hacer una reseña", actividades );
+        Actividad actividadSeleccionada = currentLearningManagementSystem.getActividad(actividades[opcionSeleccionada]);
+
+        int rating = pedirEnteroAlUsuario("Digite la calificación de la actividad (1-5)");
+        while (rating < 1 || rating > 5){
+            rating = pedirEnteroAlUsuario("La calificación debe ser un número entre 1 y 5. Digite la calificación de la actividad (1-5)");
+        }
+        String comentario = pedirCadenaAlUsuario("Digite el comentario de la actividad");
+        actividadSeleccionada.addReview(comentario, rating);
+        System.out.println("Reseña creada con éxito.");
+    }
+
+    //------------------------------------------------------------------------------------------------------------//
+    // OPCION 7 - CALIFICAR ACTIVIDAD DE ESTUDIANTE
+    public void calificarActividadDeEstudiante () {
+        // LISTO TOODAS LAS ACTIVIDADES QUE CREADAS POR EL USUARIO ACTUAL Y QUE SEAN QUIZ TAREA o EXAMEN
+
+        String[] actividades = new String[currentLearningManagementSystem.getActividadesEnElSistema().size()];
+        int i = 0;
+        for (Actividad actividad : currentLearningManagementSystem.getActividadesEnElSistema()){
+            if (actividad.getCreador().equals(currentUser.getUsername()) && (actividad instanceof Quiz || actividad instanceof Tarea || actividad instanceof Examen)){
+                actividades[i] = actividad.getNombre();
+                i++;
+            }
+        }
+
+        int opcionSeleccionada = mostrarMenu( "Seleccione la actividad que desea calificar", actividades );
+        Actividad actividadSeleccionada = currentLearningManagementSystem.getActividad(actividades[opcionSeleccionada]);
+        // DEL LEARNINGMANAGEMENTSYSTEM, SELECCIONO DEL MAPA DE ACTIVIDADES, EL MAPA DE ESTUDIANTES
+        // Y DE ESE MAPA, SELECCIONO EL ESTUDIANTE QUE QUIERO CALIFICAR
+        String[] estudiantes = new String[currentLearningManagementSystem.getActividadesHechasPorEstudiantes(actividadSeleccionada.getNombre()).size()];
+        i = 0;
+        for (String estudianteNombre : currentLearningManagementSystem.getActividadesHechasPorEstudiantes(actividadSeleccionada.getNombre()).keySet()){
+            estudiantes[i] = estudianteNombre;
+            i++;
+        }
+        int estudianteSeleccionado = mostrarMenu( "Seleccione el estudiante que desea calificar", estudiantes );
+        String estudianteNombre = estudiantes[estudianteSeleccionado];
+        Actividad actividadDelEstudiante = currentLearningManagementSystem.getActividadesHechasPorEstudiantes(actividadSeleccionada.getNombre()).get(estudianteNombre);
+        if(actividadDelEstudiante.getResultado() != ""){
+            System.out.println("El estudiante ya ha sido calificado.");
+            return;
+        }
+
+        String calficacionActividad = pedirCadenaAlUsuario("Digite la calificación de la actividad");
+        actividadDelEstudiante.setResultado(calficacionActividad);
+        System.out.println("Actividad calificada con éxito.");
+
+    }
+    //------------------------------------------------------------------------------------------------------------//
+    // OPCION 8 - VISUALIZAR MIS LEARNING PATHS
     public void visualizarMisLearingPaths () {
         // LISTAR LOS NOMBRES DE LOS LEARNING PATHS
         String[] learningPaths = new String[currentLearningManagementSystem.getLearningPaths().size()];
@@ -343,6 +409,8 @@ public class consolaProfesor extends ConsolaBasica {
         System.out.println("Duración: " + learningPathSeleccionado.getDuracion());
     }
 
+    //------------------------------------------------------------------------------------------------------------//
+    // FUNCIONES AUXILIARES
     public void eliminarActividadDeLearningPath (LearningPath nuevoLearningPath) {
         if (nuevoLearningPath.getsecuenciaActividades().size() == 0){
             System.out.println("No hay actividades para eliminar.");
@@ -408,14 +476,22 @@ public class consolaProfesor extends ConsolaBasica {
             }
 
             else if( opcionSeleccionada == 5 ){
-                visualizarResultadosEncuestas();
+                visualizarReviews();
             }
 
             else if( opcionSeleccionada == 6 ){
-                calificarActividadDeEstudiante();
+                crearReview();
             }
 
             else if( opcionSeleccionada == 7 ){
+                calificarActividadDeEstudiante();
+            }
+
+            else if( opcionSeleccionada == 8 ){
+                visualizarMisLearingPaths();
+            }
+
+            else if( opcionSeleccionada == 9 ){
                 appExecutionProfesor = false;
             }
         }
