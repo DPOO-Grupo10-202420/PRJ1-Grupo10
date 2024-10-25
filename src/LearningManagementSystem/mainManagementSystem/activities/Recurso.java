@@ -38,7 +38,7 @@ public class Recurso extends Actividad {
     }
 
     public void completarRecurso() {
-        marcarComoCompletada();
+        marcarComoExitosa();
     }
 
 

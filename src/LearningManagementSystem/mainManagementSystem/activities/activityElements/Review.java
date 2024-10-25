@@ -4,6 +4,7 @@ public class Review {
     private String contenido;
     private int rating;
 
+
     public Review(String contenido, int rating) {
         this.contenido = contenido;
         this.rating = rating;
