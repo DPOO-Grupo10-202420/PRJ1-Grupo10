@@ -36,5 +36,13 @@ public class Recurso extends Actividad {
         return this.URLRecurso;
 
     }
+
+    public void completarRecurso() {
+        marcarComoCompletada();
+    }
+
+
+
+
 }
 

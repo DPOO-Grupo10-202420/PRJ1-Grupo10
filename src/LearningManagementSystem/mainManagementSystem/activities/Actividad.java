@@ -3,6 +3,7 @@
 //====================================================================================
 
 package LearningManagementSystem.mainManagementSystem.activities;
+import LearningManagementSystem.mainManagementSystem.users.*;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -33,6 +34,9 @@ public abstract class Actividad  {
     private double rating;
     private List<String> comentarios = new ArrayList<String>();
     // private String feedback; //feedback de la Actividad
+
+    private HashMap<String, Boolean> estudiantesQueCompletaronActividad = new HashMap<String, Boolean>();
+
 
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
@@ -144,5 +148,26 @@ public abstract class Actividad  {
     public void addActividadDeSeguimiento(Actividad Actividad) {
         this.ActividadesDeSeguimiento.add(Actividad);
     }
+
+
+    public void marcarComoCompletada() {
+        this.estado = "COMPLETADA";
+    }
+
+    public void marcarComoEnviada() {
+        this.estado = "ENVIADA";
+    }
+
+    public void marcarComoExitosa() {
+        this.estado = "EXITOSA";
+    }
+
+    public void marcarComoNoExitosa() {
+        this.estado = "NO EXITOSA";
+    }
+
+
+
+
 
 }
