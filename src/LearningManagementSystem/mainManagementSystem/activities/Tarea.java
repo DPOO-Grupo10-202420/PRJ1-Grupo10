@@ -39,5 +39,12 @@ public class Tarea extends Actividad {
     //Setters
     //Metodos
     // public void enviarExamen(){}
+
+
+    public void completarTarea() {
+        marcarComoEnviada();
+    }
+
+
 }
 

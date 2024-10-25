@@ -10,7 +10,7 @@ import LearningManagementSystem.console.ConsolaBasica;
 import java.io.IOException;
 import LearningManagementSystem.mainManagementSystem.users.*;
 import LearningManagementSystem.persistence.*;
-import LearningManagementSystem.mainManagementSystem.activities.*;;
+import LearningManagementSystem.mainManagementSystem.activities.*;
 
 
 import java.util.List;
@@ -100,14 +100,14 @@ public class consolaEstudiante extends ConsolaBasica {
 
         if (!currentUser.estaEscritoEnUnLearningPath()){
 
-            System.out.println("Debes estar inscrito en un LearningPath para poder desarrollar sus Actividades.");
+            System.out.println("Debe estar inscrito en un LearningPath para poder desarrollar sus Actividades.");
 
         }
         else {
 
             String nombreActividad = pedirCadenaAlUsuario("Digite el nombre de la actividad que desea desarrollar");
 
-            
+
 
 
         }

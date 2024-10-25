@@ -73,8 +73,8 @@ public class Profesor extends Usuario  {
 
 
     
-    public LearningPath crearLearningPath(String titulo, String descripcion) {
-        return new LearningPath(titulo, descripcion);
+    public LearningPath crearLearningPath(String titulo, String descripcion, String duracion) {
+        return new LearningPath(titulo, descripcion, duracion);
     }
     
     // Clonacion -- Falta 
