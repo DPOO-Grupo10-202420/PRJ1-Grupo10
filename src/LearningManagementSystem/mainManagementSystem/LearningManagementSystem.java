@@ -62,12 +62,15 @@ public class LearningManagementSystem {
 
 	// Metodos
     public void addNewLearningPath(String titulo, String descripcion, String nivelDificultad) throws Exception {
-		
 		if (learningPaths.containsKey(titulo)) {
 			throw new Exception("Ya existe un learning path con ese titulo");
 		}
 
 		LearningPath path = new LearningPath(titulo, descripcion, nivelDificultad);
+		path.setFechaCreacion(new Date());
+
+		
+
 		learningPaths.put(titulo, path);
     }
 
@@ -85,6 +88,14 @@ public class LearningManagementSystem {
 
 	public void addNewActivity(Actividad actividad) {
 		actividadesEnElSistema.put(actividad.getNombre(), actividad);
+	}
+
+	public void deleteActivity(String nombre) {
+		actividadesEnElSistema.remove(nombre);
+	}
+
+	public boolean existeActividad(String nombre) {
+		return actividadesEnElSistema.containsKey(nombre);
 	}
 
 	public void terminarActividad(String username, Actividad tituloActividad) {
