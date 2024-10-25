@@ -176,9 +176,27 @@ public abstract class Actividad implements Cloneable {
             Quiz quiz = (Quiz) this;
             Quiz clonQuiz = (Quiz) clon;
             for (Pregunta pregunta : quiz.getPreguntas()) {
-                clonQuiz.agregarPregunta(pregunta.clone());
+                Pregunta clonPregunta = (Pregunta) pregunta.clone();
+                clonQuiz.agregarPregunta(clonPregunta);
+            }
+        }else if(this instanceof Examen) {
+            // CLONAMOS LAS PREUGNTAS
+            Examen examen = (Examen) this;
+            Examen clonExamen = (Examen) clon;
+            for (Pregunta pregunta : examen.getPreguntas()) {
+                PreguntaAbierta clonPregunta = (Pregunta) pregunta.clone();
+                clonExamen.agregarPregunta(clonPregunta);
+            }
+        }else if(this instanceof Encuesta) {
+            // CLONAMOS LAS PREUGNTAS
+            Encuesta encuesta = (Encuesta) this;
+            Encuesta clonEncuesta = (Encuesta) clon;
+            for (Pregunta pregunta : encuesta.getPreguntas()) {
+                Pregunta clonPregunta = (Pregunta) pregunta.clone();
+                clonEncuesta.agregarPregunta(clonPregunta);
             }
         }
+
 
         return clon;
     }

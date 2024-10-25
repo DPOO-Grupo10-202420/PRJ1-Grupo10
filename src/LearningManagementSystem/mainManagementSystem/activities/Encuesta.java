@@ -30,6 +30,10 @@ public class Encuesta extends Actividad {
         }
     }
 
+    public List<Pregunta> getPreguntas() {
+        return this.preguntas;
+    }
+
     //Metodos
     public void agregarPregunta(Pregunta pregunta) {
         this.preguntas.add(pregunta);

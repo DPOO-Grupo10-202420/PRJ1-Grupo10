@@ -37,6 +37,10 @@ public class Examen extends Actividad {
     public double getCalificacionObtenida (){
         return this.calificacionObtenida;
     }
+
+    public List<Pregunta> getPreguntas() {
+        return this.preguntas;
+    }
     
 
     //Setters
