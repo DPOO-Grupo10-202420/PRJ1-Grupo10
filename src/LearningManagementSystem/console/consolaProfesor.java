@@ -216,7 +216,7 @@ public class consolaProfesor extends ConsolaBasica {
             i++;
         }
         int opcionSeleccionada = mostrarMenu( "Seleccione la actividad a la que desea agregarle una actividad previa", actividades );
-        Actividad actividadSeleccionada = currentLearningManagementSystem.getActividad(actividades[opcionSeleccionada]);
+        Actividad actividadSeleccionada = currentLearningManagementSystem.getActividad(actividades[opcionSeleccionada-1]);
 
         // LISTAMOS LAS ACTIVIDADES PARA QUE ESCOJA CUAL SERA LA ACTIVIDAD PREVIA
         String[] actividadesPrevias = new String[currentLearningManagementSystem.getActividadesEnElSistema().size()];
@@ -226,7 +226,7 @@ public class consolaProfesor extends ConsolaBasica {
             i++;
         }
         opcionSeleccionada = mostrarMenu( "Seleccione la actividad previa que desea agregar", actividadesPrevias );
-        Actividad actividadPrevia = currentLearningManagementSystem.getActividad(actividadesPrevias[opcionSeleccionada]);
+        Actividad actividadPrevia = currentLearningManagementSystem.getActividad(actividadesPrevias[opcionSeleccionada-1]);
 
         try{
             actividadSeleccionada.addActividadPrevia(actividadPrevia);
@@ -254,7 +254,7 @@ public class consolaProfesor extends ConsolaBasica {
             i++;
         }
         int opcionSeleccionada = mostrarMenu( "Seleccione el LearningPath del cual desea clonar la actividad", learningPaths );
-        LearningPath learningPathSeleccionado = currentLearningManagementSystem.getLearningPath(learningPaths[opcionSeleccionada]);
+        LearningPath learningPathSeleccionado = currentLearningManagementSystem.getLearningPath(learningPaths[opcionSeleccionada-1]);
 
         //------------------------------------------------------//
         // LISTAMOS LAS ACTIVIDADES PARA QUE ESCOJA CUAL CLONAR
@@ -265,7 +265,7 @@ public class consolaProfesor extends ConsolaBasica {
             i++;
         }
         opcionSeleccionada = mostrarMenu("Seleccione la actividad que desea clonar", actividades );
-        Actividad actividadSeleccionada = learningPathSeleccionado.getsecuenciaActividades().get(opcionSeleccionada);
+        Actividad actividadSeleccionada = learningPathSeleccionado.getsecuenciaActividades().get(opcionSeleccionada-1);
 
         //------------------------------------------------------//
         // CLONAMOS LA ACTIVIDAD
@@ -299,7 +299,7 @@ public class consolaProfesor extends ConsolaBasica {
         }
 
         int opcionSeleccionada = mostrarMenu( "Seleccione el LearningPath que desea modificar", learningPaths );
-        LearningPath learningPathSeleccionado = currentLearningManagementSystem.getLearningPath(learningPaths[opcionSeleccionada]);
+        LearningPath learningPathSeleccionado = currentLearningManagementSystem.getLearningPath(learningPaths[opcionSeleccionada-1]);
 
         String[] opcionesModificarLearningPath = new String[]{ "Cambiar título", "Cambiar descripción", "Cambiar nivel de dificultad", "Agregar actividad", "Eliminar actividad", "Volver al menú anterior"};
         boolean continuar = true;
@@ -309,6 +309,16 @@ public class consolaProfesor extends ConsolaBasica {
                 case 1:
                     String nuevoTitulo = pedirCadenaAlUsuario("Digite el nuevo título del LearningPath");
                     learningPathSeleccionado.setTitulo(nuevoTitulo);
+                    //------------------------------------------------------//
+                    // LO AGREGAMOS DE NUEVO AL MAPA DE LEARNING PATHS
+                    currentLearningManagementSystem.deleteLearningPath(learningPathSeleccionado.getTitulo());
+                    try{
+                        currentLearningManagementSystem.addNewLearningPath(nuevoTitulo, learningPathSeleccionado.getDescripcion(), learningPathSeleccionado.getNivelDificultad(), learningPathSeleccionado.getCreador());
+                    } catch (Exception e){
+                        System.out.println(e.getMessage());
+                        return;
+                    }
+
                     System.out.println("Título modificado con éxito.");
                 break;
                 case 2:
@@ -349,7 +359,7 @@ public class consolaProfesor extends ConsolaBasica {
         int opcionSeleccionada = mostrarMenu( "Seleccione el LearningPath que desea visualizar", learningPaths );
 
         // IMPRIMIR LOS DETALLES DEL LEARNING PATH
-        LearningPath learningPathSeleccionado = currentLearningManagementSystem.getLearningPath(learningPaths[opcionSeleccionada]);
+        LearningPath learningPathSeleccionado = currentLearningManagementSystem.getLearningPath(learningPaths[opcionSeleccionada-1]);
 
         // ------------------------------------------------------------------------------------ //
         // IMPRIMIR LAS REVIEWS POR ACTIVIDAD - ENCABEZANDO EL TITULO DE LA ACTIVIDAD
@@ -383,7 +393,7 @@ public class consolaProfesor extends ConsolaBasica {
         }
 
         int opcionSeleccionada = mostrarMenu( "Seleccione la actividad a la que desea hacer una reseña", actividades );
-        Actividad actividadSeleccionada = currentLearningManagementSystem.getActividad(actividades[opcionSeleccionada]);
+        Actividad actividadSeleccionada = currentLearningManagementSystem.getActividad(actividades[opcionSeleccionada-1]);
 
         int rating = pedirEnteroAlUsuario("Digite la calificación de la actividad (1-5)");
         while (rating < 1 || rating > 5){
@@ -408,7 +418,7 @@ public class consolaProfesor extends ConsolaBasica {
         }
 
         int opcionSeleccionada = mostrarMenu( "Seleccione la actividad que desea calificar", actividades );
-        Actividad actividadSeleccionada = currentLearningManagementSystem.getActividad(actividades[opcionSeleccionada]);
+        Actividad actividadSeleccionada = currentLearningManagementSystem.getActividad(actividades[opcionSeleccionada-1]);
         // DEL LEARNINGMANAGEMENTSYSTEM, SELECCIONO DEL MAPA DE ACTIVIDADES, EL MAPA DE ESTUDIANTES
         // Y DE ESE MAPA, SELECCIONO EL ESTUDIANTE QUE QUIERO CALIFICAR
         String[] estudiantes = new String[currentLearningManagementSystem.getActividadesHechasPorEstudiantes(actividadSeleccionada.getNombre()).size()];
@@ -443,7 +453,7 @@ public class consolaProfesor extends ConsolaBasica {
         int opcionSeleccionada = mostrarMenu( "Seleccione el LearningPath que desea visualizar", learningPaths );
 
         // IMPRIMIR LOS DETALLES DEL LEARNING PATH
-        LearningPath learningPathSeleccionado = currentLearningManagementSystem.getLearningPath(learningPaths[opcionSeleccionada]);
+        LearningPath learningPathSeleccionado = currentLearningManagementSystem.getLearningPath(learningPaths[opcionSeleccionada-1]);
         System.out.println("Título: " + learningPathSeleccionado.getTitulo());
         System.out.println("Descripción: " + learningPathSeleccionado.getDescripcion());
         System.out.println("Nivel de dificultad: " + learningPathSeleccionado.getNivelDificultad());
@@ -467,7 +477,7 @@ public class consolaProfesor extends ConsolaBasica {
         }
 
         int opcionSeleccionada = mostrarMenu( "Seleccione la actividad que desea eliminar", actividades );
-        nuevoLearningPath.removeActividad(nuevoLearningPath.getsecuenciaActividades().get(opcionSeleccionada));
+        nuevoLearningPath.removeActividad(nuevoLearningPath.getsecuenciaActividades().get(opcionSeleccionada-1));
         System.out.println("Actividad eliminada con éxito.");
         return;
     }

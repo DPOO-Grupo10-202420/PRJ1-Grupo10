@@ -28,7 +28,7 @@ public abstract class Actividad implements Cloneable {
 
     private List<Actividad> ActividadesPrevias = new ArrayList<Actividad>();
     private List<Actividad> ActividadesDeSeguimiento = new ArrayList<Actividad>();
-    private List<Review> reviews;
+    private List<Review> reviews = new ArrayList<Review>();
 
     private String resultado;
     private String estado; // EXITOSA - NO EXITOSA - ENVIADA - NO ENVIADA - COMPLETADA
