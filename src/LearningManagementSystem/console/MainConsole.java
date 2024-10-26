@@ -25,7 +25,7 @@ public class MainConsole extends ConsolaBasica
 
     public boolean appExecution = true;
 
-    consolaProfesor estCon = new consolaProfesor();
+    consolaEstudiante estCon = new consolaEstudiante();
     consolaProfesor profCon = new consolaProfesor();
 
 
@@ -77,11 +77,11 @@ public class MainConsole extends ConsolaBasica
             System.out.println("------------------------------------------------------------");
             System.out.println("Bienvenido/a " + usuario.getUsername() + "! ");
         
-            if (usuario instanceof Profesor){
-                estCon.ejecutarConsolaProfesor(currentLearningManagementSystem, usuario);
+            if (usuario instanceof Estudiante){
+                estCon.ejecutarConsolaEstudiante(currentLearningManagementSystem, usuario);
             }
             else if (usuario instanceof Profesor) {
-                profCon.ejecutarConsolaProfesor(currentLearningManagementSystem, usuario);
+                profCon.ejecutarConsolaProfesor(currentLearningManagementSystem, usuario); // MAL
             }
 
         }
@@ -126,7 +126,7 @@ public class MainConsole extends ConsolaBasica
         }
         else if (opcionSeleccionada == 2) {
 
-            Profesor newProfesor = new Profesor(username, password, email);
+            Estudiante newProfesor = new Estudiante(username, password, email);
 
             currentLearningManagementSystem.addNewUser(newProfesor);
 

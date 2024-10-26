@@ -96,6 +96,8 @@ public class consolaEstudiante extends ConsolaBasica {
 
             System.out.println("Ya se encuentra inscrito en un LearningPath. Debe finalizarlo para inicar uno nuevo.");
 
+        } else {
+            currentUser.iniciarLearningPath(String);
         }
 
     }
