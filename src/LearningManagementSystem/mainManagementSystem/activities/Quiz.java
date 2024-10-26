@@ -18,7 +18,7 @@ import java.lang.String;
 public class Quiz extends Actividad {
 	//----------------------------------------------------------------------
 	// Definicion de atributos
-    private List<Pregunta> Preguntas = new ArrayList<Pregunta>();
+    private List<Pregunta> Preguntas = new List<Pregunta>();
     private double calificacionMinima;
 
 	//----------------------------------------------------------------------

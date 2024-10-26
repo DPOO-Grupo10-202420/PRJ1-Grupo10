@@ -385,7 +385,7 @@ public class consolaProfesor extends ConsolaBasica {
             int opcionSeleccionada = mostrarMenu( "MENÚ PRINCIPAL DEL PROFESOR", opcionesMenuProfesor );
 
             if( opcionSeleccionada == 1 ){
-                crearLearningPath ();
+                crearLearningPath();
             }
 
             else if( opcionSeleccionada == 2 ){

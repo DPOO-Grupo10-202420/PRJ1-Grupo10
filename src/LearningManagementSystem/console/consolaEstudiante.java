@@ -11,7 +11,9 @@ import java.io.IOException;
 import LearningManagementSystem.mainManagementSystem.users.*;
 import LearningManagementSystem.persistence.*;
 import LearningManagementSystem.mainManagementSystem.activities.*;
-
+import LearningManagementSystem.mainManagementSystem.activities.activityElements.Pregunta;
+import LearningManagementSystem.mainManagementSystem.activities.activityElements.PreguntaAbierta;
+import LearningManagementSystem.mainManagementSystem.activities.activityElements.PreguntaMultiple;
 
 import java.util.List;
 
@@ -26,7 +28,9 @@ public class consolaEstudiante extends ConsolaBasica {
 
     //Opciones
     private final String[] opcionesMenuEstudiante = new String[]{ "Visualizar LearinigPath en curso", "Inscribirse a LearnignPath", "LLevar a cabo Actividad", "Cerrar sesión." };
-
+    // Menu para actividades:
+    private final String[] opcionesMenuRecurso = new String[]{ "Visualizar LearinigPath en curso", "Marcar como entregado" };
+    private final String[] opcionesMenuQuiz = new String[]{ "Visualizar Informacion", "Realizar Quiz" };
     //==================================================================================================================
 
     // Funciones del Profesor.
@@ -99,22 +103,105 @@ public class consolaEstudiante extends ConsolaBasica {
     public void realizarActividad () {
 
         if (!currentUser.estaEscritoEnUnLearningPath()){
-
             System.out.println("Debe estar inscrito en un LearningPath para poder desarrollar sus Actividades.");
-
         }
         else {
-
             String nombreActividad = pedirCadenaAlUsuario("Digite el nombre de la actividad que desea desarrollar");
+        }
+
+        Actividad actividad = new 
 
 
 
+        if (nombreActividad instanceof Quiz) {
+            Quiz quiz = (Quiz) nombreActividad;
 
+            System.out.println("Información del Quiz:");
+            System.out.println("Nombre: " + quiz.getNombre());
+            System.out.println("Descripción: " + quiz.getDescripcion());
+            System.out.println("Objetivo: " + quiz.getObjetivo());
+            System.out.println("Dificultad: " + quiz.getDificultad());
+            System.out.println("Fecha de cierre: " + quiz.getFechaDeCierre());    
+
+            for (Pregunta pregunta: quiz.getPreguntas()) {
+             System.out.println("\nEnunciado: " + pregunta.getEnunciado());
+                PreguntaMultiple preguntaMultiple = (PreguntaMultiple) pregunta;
+                preguntaMultiple.mostrarOpciones();
+
+                String respuesta = pedirCadenaAlUsuario("Ingrese la opcion correcta (A, B, C o D)");
+
+            }
+            double calificacion = quiz.calificar(); // es un porcentaje
+            System.out.println("Calificacion obtenida: " + calificacion + "%");
+            if (quiz.aprobado()) {
+                System.out.println("Ha aprobado el Quiz");
+            } else {
+                System.out.println("No ha aprobado el Quiz");
+            }
+
+            for (Pregunta pregunta : quiz.getPreguntas()) {
+                System.out.println("\nEnunciado: " + pregunta.getEnunciado());
+                System.out.println("Retroalimentación: " + pregunta.getRetroalimentacion());
+            }
+
+
+            currentUser.terminarActividad();
+        } 
+        else if (nombreActividad instanceof Examen) {
+
+            Examen examen = (Examen) nombreActividad;
+
+            System.out.println("Información del Examen:");
+            System.out.println("Nombre: " + examen.getNombre());
+            System.out.println("Descripción: " + examen.getDescripcion());
+            System.out.println("Objetivo: " + examen.getObjetivo());
+            System.out.println("Dificultad: " + examen.getDificultad());
+            System.out.println("Fecha de cierre: " + examen.getFechaDeCierre());
+            for (Pregunta pregunta: examen.getPreguntas()) {
+
+                PreguntaAbierta preguntaAbierta = (PreguntaAbierta) pregunta;
+
+                System.out.println("\nEnunciado: " + preguntaAbierta.getEnunciado());
+                String respuestaEstudiante = pedirCadenaAlUsuario("Ingrese su respuesta:");
+
+                preguntaAbierta.responder(respuestaEstudiante);
+            }
+            examen.enviarExamen();
+
+            for (Pregunta pregunta : examen.getPreguntas()) {
+                System.out.println("\nEnunciado: " + pregunta.getEnunciado());
+                System.out.println("Retroalimentación: " + pregunta.getRetroalimentacion());
+            }
+
+            currentUser.terminarActividad();
+
+            System.out.println("Examen completado y enviado. Espere la retroalimentación del profesor.");
+        } else if (nombreActividad instanceof Encuesta) {
+            Encuesta encuesta = (Encuesta) nombreActividad;
+        
+            System.out.println("Información de la Encuesta:");
+            System.out.println("Nombre: " + encuesta.getNombre());
+            System.out.println("Descripción: " + encuesta.getDescripcion());
+            System.out.println("Objetivo: " + encuesta.getObjetivo());
+            System.out.println("Dificultad: " + encuesta.getDificultad());
+            System.out.println("Fecha de cierre: " + encuesta.getFechaDeCierre());
+        
+            for (Pregunta pregunta : encuesta.getPreguntas()) {
+                PreguntaAbierta preguntaAbierta = (PreguntaAbierta) pregunta;
+                
+                System.out.println("\nEnunciado: " + preguntaAbierta.getEnunciado());
+                String respuestaEstudiante = pedirCadenaAlUsuario("Ingrese su respuesta:");
+        
+                preguntaAbierta.responder(respuestaEstudiante);
+            }
+        
+            encuesta.enviarEncuesta();
+            currentUser.terminarActividad();
+            System.out.println("Encuesta completada y enviada. Gracias por tus respuestas.");
         }
 
 
-
-
+        //  if (studentCurrentActivity instanceof Encuesta)
 
     }
 
@@ -135,7 +222,7 @@ public class consolaEstudiante extends ConsolaBasica {
 
             if( opcionSeleccionada == 1 )
             {
-                visualizarLearningPathEnCurso( );
+                visualizarLearningPathEnCurso();
             }
 
             else if( opcionSeleccionada == 2 )
