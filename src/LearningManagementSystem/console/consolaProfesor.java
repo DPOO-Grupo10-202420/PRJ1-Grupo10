@@ -23,7 +23,7 @@ public class consolaProfesor extends ConsolaBasica {
     public Profesor currentUser;
 
     //Opciones
-    private final String[] opcionesMenuProfesor = new String[]{ "Crear LearningPath", "Agregar Actividad en un LearningPath", "Clonar Actividad de un LearnignPath existente", "Modificar LearningPath", "Visualizar reseñas", "Crear reseña", "Calificar Actividad de Estudiante", "Visualisar mis LearningPaths","Cerrar sesión."};
+    private final String[] opcionesMenuProfesor = new String[]{ "Crear LearningPath", "Agregar Actividad en un LearningPath", "Agregar actividad Previa a actividad", "Clonar Actividad de un LearnignPath existente", "Modificar LearningPath", "Visualizar reseñas", "Crear reseña", "Calificar Actividad de Estudiante", "Visualisar mis LearningPaths","Cerrar sesión."};
     private final String[] opcionesPostCrearLeaningPath = new String[]{ "Crear Actividad", "Eliminar Actividad", "Volver a menu anterior."};
 
     //==================================================================================================================
@@ -206,10 +206,47 @@ public class consolaProfesor extends ConsolaBasica {
     }
 
     //------------------------------------------------------------------------------------------------------------//
-    // OPCION 3 - CLONAR ACTIVIDAD DE UN LEARNING PATH EXISTENTE
+    // OPCION 3 - AGREGAR ACTIVIDAD PREVIA A ACTIVIDAD
+    public void agregarActividadPreviaAActividad() {
+        // LISTAMOS LAS ACTIVIDADES PARA QUE ESCOJA CUAL AGREGARLE UNA ACTIVIDAD PREVIA
+        String[] actividades = new String[currentLearningManagementSystem.getActividadesEnElSistema().size()];
+        int i = 0;
+        for (Actividad actividad : currentLearningManagementSystem.getActividadesEnElSistema()){
+            actividades[i] = actividad.getNombre();
+            i++;
+        }
+        int opcionSeleccionada = mostrarMenu( "Seleccione la actividad a la que desea agregarle una actividad previa", actividades );
+        Actividad actividadSeleccionada = currentLearningManagementSystem.getActividad(actividades[opcionSeleccionada]);
+
+        // LISTAMOS LAS ACTIVIDADES PARA QUE ESCOJA CUAL SERA LA ACTIVIDAD PREVIA
+        String[] actividadesPrevias = new String[currentLearningManagementSystem.getActividadesEnElSistema().size()];
+        i = 0;
+        for (Actividad actividad : currentLearningManagementSystem.getActividadesEnElSistema()){
+            actividadesPrevias[i] = actividad.getNombre();
+            i++;
+        }
+        opcionSeleccionada = mostrarMenu( "Seleccione la actividad previa que desea agregar", actividadesPrevias );
+        Actividad actividadPrevia = currentLearningManagementSystem.getActividad(actividadesPrevias[opcionSeleccionada]);
+
+        try{
+            actividadSeleccionada.addActividadPrevia(actividadPrevia);
+            System.out.println("Actividad previa agregada con éxito.");
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return;
+        }
+    }
+
+    //------------------------------------------------------------------------------------------------------------//
+    // OPCION 4 - CLONAR ACTIVIDAD DE UN LEARNING PATH EXISTENTE
     public void clonarActividadDeLearningPath() {
         //------------------------------------------------------//
         // LISTAMOS LOS LEARNING PATHS PARA QUE ESCOJA DE CUAL CLONAR
+        if (currentLearningManagementSystem.getLearningPaths().size() == 0){
+            System.out.println("No hay LearningPaths en el sistema.");
+            return;
+        }
+
         String[] learningPaths = new String[currentLearningManagementSystem.getLearningPaths().size()];
         int i = 0;
         for (LearningPath learningPath : currentLearningManagementSystem.getLearningPaths()){
@@ -247,8 +284,13 @@ public class consolaProfesor extends ConsolaBasica {
     }
 
     //------------------------------------------------------------------------------------------------------------//
-    // OPCION 4 - MODIFICAR LEARNING PATH
+    // OPCION 5 - MODIFICAR LEARNING PATH
     public void modificarLearningPath() {
+        if (currentLearningManagementSystem.getLearningPaths().size() == 0){
+            System.out.println("No hay LearningPaths en el sistema.");
+            return;
+        }
+
         String[] learningPaths = new String[currentLearningManagementSystem.getLearningPaths().size()];
         int i = 0;
         for (LearningPath learningPath : currentLearningManagementSystem.getLearningPaths()){
@@ -293,7 +335,7 @@ public class consolaProfesor extends ConsolaBasica {
     }
 
     //------------------------------------------------------------------------------------------------------------//
-    // OPCION 5 - VISUALIZAR RESEÑAS
+    // OPCION 6 - VISUALIZAR RESEÑAS
     public void visualizarReviews () {
         // LISTAR LOS NOMBRES DE LOS LEARNING PATHS QUE SON DEL CREADOR ACTUAL
         String[] learningPaths = new String[currentLearningManagementSystem.getLearningPaths().size()];
@@ -328,7 +370,7 @@ public class consolaProfesor extends ConsolaBasica {
     }
 
     //------------------------------------------------------------------------------------------------------------//
-    // OPCION 6 - CREAR RESEÑA
+    // OPCION 7 - CREAR RESEÑA
     public void crearReview() {
         // PINTA TODAS LAS ACTIVIDADES QUE NO SEAN DE CREADAS POR EL USUARIO ACTUAL
         String[] actividades = new String[currentLearningManagementSystem.getActividadesEnElSistema().size()];
@@ -353,10 +395,9 @@ public class consolaProfesor extends ConsolaBasica {
     }
 
     //------------------------------------------------------------------------------------------------------------//
-    // OPCION 7 - CALIFICAR ACTIVIDAD DE ESTUDIANTE
+    // OPCION 8 - CALIFICAR ACTIVIDAD DE ESTUDIANTE
     public void calificarActividadDeEstudiante () {
         // LISTO TOODAS LAS ACTIVIDADES QUE CREADAS POR EL USUARIO ACTUAL Y QUE SEAN QUIZ TAREA o EXAMEN
-
         String[] actividades = new String[currentLearningManagementSystem.getActividadesEnElSistema().size()];
         int i = 0;
         for (Actividad actividad : currentLearningManagementSystem.getActividadesEnElSistema()){
@@ -390,7 +431,7 @@ public class consolaProfesor extends ConsolaBasica {
 
     }
     //------------------------------------------------------------------------------------------------------------//
-    // OPCION 8 - VISUALIZAR MIS LEARNING PATHS
+    // OPCION 9 - VISUALIZAR MIS LEARNING PATHS
     public void visualizarMisLearingPaths () {
         // LISTAR LOS NOMBRES DE LOS LEARNING PATHS
         String[] learningPaths = new String[currentLearningManagementSystem.getLearningPaths().size()];
@@ -442,7 +483,6 @@ public class consolaProfesor extends ConsolaBasica {
 
     //==================================================================================================================
     // Definicion del metodo que ejecuta la consola del Profesor.
-
     public void ejecutarConsolaProfesor(LearningManagementSystem LearningManagementSystem, Usuario usuario){
         this.currentLearningManagementSystem = LearningManagementSystem;
         this.currentUser = (Profesor) usuario;
@@ -458,6 +498,12 @@ public class consolaProfesor extends ConsolaBasica {
 
             else if( opcionSeleccionada == 2 ){
                 String nombreLearningPath = pedirCadenaAlUsuario("Digite el nombre del LearningPath al que quiere agregar la actividad");
+                // Verificar que el LearningPath exista y que hayan mas de 1 learningPath
+                if (currentLearningManagementSystem.getLearningPaths().size() == 0){
+                    System.out.println("No hay LearningPaths en el sistema.");
+                    continue;
+                }
+
                 if (!currentLearningManagementSystem.existeLearningPath(nombreLearningPath)){
                     while (!currentLearningManagementSystem.existeLearningPath(nombreLearningPath)){
                         nombreLearningPath = pedirCadenaAlUsuario("El LearningPath digitado no existe. Digito otro que si se encuentre en la base de datos");
@@ -468,30 +514,35 @@ public class consolaProfesor extends ConsolaBasica {
             }
 
             else if( opcionSeleccionada == 3 ) {
+                // agregar actividad Previa a actividad
+                agregarActividadPreviaAActividad();
+            }
+
+            else if( opcionSeleccionada == 4 ) {
                 clonarActividadDeLearningPath();
             }
 
-            else if( opcionSeleccionada == 4 ){
+            else if( opcionSeleccionada == 5 ) {
                 modificarLearningPath();
             }
 
-            else if( opcionSeleccionada == 5 ){
+            else if( opcionSeleccionada == 6 ) {
                 visualizarReviews();
             }
 
-            else if( opcionSeleccionada == 6 ){
+            else if( opcionSeleccionada == 7 ) {
                 crearReview();
             }
 
-            else if( opcionSeleccionada == 7 ){
+            else if( opcionSeleccionada == 8 ) {
                 calificarActividadDeEstudiante();
             }
 
-            else if( opcionSeleccionada == 8 ){
+            else if( opcionSeleccionada == 9 ) {
                 visualizarMisLearingPaths();
             }
 
-            else if( opcionSeleccionada == 9 ){
+            else if( opcionSeleccionada == 10 ) {
                 appExecutionProfesor = false;
             }
         }
