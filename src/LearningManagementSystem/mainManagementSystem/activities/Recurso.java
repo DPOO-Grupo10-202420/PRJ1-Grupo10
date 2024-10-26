@@ -21,7 +21,7 @@ public class Recurso extends Actividad {
 
     //----------------------------------------------------------------------
 	// Metodo constructor de la clase.
-    public Recurso (String nombre ,String descripcion, String objetivo, String dificultad, int tiempoEstimado, Date fechaDeCierre, boolean obligatoria, String creador, String tiporecurso, String URLRecurso) {
+    public Recurso (String nombre ,String descripcion, String objetivo, String dificultad, int tiempoEstimado, Date fechaDeCierre, boolean obligatoria, String creador, String tipoRecurso, String URLRecurso) {
         super(nombre ,descripcion, objetivo, dificultad, tiempoEstimado, fechaDeCierre, obligatoria, creador);
         this.tipoRecurso = tipoRecurso;
         this.URLRecurso = URLRecurso;

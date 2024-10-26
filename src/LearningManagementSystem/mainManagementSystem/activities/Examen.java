@@ -52,7 +52,6 @@ public class Examen extends Actividad {
         this.preguntas.add(pregunta);
     }
 
-    //Metodos
-    public void enviarExamen(){}
+
 }
 

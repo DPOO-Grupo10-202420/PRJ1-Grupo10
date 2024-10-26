@@ -39,10 +39,6 @@ public class Encuesta extends Actividad {
         this.preguntas.add(pregunta);
     }
 
-    // public void agregarRespuesta(String pregunta, String respuesta) {
-    //     Pregunta pregunta = this.preguntas.get(pregunta).add(respuesta); // Este metodo es de pregunta
-    // }
 
-    public void enviarEncuesta () {}
 }
 

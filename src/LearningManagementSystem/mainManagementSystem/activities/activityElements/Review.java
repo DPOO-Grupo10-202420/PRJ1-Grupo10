@@ -5,9 +5,10 @@ public class Review {
     private int rating;
     private String autor;
 
-    public Review(String contenido, int rating) {
+    public Review(String contenido, int rating, String autor) {
         this.contenido = contenido;
         this.rating = rating;
+        this.autor = autor;
     }
 
     public String getContenido() {

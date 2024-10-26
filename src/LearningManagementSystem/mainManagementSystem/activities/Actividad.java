@@ -158,8 +158,11 @@ public abstract class Actividad implements Cloneable {
         this.estado = "NO EXITOSA";
     }
 
-    public void addReview(String contenido, int rating) {
-        Review review = new Review(contenido, rating);
+    public void addReview(String contenido, Double rating, String nombreUsuario) {
+        Review review = new Review(contenido, rating, nombreUsuario);
+
+
+        
         reviews.add(review);
     }
 

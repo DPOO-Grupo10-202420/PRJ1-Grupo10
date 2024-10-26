@@ -23,16 +23,18 @@ public class LearningPath  {
 	//----------------------------------------------------------------------
 	// Definicion de atributos
 	
-    String titulo;
-    String descripcion;
-    String nivelDificultad;
-    int duracion;
-    double rating;
-    Date fechaCreacion;
-    Date fechaModificacion;
-    String version;
-    String creador;
-    ArrayList<Actividad> secuenciaActividades = new ArrayList<Actividad>();
+    private String titulo;
+    private String descripcion;
+    private String nivelDificultad;
+    private int duracion;
+    private double rating;
+    private Date fechaCreacion;
+    private Date fechaModificacion;
+    private String version;
+    private String creador;
+    private ArrayList<Actividad> secuenciaActividades = new ArrayList<Actividad>();
+
+    private int numTotalReviews;
 
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.

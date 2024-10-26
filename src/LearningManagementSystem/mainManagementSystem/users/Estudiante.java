@@ -12,12 +12,17 @@ import java.util.HashMap;
 import java.util.Map;
 import LearningManagementSystem.mainManagementSystem.*;
 import LearningManagementSystem.mainManagementSystem.activities.Actividad;
+import LearningManagementSystem.mainManagementSystem.activities.Encuesta;
+import LearningManagementSystem.mainManagementSystem.activities.Examen;
+import LearningManagementSystem.mainManagementSystem.activities.Quiz;
+import LearningManagementSystem.mainManagementSystem.activities.Recurso;
+import LearningManagementSystem.mainManagementSystem.activities.Tarea;
 
 // import Usuario;
 
 
 //====================================================================================
-// Definicion de la clase Profesor
+// Definicion de la clase Estudiante
 //====================================================================================
 
 public class Estudiante extends Usuario  {
@@ -56,6 +61,10 @@ public class Estudiante extends Usuario  {
         return this.studentCurrentLearningPath;
     }
 
+    public Actividad getStudentCurrentActivity (){
+        return this.studentCurrentActivity;
+    }
+
     public HashMap<String, Actividad> getCompletedActivities(){
         return this.studentCompletedActivities;
     }
@@ -64,7 +73,7 @@ public class Estudiante extends Usuario  {
 
     // Metodos
 
-    public void salirseLearningPath(){
+public void salirseLearningPath(){
         this.studentCurrentLearningPath = null;
     }
 
@@ -77,7 +86,47 @@ public class Estudiante extends Usuario  {
         this.studentCurrentActivity = actividad;
     }
 
+
     public void terminarActividad(){
-        this.studentCurrentActivity = null;
+
+        if (studentCurrentActivity == null) {
+            System.out.println("No hay ninguna actividad en curso.");
+            return;
+        }
+        
+        if (studentCurrentActivity instanceof Encuesta) {
+            studentCurrentActivity.marcarComoExitosa(); 
+        } 
+        
+        else if (studentCurrentActivity instanceof Tarea) {
+            studentCurrentActivity.marcarComoEnviada(); 
+            
+        } 
+        
+        else if (studentCurrentActivity instanceof Examen) {
+            studentCurrentActivity.marcarComoEnviada(); }
+            
+        else if (studentCurrentActivity instanceof Quiz) {
+            if (((Quiz) studentCurrentActivity).aprobado()) {
+                studentCurrentActivity.marcarComoExitosa();
+            }
+            else {
+                studentCurrentActivity.marcarComoNoExitosa();
+            }
+
+        } 
+        
+        else if (studentCurrentActivity instanceof Recurso) {
+            studentCurrentActivity.marcarComoExitosa();
+        }
+
+        studentCompletedActivities.put(studentCurrentActivity.getNombre(), studentCurrentActivity);
+        studentCurrentActivity = null;
+
+        if (studentCompletedActivities.size() == studentCurrentLearningPath.getSecuenciaActividades().size()) {
+            completedLearningPaths.put(studentCurrentLearningPath.getTitulo(), studentCurrentLearningPath);
+            studentCurrentLearningPath = null;
+            System.out.println("Finalizó el Learning Path, ahora puede inscribirse a uno nuevo.");
+        }
     }
 }

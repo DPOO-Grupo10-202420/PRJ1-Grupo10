@@ -11,7 +11,9 @@ import java.io.IOException;
 import LearningManagementSystem.mainManagementSystem.users.*;
 import LearningManagementSystem.persistence.*;
 import LearningManagementSystem.mainManagementSystem.activities.*;
-
+import LearningManagementSystem.mainManagementSystem.activities.activityElements.Pregunta;
+import LearningManagementSystem.mainManagementSystem.activities.activityElements.PreguntaAbierta;
+import LearningManagementSystem.mainManagementSystem.activities.activityElements.PreguntaMultiple;
 
 import java.util.List;
 import java.util.HashMap;
@@ -27,7 +29,7 @@ public class consolaEstudiante extends ConsolaBasica {
     public Estudiante currentUser;
 
     //Opciones
-    private final String[] opcionesMenuEstudiante = new String[]{ "Visualizar LearinigPath en curso", "Inscribirse a LearnignPath", "LLevar a cabo Actividad", "Cerrar sesión." };
+    private final String[] opcionesMenuEstudiante = new String[]{ "Visualizar LearinigPath en curso", "Inscribirse a LearnignPath", "LLevar a cabo Actividad", "Agregar reseña a Actividad", "Cerrar sesión." };
 
     //==================================================================================================================
 
@@ -139,28 +141,216 @@ public class consolaEstudiante extends ConsolaBasica {
 
             Actividad actividadARealizar = currentLearningManagementSystem.getActividad(nombreActividadARealizar);
 
-            currentUser.iniciarActividad(actividadARealizar);
+            HashMap<String, Actividad> actividadesHechas = currentUser.getCompletedActivities();
 
-            actividadARealizar.realizarActividad();
+            boolean noHayPrevia = true;
+
+            for (Actividad elementActividad: currentUser.getStudentCurrentActivity().getActividadesPrevias()){
+
+                String nombreActividad = elementActividad.getNombre();
+
+                if (!actividadesHechas.containsKey(nombreActividad)) {
+                    System.out.println("La Actividad ' " + actividadARealizar.getNombre() + " ' debe ser hecha antes de realizar la Actividad ' " + nombreActividad  +"'. ");
+                    noHayPrevia = false;
+
+                }
+
+            }
+
+            boolean continuar = true;
+
+            if (!noHayPrevia){
+
+                String opcionContinuar = pedirCadenaAlUsuario("¿Desea realizar la actividad aún asi? (si/no) ");
+
+                if (opcionContinuar.toUpperCase() == "NO"){
+                    continuar = false;
+                }
+            }
+
+
+            if (continuar) {
+
+                currentUser.iniciarActividad(actividadARealizar);
+
+                // Realizar Recurso
+
+                if (currentUser.getStudentCurrentActivity() instanceof Recurso) {
+
+                    Recurso recurso = (Recurso) currentUser.getStudentCurrentActivity();
+
+                    System.out.println("-----------------------------------------------");
+                    System.out.println("Información del Recurso:");
+                    System.out.println("-----------------------------------------------");
+                    System.out.println("Nombre: " + recurso.getNombre());
+                    System.out.println("Descripción: " + recurso.getDescripcion());
+                    System.out.println("Objetivo: " + recurso.getObjetivo());
+                    System.out.println("Dificultad: " + recurso.getDificultad());
+                    System.out.println("Fecha de cierre: " + recurso.getFechaDeCierre()); 
+                    System.out.println("Tipo de recurso: " + recurso.getTipoRecurso());
+                    System.out.println("-----------------------------------------------");
+                    System.out.println("Contenido: ");
+                    System.out.println("URL: " + recurso.getURLRecurso());
+                    System.out.println("-----------------------------------------------");
+                    System.out.println("\n");
+
+                    String cualquierCadena = pedirCadenaAlUsuario("Presione cualquier tecla para marcar como leido el recurso: ");
+
+                    currentUser.terminarActividad();
+
+                }
+
+                // Realizar Tarea
+
+                else if (currentUser.getStudentCurrentActivity() instanceof Tarea){
+
+                    Tarea tarea = (Tarea) currentUser.getStudentCurrentActivity();
+
+                    System.out.println("-----------------------------------------------");
+                    System.out.println("Información del Recurso:");
+                    System.out.println("-----------------------------------------------");
+                    System.out.println("Nombre: " + tarea.getNombre());
+                    System.out.println("Descripción: " + tarea.getDescripcion());
+                    System.out.println("Objetivo: " + tarea.getObjetivo());
+                    System.out.println("Dificultad: " + tarea.getDificultad());
+                    System.out.println("Fecha de cierre: " + tarea.getFechaDeCierre()); 
+                    System.out.println("Metodo de envio: " + tarea.getMetodoEnvio());
+                    System.out.println("-----------------------------------------------");
+                    System.out.println("\n");
+
+                    String cualquierCadena = pedirCadenaAlUsuario("Presione cualquier tecla para enviar la tarea: ");    
+
+                    currentUser.terminarActividad();
+
+                }
+
+                // Realizar Quiz
+
+                else if (currentUser.getStudentCurrentActivity() instanceof Quiz) {
+
+                    Quiz quiz = (Quiz) currentUser.getStudentCurrentActivity();
+
+                    System.out.println("Información del Quiz:");
+                    System.out.println("Nombre: " + quiz.getNombre());
+                    System.out.println("Descripción: " + quiz.getDescripcion());
+                    System.out.println("Objetivo: " + quiz.getObjetivo());
+                    System.out.println("Dificultad: " + quiz.getDificultad());
+                    System.out.println("Fecha de cierre: " + quiz.getFechaDeCierre());    
+
+                    for (Pregunta pregunta: quiz.getPreguntas()) {
+                    System.out.println("\nEnunciado: " + pregunta.getEnunciado());
+                        PreguntaMultiple preguntaMultiple = (PreguntaMultiple) pregunta;
+                        preguntaMultiple.mostrarOpciones();
+
+                        String respuesta = pedirCadenaAlUsuario("Ingrese la opcion correcta (A, B, C o D)");
+
+                    }
+                    double calificacion = quiz.calificar(); // es un porcentaje
+                    System.out.println("Calificacion obtenida: " + calificacion + "%");
+                    if (quiz.aprobado()) {
+                        System.out.println("Ha aprobado el Quiz");
+                    } else {
+                        System.out.println("No ha aprobado el Quiz");
+                    }
+
+                    for (Pregunta pregunta : quiz.getPreguntas()) {
+                        System.out.println("\nEnunciado: " + pregunta.getEnunciado());
+                        System.out.println("Retroalimentación: " + pregunta.getRetroalimentacion());
+                    }
+
+                    currentUser.terminarActividad();
+
+                } 
+
+                // Realizar Examen
+            
+                else if (currentUser.getStudentCurrentActivity() instanceof Examen) {
+
+                    Examen examen = (Examen) currentUser.getStudentCurrentActivity();
+
+                    System.out.println("Información del Examen:");
+                    System.out.println("Nombre: " + examen.getNombre());
+                    System.out.println("Descripción: " + examen.getDescripcion());
+                    System.out.println("Objetivo: " + examen.getObjetivo());
+                    System.out.println("Dificultad: " + examen.getDificultad());
+                    System.out.println("Fecha de cierre: " + examen.getFechaDeCierre());
+                    for (Pregunta pregunta: examen.getPreguntas()) {
+
+                        PreguntaAbierta preguntaAbierta = (PreguntaAbierta) pregunta;
+
+                        System.out.println("\nEnunciado: " + preguntaAbierta.getEnunciado());
+                        String respuestaEstudiante = pedirCadenaAlUsuario("Ingrese su respuesta:");
+
+                        preguntaAbierta.responder(respuestaEstudiante);
+                    }
+
+                    System.out.println("\n");
+                    System.out.println("Retroalimentacion.");
+
+                    for (Pregunta pregunta : examen.getPreguntas()) {
+                        System.out.println("\nEnunciado: " + pregunta.getEnunciado());
+                        System.out.println("Retroalimentación: " + pregunta.getRetroalimentacion());
+                    }
+                    
+                    currentUser.terminarActividad();
+
+                    System.out.println("Examen completado y enviado. Espere la retroalimentación del profesor.");
+
+                } 
+
+                // Realizar Encuesta
+                    
+                else if (currentUser.getStudentCurrentActivity() instanceof Encuesta) {
+                    Encuesta encuesta = (Encuesta) currentUser.getStudentCurrentActivity();
+                
+                    System.out.println("Información de la Encuesta:");
+                    System.out.println("Nombre: " + encuesta.getNombre());
+                    System.out.println("Descripción: " + encuesta.getDescripcion());
+                    System.out.println("Objetivo: " + encuesta.getObjetivo());
+                    System.out.println("Dificultad: " + encuesta.getDificultad());
+                    System.out.println("Fecha de cierre: " + encuesta.getFechaDeCierre());
+                
+                    for (Pregunta pregunta : encuesta.getPreguntas()) {
+                        PreguntaAbierta preguntaAbierta = (PreguntaAbierta) pregunta;
+                        
+                        System.out.println("\nEnunciado: " + preguntaAbierta.getEnunciado());
+                        String respuestaEstudiante = pedirCadenaAlUsuario("Ingrese su respuesta:");
+                
+                        preguntaAbierta.responder(respuestaEstudiante);
+                    }
+
+                    currentUser.terminarActividad();
+                    System.out.println("Encuesta completada y enviada. Gracias por tus respuestas.");
+                }
+
+                }
+            }
+        
+    }
 
 
 
+    public void addReview (){
 
+        String nombreActividad = pedirCadenaAlUsuario("Digite la Actividad a la que quiere agregar una reseña");
 
+        if (!currentLearningManagementSystem.existeActividad(nombreActividad)){
 
+            System.out.println("La Actividad digitada no se encuentra en la base de datos. ");
 
+        }
+        else{
 
+            Actividad actividadReview = currentLearningManagementSystem.getActividad(nombreActividad);
 
-
-            String nombreActividad = pedirCadenaAlUsuario("Digite el nombre de la actividad que desea desarrollar");
-
-
-
+            String Contenido = pedirCadenaAlUsuario("Digite el contenido de la reseña");
+            String rating = pedirCadenaAlUsuario("Digite el rating (de 0 a 5)");
+        
+            actividadReview.addReview(Contenido, Double.parseDouble(rating), currentUser.getUsername());
 
         }
 
-
-
+        
 
 
     }
@@ -196,6 +386,11 @@ public class consolaEstudiante extends ConsolaBasica {
             }
 
             else if( opcionSeleccionada == 4 )
+            {
+                addReview( );
+            }
+
+            else if( opcionSeleccionada == 5 )
             {
                
                 appExecutionProfesor = false;
