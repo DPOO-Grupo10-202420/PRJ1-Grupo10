@@ -33,6 +33,7 @@ public class LearningManagementSystem {
 	public LearningManagementSystem () {
 		this.usuarios = new HashMap<String,Usuario>();
 		this.learningPaths = new HashMap<String, LearningPath>();
+		this.actividadesEnElSistema = new HashMap<String, Actividad>();
 	}
 
 	//----------------------------------------------------------------------
