@@ -138,6 +138,7 @@ public class consolaEstudiante extends ConsolaBasica {
                 String nombreActividad = elementActividad.getNombre();
 
                 if (!studentCompletedActivities.containsKey(nombreActividad)){
+                    System.out.println(nombreActividad);
                     System.out.println("-----------------------");
                     System.out.println("nombreActividad");
                     nombreActividadesNoRealizadasDelLearningPath.add(nombreActividad);
@@ -159,7 +160,8 @@ public class consolaEstudiante extends ConsolaBasica {
 
             boolean noHayPrevia = true;
 
-            for (Actividad elementActividad: currentUser.getStudentCurrentActivity().getActividadesPrevias()){
+            if (currentUser.getStudentCurrentActivity() != null) {
+                for (Actividad elementActividad: currentUser.getStudentCurrentActivity().getActividadesPrevias()){
 
                 String nombreActividad = elementActividad.getNombre();
 
@@ -170,6 +172,8 @@ public class consolaEstudiante extends ConsolaBasica {
                 }
 
             }
+        }
+            
 
             boolean continuar = true;
 
@@ -182,11 +186,13 @@ public class consolaEstudiante extends ConsolaBasica {
                 }
             }
 
+            System.out.println(continuar);
 
             if (continuar) {
 
                 currentUser.iniciarActividad(actividadARealizar);
-
+                
+                System.out.println(currentUser.getStudentCurrentActivity() instanceof Recurso);
                 // Realizar Recurso
 
                 if (currentUser.getStudentCurrentActivity() instanceof Recurso) {
@@ -213,9 +219,7 @@ public class consolaEstudiante extends ConsolaBasica {
                     currentUser.terminarActividad();
 
                 }
-
                 // Realizar Tarea
-
                 else if (currentUser.getStudentCurrentActivity() instanceof Tarea){
 
                     Tarea tarea = (Tarea) currentUser.getStudentCurrentActivity();
