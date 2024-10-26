@@ -65,16 +65,14 @@ public abstract class Usuario  {
 
     // Metodos
 
-
-
     public void addRatingToActivity(Actividad actividad, int rating) {
         
     }
 
-    public void addReviewToActivity(Actividad actividad, String review, String contenido, int rating) {
+    //public void addReviewToActivity(Actividad actividad, String review, String contenido, int rating) {
         
-        actividad.addReview(contenido, rating); // agregar review deberia de estar en Actividad
-    }
+       // actividad.addReview(contenido, rating); // agregar review deberia de estar en Actividad
+    //}
 
 
     public void logIn(String username, String password) {

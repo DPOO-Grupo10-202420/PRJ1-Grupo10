@@ -18,6 +18,7 @@ import LearningManagementSystem.mainManagementSystem.activities.activityElements
 import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class consolaEstudiante extends ConsolaBasica {
 
@@ -332,21 +333,30 @@ public class consolaEstudiante extends ConsolaBasica {
 
     public void addReview (){
 
-        String nombreActividad = pedirCadenaAlUsuario("Digite la Actividad a la que quiere agregar una reseña");
+        String nombreActividad = pedirCadenaAlUsuario("Digite la Actividad a la que quiere agregar una reseña (Unicamente se permite en aquellas que ya fueron desarrolladas)");
 
-        if (!currentLearningManagementSystem.existeActividad(nombreActividad)){
+        for (Map.Entry<String, Actividad> tupla: currentUser.getCompletedActivities().entrySet()){
 
-            System.out.println("La Actividad digitada no se encuentra en la base de datos. ");
+            System.out.println(tupla.getKey());
+
+        }
+
+        if (!currentUser.getCompletedActivities().containsKey(nombreActividad) ){
+
+            System.out.println("La Actividad digitada no se encuentra dentro de las desarrolladas ");
 
         }
         else{
 
-            Actividad actividadReview = currentLearningManagementSystem.getActividad(nombreActividad);
+            Actividad actividadSeleccionada = currentLearningManagementSystem.getActividad(nombreActividad);
 
-            String Contenido = pedirCadenaAlUsuario("Digite el contenido de la reseña");
-            String rating = pedirCadenaAlUsuario("Digite el rating (de 0 a 5)");
-        
-            actividadReview.addReview(Contenido, Double.parseDouble(rating), currentUser.getUsername());
+            int rating = pedirEnteroAlUsuario("Digite la calificación de la actividad (1-5)");
+            while (rating < 1 || rating > 5){
+                rating = pedirEnteroAlUsuario("La calificación debe ser un número entre 1 y 5. Digite la calificación de la actividad (1-5)");
+            }
+            String comentario = pedirCadenaAlUsuario("Digite el comentario de la actividad");
+            actividadSeleccionada.addReview(comentario, rating, currentUser.getUsername());
+            System.out.println("Reseña creada con éxito.");
 
         }
 

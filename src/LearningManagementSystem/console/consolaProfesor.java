@@ -400,7 +400,7 @@ public class consolaProfesor extends ConsolaBasica {
             rating = pedirEnteroAlUsuario("La calificación debe ser un número entre 1 y 5. Digite la calificación de la actividad (1-5)");
         }
         String comentario = pedirCadenaAlUsuario("Digite el comentario de la actividad");
-        actividadSeleccionada.addReview(comentario, rating);
+        actividadSeleccionada.addReview(comentario, rating, currentUser.getUsername());
         System.out.println("Reseña creada con éxito.");
     }
 
