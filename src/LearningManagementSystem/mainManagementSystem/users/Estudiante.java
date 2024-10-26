@@ -56,6 +56,10 @@ public class Estudiante extends Usuario  {
         return this.studentCurrentLearningPath;
     }
 
+    public HashMap<String, Actividad> getCompletedActivities(){
+        return this.studentCompletedActivities;
+    }
+
 
 
     // Metodos

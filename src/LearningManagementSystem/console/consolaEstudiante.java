@@ -14,6 +14,8 @@ import LearningManagementSystem.mainManagementSystem.activities.*;
 
 
 import java.util.List;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 public class consolaEstudiante extends ConsolaBasica {
 
@@ -104,6 +106,51 @@ public class consolaEstudiante extends ConsolaBasica {
 
         }
         else {
+
+            LearningPath studentCurrentLearningPath = currentUser.getStudentCurrentLearningPath();
+            List<Actividad> secuenciaActividades = studentCurrentLearningPath.getSecuenciaActividades();
+            
+            HashMap<String, Actividad> studentCompletedActivities = currentUser.getCompletedActivities() ;
+
+            System.out.println("\n");
+            System.out.println("Las Actividades que faltan por realizar del LearningPath son las siguientes: ");
+
+            List<String> nombreActividadesNoRealizadasDelLearningPath = new ArrayList<String>();
+
+            for (Actividad elementActividad: secuenciaActividades){
+
+                String nombreActividad = elementActividad.getNombre();
+
+                if (!studentCompletedActivities.containsKey(nombreActividad)){
+                    System.out.println("-----------------------");
+                    System.out.println("nombreActividad");
+                    nombreActividadesNoRealizadasDelLearningPath.add(nombreActividad);
+                }
+
+            }
+
+            System.out.println("--------------------------------------------------------");
+            String nombreActividadARealizar = pedirCadenaAlUsuario("Digite la Actividad que desea realizar");
+
+            while (!nombreActividadesNoRealizadasDelLearningPath.contains(nombreActividadARealizar)){
+                nombreActividadARealizar = pedirCadenaAlUsuario("La Actividad digitada no pertenece al LearningPath mostrado anteriormente. Digite otra");
+
+            }
+
+            Actividad actividadARealizar = currentLearningManagementSystem.getActividad(nombreActividadARealizar);
+
+            currentUser.iniciarActividad(actividadARealizar);
+
+            actividadARealizar.realizarActividad();
+
+
+
+
+
+
+
+
+
 
             String nombreActividad = pedirCadenaAlUsuario("Digite el nombre de la actividad que desea desarrollar");
 
