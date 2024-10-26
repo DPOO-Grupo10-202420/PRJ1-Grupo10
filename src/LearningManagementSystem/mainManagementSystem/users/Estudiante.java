@@ -30,14 +30,16 @@ public class Estudiante extends Usuario  {
 	//----------------------------------------------------------------------
 	// Definicion de atributos
     private LearningPath studentCurrentLearningPath;
-    private HashMap<String, Actividad> studentCompletedActivities;
+    private HashMap<String, Actividad> studentCompletedActivities = new HashMap<String, Actividad>();
     private Actividad studentCurrentActivity;
-    private HashMap<String, LearningPath> completedLearningPaths;
+    private HashMap<String, LearningPath> completedLearningPaths =  new HashMap<String, LearningPath>();
 
 	//----------------------------------------------------------------------
+    
 	// Metodo constructor de la clase.
     public Estudiante(String username, String password, String email) {
         super(username, password,email);
+
     }
 
 	//----------------------------------------------------------------------
