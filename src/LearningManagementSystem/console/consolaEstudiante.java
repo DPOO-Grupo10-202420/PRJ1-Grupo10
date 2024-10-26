@@ -97,7 +97,18 @@ public class consolaEstudiante extends ConsolaBasica {
             System.out.println("Ya se encuentra inscrito en un LearningPath. Debe finalizarlo para inicar uno nuevo.");
 
         } else {
-            currentUser.iniciarLearningPath(String);
+
+            String tituloLearningPath = pedirCadenaAlUsuario("Digite el titulo del LearningPath al que desea inscribirse ");
+
+            if (currentLearningManagementSystem.existeLearningPath(tituloLearningPath)){
+                currentUser.iniciarLearningPath(currentLearningManagementSystem.getLearningPath(tituloLearningPath));
+            }
+            else {
+             
+                System.out.println("El LearningPath no se encuentra en la base de datos.");
+                
+            }
+
         }
 
     }
@@ -337,33 +348,40 @@ public class consolaEstudiante extends ConsolaBasica {
 
         String nombreActividad = pedirCadenaAlUsuario("Digite la Actividad a la que quiere agregar una reseña (Unicamente se permite en aquellas que ya fueron desarrolladas)");
 
-        for (Map.Entry<String, Actividad> tupla: currentUser.getCompletedActivities().entrySet()){
+        if (currentUser.getCompletedActivities().size() > 0){
 
-            System.out.println(tupla.getKey());
+            for (Map.Entry<String, Actividad> tupla: currentUser.getCompletedActivities().entrySet()){
 
-        }
-
-        if (!currentUser.getCompletedActivities().containsKey(nombreActividad) ){
-
-            System.out.println("La Actividad digitada no se encuentra dentro de las desarrolladas ");
-
-        }
-        else{
-
-            Actividad actividadSeleccionada = currentLearningManagementSystem.getActividad(nombreActividad);
-
-            int rating = pedirEnteroAlUsuario("Digite la calificación de la actividad (1-5)");
-            while (rating < 1 || rating > 5){
-                rating = pedirEnteroAlUsuario("La calificación debe ser un número entre 1 y 5. Digite la calificación de la actividad (1-5)");
+                System.out.println(tupla.getKey());
+    
             }
-            String comentario = pedirCadenaAlUsuario("Digite el comentario de la actividad");
-            actividadSeleccionada.addReview(comentario, rating, currentUser.getUsername());
-            System.out.println("Reseña creada con éxito.");
+
+
+            if (!currentUser.getCompletedActivities().containsKey(nombreActividad) ){
+
+                System.out.println("La Actividad digitada no se encuentra dentro de las desarrolladas ");
+    
+            }
+            else{
+    
+                Actividad actividadSeleccionada = currentLearningManagementSystem.getActividad(nombreActividad);
+    
+                int rating = pedirEnteroAlUsuario("Digite la calificación de la actividad (1-5)");
+                while (rating < 1 || rating > 5){
+                    rating = pedirEnteroAlUsuario("La calificación debe ser un número entre 1 y 5. Digite la calificación de la actividad (1-5)");
+                }
+                String comentario = pedirCadenaAlUsuario("Digite el comentario de la actividad");
+                actividadSeleccionada.addReview(comentario, rating, currentUser.getUsername());
+                System.out.println("Reseña creada con éxito.");
+    
+            }
+
 
         }
 
-        
-
+        else {
+            System.out.println("No hay Actividades disponibles para agregar una reseña. ");
+        }
 
     }
 
