@@ -194,7 +194,7 @@ public class consolaEstudiante extends ConsolaBasica {
 
             if (continuar) {
 
-                Actividad actividadClonada = actividadARealizar.clone();
+                //Actividad actividadClonada = actividadARealizar.clone();
 
                 currentUser.iniciarActividad(actividadARealizar);
             
