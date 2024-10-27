@@ -40,7 +40,8 @@ public class consolaEstudiante extends ConsolaBasica {
     public void visualizarLearningPathEnCurso (){
 
         if (!currentUser.estaEscritoEnUnLearningPath()){
-
+            
+            System.out.println( "\n" );
             System.out.println("No se encuentra inscrito en ningún LearningPath.");
 
         }
@@ -48,6 +49,7 @@ public class consolaEstudiante extends ConsolaBasica {
 
             LearningPath studentCurrentLearningPath = currentUser.getStudentCurrentLearningPath();
 
+            System.out.println( "\n" );
             System.out.println("El LearningPath en el que está inscrito es el siguiente: " + studentCurrentLearningPath.getTitulo());
             System.out.println("\n");
             System.out.println("Actividades del LearningPath: ");
@@ -118,6 +120,7 @@ public class consolaEstudiante extends ConsolaBasica {
 
         if (!currentUser.estaEscritoEnUnLearningPath()){
 
+            System.out.println("-----------------------------------------------");
             System.out.println("Debe estar inscrito en un LearningPath para poder desarrollar sus Actividades.");
 
         }
@@ -138,9 +141,9 @@ public class consolaEstudiante extends ConsolaBasica {
                 String nombreActividad = elementActividad.getNombre();
 
                 if (!studentCompletedActivities.containsKey(nombreActividad)){
-                    System.out.println(nombreActividad);
                     System.out.println("-----------------------");
-                    System.out.println("nombreActividad");
+                    System.out.println(nombreActividad);
+                    System.out.println("\n");
                     nombreActividadesNoRealizadasDelLearningPath.add(nombreActividad);
                 }
 
@@ -150,7 +153,7 @@ public class consolaEstudiante extends ConsolaBasica {
             String nombreActividadARealizar = pedirCadenaAlUsuario("Digite la Actividad que desea realizar");
 
             while (!nombreActividadesNoRealizadasDelLearningPath.contains(nombreActividadARealizar)){
-                nombreActividadARealizar = pedirCadenaAlUsuario("La Actividad digitada no pertenece al LearningPath mostrado anteriormente. Digite otra");
+                nombreActividadARealizar = pedirCadenaAlUsuario("La Actividad digitada no pertenece al LearningPath mostrado anteriormente. Digite otra de nuevo");
 
             }
 
@@ -163,15 +166,16 @@ public class consolaEstudiante extends ConsolaBasica {
             if (currentUser.getStudentCurrentActivity() != null) {
                 for (Actividad elementActividad: currentUser.getStudentCurrentActivity().getActividadesPrevias()){
 
-                String nombreActividad = elementActividad.getNombre();
+                    String nombreActividad = elementActividad.getNombre();
 
-                if (!actividadesHechas.containsKey(nombreActividad)) {
-                    System.out.println("La Actividad ' " + actividadARealizar.getNombre() + " ' debe ser hecha antes de realizar la Actividad ' " + nombreActividad  +"'. ");
-                    noHayPrevia = false;
+                    if (!actividadesHechas.containsKey(nombreActividad)) {
+                        System.out.println("La Actividad ' " + actividadARealizar.getNombre() + " ' debe ser hecha antes de realizar la Actividad ' " + nombreActividad  +"'. ");
+                        noHayPrevia = false;
 
-                }
+                    }
 
             }
+        
         }
             
 
@@ -179,6 +183,7 @@ public class consolaEstudiante extends ConsolaBasica {
 
             if (!noHayPrevia){
 
+                System.out.println("\n");
                 String opcionContinuar = pedirCadenaAlUsuario("¿Desea realizar la actividad aún asi? (si/no) ");
 
                 if (opcionContinuar.toUpperCase() == "NO"){
@@ -186,13 +191,13 @@ public class consolaEstudiante extends ConsolaBasica {
                 }
             }
 
-            System.out.println(continuar);
 
             if (continuar) {
 
+                Actividad actividadClonada = actividadARealizar.clone();
+
                 currentUser.iniciarActividad(actividadARealizar);
-                
-                System.out.println(currentUser.getStudentCurrentActivity() instanceof Recurso);
+            
                 // Realizar Recurso
 
                 if (currentUser.getStudentCurrentActivity() instanceof Recurso) {
@@ -248,7 +253,9 @@ public class consolaEstudiante extends ConsolaBasica {
 
                     Quiz quiz = (Quiz) currentUser.getStudentCurrentActivity();
 
+                    System.out.println("-----------------------------------------------");
                     System.out.println("Información del Quiz:");
+                    System.out.println("-----------------------------------------------");
                     System.out.println("Nombre: " + quiz.getNombre());
                     System.out.println("Descripción: " + quiz.getDescripcion());
                     System.out.println("Objetivo: " + quiz.getObjetivo());
@@ -266,9 +273,11 @@ public class consolaEstudiante extends ConsolaBasica {
                     double calificacion = quiz.calificar(); // es un porcentaje
                     System.out.println("Calificacion obtenida: " + calificacion + "%");
                     if (quiz.aprobado()) {
-                        System.out.println("Ha aprobado el Quiz");
+                        System.out.println("-----------------------------------------------");
+                        System.out.println("Quiz finalizado: Ha aprobado el Quiz");
                     } else {
-                        System.out.println("No ha aprobado el Quiz");
+                        System.out.println("-----------------------------------------------");
+                        System.out.println("Quiz finalizado: No ha aprobado el Quiz");
                     }
 
                     for (Pregunta pregunta : quiz.getPreguntas()) {
@@ -286,7 +295,9 @@ public class consolaEstudiante extends ConsolaBasica {
 
                     Examen examen = (Examen) currentUser.getStudentCurrentActivity();
 
+                    System.out.println("-----------------------------------------------");
                     System.out.println("Información del Examen:");
+                    System.out.println("-----------------------------------------------");
                     System.out.println("Nombre: " + examen.getNombre());
                     System.out.println("Descripción: " + examen.getDescripcion());
                     System.out.println("Objetivo: " + examen.getObjetivo());
@@ -312,6 +323,7 @@ public class consolaEstudiante extends ConsolaBasica {
                     
                     currentUser.terminarActividad();
 
+                    System.out.println("-----------------------------------------------");
                     System.out.println("Examen completado y enviado. Espere la retroalimentación del profesor.");
 
                 } 
@@ -320,8 +332,10 @@ public class consolaEstudiante extends ConsolaBasica {
                     
                 else if (currentUser.getStudentCurrentActivity() instanceof Encuesta) {
                     Encuesta encuesta = (Encuesta) currentUser.getStudentCurrentActivity();
-                
+                    
+                    System.out.println("-----------------------------------------------");
                     System.out.println("Información de la Encuesta:");
+                    System.out.println("-----------------------------------------------");
                     System.out.println("Nombre: " + encuesta.getNombre());
                     System.out.println("Descripción: " + encuesta.getDescripcion());
                     System.out.println("Objetivo: " + encuesta.getObjetivo());
@@ -338,6 +352,7 @@ public class consolaEstudiante extends ConsolaBasica {
                     }
 
                     currentUser.terminarActividad();
+                    System.out.println("-----------------------------------------------");
                     System.out.println("Encuesta completada y enviada. Gracias por tus respuestas.");
                 }
 

@@ -4,7 +4,7 @@ package LearningManagementSystem.mainManagementSystem.activities.activityElement
 import java.util.HashMap;
 
 public class PreguntaMultiple extends Pregunta {
-    private HashMap<String, String> opciones;
+    private HashMap<String, String> opciones = new HashMap<String, String>();
     private String respuestaCorrecta;
     private String respuestaEstudiante;
 

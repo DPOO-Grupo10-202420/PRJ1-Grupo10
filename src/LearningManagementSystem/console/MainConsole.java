@@ -118,6 +118,7 @@ public void configurarLearningPathDePrueba() {
                 }
             }
             if(Error){
+                System.out.println("---------");
                 System.out.println("Ha excedido el número de intentos permitidos. Intente de nuevo más tarde.");
                 return;
             }
@@ -149,47 +150,56 @@ public void configurarLearningPathDePrueba() {
 
         int opcionSeleccionada = mostrarMenu( "Registro de usuario", opcionesResgistrarNuevoUsuario );
 
-        System.out.println("------------------------------------------------------------");
-        System.out.println("¿Cómo desea registrarse? ");
-        String username = pedirCadenaAlUsuario("Digite el nombre de usuario que desea usar");
+        if (opcionSeleccionada != 3){
 
-        while (currentLearningManagementSystem.existeUsuario(username)){
+            System.out.println( "\n" );
+            System.out.println("------------------------------------------------------------");
+            System.out.println("¿Cómo desea registrarse? ");
+            String username = pedirCadenaAlUsuario("Digite el nombre de usuario que desea usar");
+    
+            while (currentLearningManagementSystem.existeUsuario(username)){
+                
+                System.out.println("El nombre de usuario elegido ya esta en uso. Digite uno distinto.");
+                System.out.println( "\n" );
+                username = pedirCadenaAlUsuario("Digite el nombre de usuario que desea usar");
+    
+            }
+    
+            System.out.println("------------------------------------------------------------");
+            String password = pedirCadenaAlUsuario("Digite su contraseña");
+            System.out.println("------------------------------------------------------------");
+            String email = pedirCadenaAlUsuario("Digite su correo electrónico");
+            System.out.println("------------------------------------------------------------");
+            System.out.println( "\n" );
 
-            System.out.println("El nombre de usuario elegido ya esta en uso. Digite uno distinto.");
-            username = pedirCadenaAlUsuario("Digite el nombre de usuario que desea usar");
+            if (opcionSeleccionada == 1) {
+    
+                Profesor newProfesor = new Profesor(username, password, email);
+    
+                currentLearningManagementSystem.addNewUser(newProfesor);
+    
+            }
+            else if (opcionSeleccionada == 2) {
+    
+                Estudiante newEstudiante = new Estudiante(username, password, email);
+    
+                currentLearningManagementSystem.addNewUser(newEstudiante);
+    
+            }
+
 
         }
 
-        System.out.println("------------------------------------------------------------");
-        String password = pedirCadenaAlUsuario("Digite su contraseña");
-        System.out.println("------------------------------------------------------------");
-        String email = pedirCadenaAlUsuario("Digite su correo electrónico");
-        System.out.println("------------------------------------------------------------");
+        //Si elije 3, regresa al menu principal.
 
-        if (opcionSeleccionada == 1) {
-
-            Profesor newProfesor = new Profesor(username, password, email);
-
-            currentLearningManagementSystem.addNewUser(newProfesor);
-
-        }
-        else if (opcionSeleccionada == 2) {
-
-            Estudiante newProfesor = new Estudiante(username, password, email);
-
-            currentLearningManagementSystem.addNewUser(newProfesor);
-
-        }
-        else if (opcionSeleccionada == 3) {
-            // Volver al menu principal.
-        }   
 
     }
 
     //==================================================================================================================//
     //public void ingresarComoAdmin(){}
     public void ejecutarAplicacion( )
-    {
+    {   
+        System.out.println( "\n" );
         System.out.println("================================================================================");
         System.out.println("              WELCOME TO THE LEARNING PATH RECOMMENDATION SYSTEM                ");
         System.out.println("================================================================================");
@@ -197,13 +207,17 @@ public void configurarLearningPathDePrueba() {
 
         //------------------------------------------------------
         // Se carga la informacion antes de usar la aplicacion.
-        configurarLearningPathDePrueba();
+        //configurarLearningPathDePrueba();
         
         cargarInformacion();
 
         //------------------------------------------------------
         // Muestra el menu principal
         while (appExecution){
+
+            System.out.print("\n");
+            System.out.println("-------------------------------------");
+
             int opcionSeleccionada = mostrarMenu( "MENÚ PRINCIPAL DEL SISTEMA", opcionesMenuPrincipal );
             if( opcionSeleccionada == 1 )
             {
@@ -215,12 +229,16 @@ public void configurarLearningPathDePrueba() {
             }
             else if( opcionSeleccionada == 3 )
             {
+                System.out.println( "\n" );
                 System.out.println( "Guardando información en la base de datos ..." );
+                System.out.println( "\n" );
                 
-                // Guarda la informacion en la base de datos.
+                // Guarda la informacion en la base de datos.s
                 saveInformation();
 
+                System.out.println( "\n" );
                 System.out.println( "Saliendo ..." );
+                System.out.println( "\n" );
                 appExecution = false;
                 System.exit( 0 );
             }

@@ -23,10 +23,10 @@ import java.util.Collection;
 public class LearningManagementSystem {
 	//----------------------------------------------------------------------
 	// Definicion de atributos
-	private HashMap<String, Usuario > usuarios;
-	private HashMap<String, LearningPath > learningPaths;
-	private HashMap<String, HashMap<String, Actividad> > actividadesHechasPorEstudiantes;
-	private HashMap<String, Actividad> actividadesEnElSistema; // String = Id actividad;
+	private HashMap<String, Usuario > usuarios = new HashMap<String, Usuario>();
+	private HashMap<String, LearningPath > learningPaths = new HashMap<String, LearningPath>();
+	private HashMap<String, HashMap<String, Actividad> > actividadesHechasPorEstudiantes = new HashMap<String, HashMap<String, Actividad>>();
+	private HashMap<String, Actividad> actividadesEnElSistema = new HashMap<String, Actividad>(); // String = Id actividad;
 
 	//----------------------------------------------------------------------
 	// Metodo constructor de la clase.
