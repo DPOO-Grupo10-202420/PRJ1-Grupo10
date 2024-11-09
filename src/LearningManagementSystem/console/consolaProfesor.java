@@ -428,7 +428,7 @@ public class consolaProfesor extends ConsolaBasica {
             i++;
         }
         int estudianteSeleccionado = mostrarMenu( "Seleccione el estudiante que desea calificar", estudiantes );
-        String estudianteNombre = estudiantes[estudianteSeleccionado];
+        String estudianteNombre = estudiantes[estudianteSeleccionado-1]; // Cambio el indice para que sea el correcto (se resta 1 para colocarlo en pos de arreglo)
         Actividad actividadDelEstudiante = currentLearningManagementSystem.getActividadesHechasPorEstudiantes(actividadSeleccionada.getNombre()).get(estudianteNombre);
         if(actividadDelEstudiante.getResultado() != ""){
             System.out.println("El estudiante ya ha sido calificado.");
