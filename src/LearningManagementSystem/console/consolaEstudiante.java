@@ -4,12 +4,12 @@
 package LearningManagementSystem.console;
 
 import LearningManagementSystem.mainManagementSystem.*;
-import LearningManagementSystem.console.*;
-import LearningManagementSystem.console.ConsolaBasica;
+// import LearningManagementSystem.console.*;
+// import LearningManagementSystem.console.ConsolaBasica;
 
-import java.io.IOException;
+// import java.io.IOException;
 import LearningManagementSystem.mainManagementSystem.users.*;
-import LearningManagementSystem.persistence.*;
+// import LearningManagementSystem.persistence.*;
 import LearningManagementSystem.mainManagementSystem.activities.*;
 import LearningManagementSystem.mainManagementSystem.activities.activityElements.Pregunta;
 import LearningManagementSystem.mainManagementSystem.activities.activityElements.PreguntaAbierta;
@@ -193,11 +193,15 @@ public class consolaEstudiante extends ConsolaBasica {
 
 
             if (continuar) {
+                Actividad actividadClonada = null;
+                try {
+                    actividadClonada = actividadARealizar.clone();
+                }
+                catch (CloneNotSupportedException e){
+                    System.out.println("Error al clonar la actividad");
+                }
 
-                //Actividad actividadClonada = actividadARealizar.clone();
-
-                currentUser.iniciarActividad(actividadARealizar);
-            
+                currentUser.iniciarActividad(actividadClonada);
                 // Realizar Recurso
 
                 if (currentUser.getStudentCurrentActivity() instanceof Recurso) {
@@ -221,6 +225,8 @@ public class consolaEstudiante extends ConsolaBasica {
 
                     String cualquierCadena = pedirCadenaAlUsuario("Presione cualquier tecla para marcar como leido el recurso: ");
 
+                    
+                    currentLearningManagementSystem.addActividadHechaPorEstudiante(actividadARealizar.getNombre(), currentUser.getUsername(), actividadClonada);
                     currentUser.terminarActividad();
 
                 }
@@ -243,6 +249,7 @@ public class consolaEstudiante extends ConsolaBasica {
 
                     String cualquierCadena = pedirCadenaAlUsuario("Presione cualquier tecla para enviar la tarea: ");    
 
+                                        currentLearningManagementSystem.addActividadHechaPorEstudiante(actividadARealizar.getNombre(), currentUser.getUsername(), actividadClonada);
                     currentUser.terminarActividad();
 
                 }
@@ -284,7 +291,7 @@ public class consolaEstudiante extends ConsolaBasica {
                         System.out.println("\nEnunciado: " + pregunta.getEnunciado());
                         System.out.println("Retroalimentación: " + pregunta.getRetroalimentacion());
                     }
-
+                    currentLearningManagementSystem.addActividadHechaPorEstudiante(actividadARealizar.getNombre(), currentUser.getUsername(), actividadClonada);
                     currentUser.terminarActividad();
 
                 } 
@@ -320,7 +327,7 @@ public class consolaEstudiante extends ConsolaBasica {
                         System.out.println("\nEnunciado: " + pregunta.getEnunciado());
                         System.out.println("Retroalimentación: " + pregunta.getRetroalimentacion());
                     }
-                    
+                    currentLearningManagementSystem.addActividadHechaPorEstudiante(actividadARealizar.getNombre(), currentUser.getUsername(), actividadClonada);
                     currentUser.terminarActividad();
 
                     System.out.println("-----------------------------------------------");
@@ -350,15 +357,14 @@ public class consolaEstudiante extends ConsolaBasica {
                 
                         preguntaAbierta.responder(respuestaEstudiante);
                     }
-
+                    currentLearningManagementSystem.addActividadHechaPorEstudiante(actividadARealizar.getNombre(), currentUser.getUsername(), actividadClonada);
                     currentUser.terminarActividad();
                     System.out.println("-----------------------------------------------");
                     System.out.println("Encuesta completada y enviada. Gracias por tus respuestas.");
                 }
 
-                }
             }
-        
+        }
     }
 
 
@@ -368,34 +374,41 @@ public class consolaEstudiante extends ConsolaBasica {
         String nombreActividad = pedirCadenaAlUsuario("Digite la Actividad a la que quiere agregar una reseña (Unicamente se permite en aquellas que ya fueron desarrolladas)");
 
         if (currentUser.getCompletedActivities().size() > 0){
-
             for (Map.Entry<String, Actividad> tupla: currentUser.getCompletedActivities().entrySet()){
-
                 System.out.println(tupla.getKey());
-    
             }
-
 
             if (!currentUser.getCompletedActivities().containsKey(nombreActividad) ){
-
                 System.out.println("La Actividad digitada no se encuentra dentro de las desarrolladas ");
-    
-            }
-            else{
-    
+            } else {
                 Actividad actividadSeleccionada = currentLearningManagementSystem.getActividad(nombreActividad);
-    
                 int rating = pedirEnteroAlUsuario("Digite la calificación de la actividad (1-5)");
                 while (rating < 1 || rating > 5){
                     rating = pedirEnteroAlUsuario("La calificación debe ser un número entre 1 y 5. Digite la calificación de la actividad (1-5)");
                 }
                 String comentario = pedirCadenaAlUsuario("Digite el comentario de la actividad");
+
+                // --------------------------------------------------------------------------------- //
+                // ------------------- Actualizar Rating de la Actividad General ------------------- //
+                Actividad actividadGeneral = currentLearningManagementSystem.getActividad(nombreActividad);
+                double ratingGeneral = actividadGeneral.getRating();
+
+                int totalReviews = actividadGeneral.getReviews().size();
+
                 actividadSeleccionada.addReview(comentario, rating, currentUser.getUsername());
+                ratingGeneral = ((ratingGeneral * totalReviews) + rating )/ actividadGeneral.getReviews().size();
+                actividadGeneral.setRating(ratingGeneral);
+
+                List<Actividad> secuenciaActividades = currentLearningManagementSystem.getLearningPath(currentUser.getStudentCurrentLearningPath().getTitulo()).getSecuenciaActividades();  
+                for (Actividad elementActividad: secuenciaActividades){
+                    // TODO ACTAUALIZAR EL LEARNING PATH
+                    // if (elementActividad.getNombre().equals(nombreActividad)){
+                    //     elementActividad.setRating(ratingGeneral);
+                    // }
+                }
+
                 System.out.println("Reseña creada con éxito.");
-    
             }
-
-
         }
 
         else {

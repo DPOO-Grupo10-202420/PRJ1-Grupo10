@@ -104,6 +104,15 @@ public class LearningManagementSystem {
 		return actividadesHechasPorEstudiantes.get(nombreActividad);
 	}
 
+	public void addActividadHechaPorEstudiante(String nombreActividad, String username, Actividad actividad) {
+		HashMap<String, Actividad> actividades = actividadesHechasPorEstudiantes.get(nombreActividad);
+		if (actividades == null) {
+			actividades = new HashMap<String, Actividad>();
+			actividadesHechasPorEstudiantes.put(nombreActividad, actividades);
+		}
+		actividades.put(username, actividad);
+	}
+
 	public Collection<Actividad> getActividadesEnElSistema() {
 		return actividadesEnElSistema.values();
 	}

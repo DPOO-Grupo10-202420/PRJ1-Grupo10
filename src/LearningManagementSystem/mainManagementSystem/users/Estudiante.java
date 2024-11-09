@@ -122,6 +122,9 @@ public void salirseLearningPath(){
             studentCurrentActivity.marcarComoExitosa();
         }
 
+
+        
+
         studentCompletedActivities.put(studentCurrentActivity.getNombre(), studentCurrentActivity);
         studentCurrentActivity = null;
 

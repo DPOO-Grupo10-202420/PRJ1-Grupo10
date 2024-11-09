@@ -119,6 +119,10 @@ public abstract class Actividad implements Cloneable {
         return this.rating;
     }
 
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
     public List<String> getComentaros() {
         return this.comentarios;
     }
@@ -203,8 +207,6 @@ public abstract class Actividad implements Cloneable {
                 clonEncuesta.agregarPregunta(clonPregunta);
             }
         }
-
-
         return clon;
     }
 
