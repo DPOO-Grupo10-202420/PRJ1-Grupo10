@@ -9,6 +9,9 @@ import LearningManagementSystem.mainManagementSystem.activities.Actividad;
 import LearningManagementSystem.mainManagementSystem.activities.Examen;
 import LearningManagementSystem.mainManagementSystem.activities.Quiz;
 import LearningManagementSystem.mainManagementSystem.users.*;
+import LearningManagementSystem.persistence.FirebaseConnection;
+import LearningManagementSystem.persistence.CentralPersistencia;
+
 import java.util.Date;
 
 //====================================================================================
@@ -85,15 +88,17 @@ public void configurarLearningPathDePrueba() {
 
     //------------------------------------------------------
     // Llama los modulos de persisitencia de datos.
-    public void cargarInformacion(){
-        //CentralPersistencia centPers = new CentralPersistencia();
-        //LentPers.cargarInformacion(LearningManagementSystem());
+    public void loadInformation(){
+        CentralPersistencia centPers = new CentralPersistencia(currentLearningManagementSystem);
+        centPers.cargarInformacion();
+
     };
 
 
     public void saveInformation(){
-        //CentralPersistencia centPers = new CentralPersistencia();
-        //LentPers.cargarInformacion(LearningManagementSystem());
+        CentralPersistencia centPers = new CentralPersistencia(currentLearningManagementSystem);
+        centPers.guardarInformacion();
+
     }
 
     //==================================================================================================================
@@ -209,7 +214,12 @@ public void configurarLearningPathDePrueba() {
         // Se carga la informacion antes de usar la aplicacion.
         //configurarLearningPathDePrueba();
         
-        cargarInformacion();
+        try {
+            loadInformation();
+        } catch (Exception e) {
+            System.out.println("Error al cargar la información: " + e.getMessage());
+        }
+
 
         //------------------------------------------------------
         // Muestra el menu principal
@@ -233,7 +243,7 @@ public void configurarLearningPathDePrueba() {
                 System.out.println( "Guardando información en la base de datos ..." );
                 System.out.println( "\n" );
                 
-                // Guarda la informacion en la base de datos.s
+                // Guarda la informacion en la base de datos
                 saveInformation();
 
                 System.out.println( "\n" );
