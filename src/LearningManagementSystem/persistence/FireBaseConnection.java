@@ -32,20 +32,22 @@ public class FirebaseConnection {
     private DatabaseReference database;
 
     private LearningManagementSystem currentLearningManagementSystem;
-
+    
     //----------------------------------------------------------------------
 	// Metodo constructor de la clase.
     public FirebaseConnection(LearningManagementSystem currentLearningManagementSystem) {
         // Inicializar la configuración de Firebase
         this.currentLearningManagementSystem = currentLearningManagementSystem;
 
+        FileInputStream serviceAccount = new FileInputStream("learningmanagementsystem-g10-firebase-adminsdk-f4147-e38cd81bea.json");
+        
         FirebaseOptions options = new FirebaseOptions.Builder()
-                .setDatabaseUrl("https://learningmanagementsystem-g10-default-rtdb.firebaseio.com/")
-                .setServiceAccount("path/to/serviceAccountKey.json")
-                .build();
-
+          .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+          .setDatabaseUrl("https://learningmanagementsystem-g10-default-rtdb.firebaseio.com")
+          .build();
+        
         FirebaseApp.initializeApp(options);
-
+        
         // Obtener una referencia a la base de datos
         database = FirebaseDatabase.getInstance().getReference();
     }
