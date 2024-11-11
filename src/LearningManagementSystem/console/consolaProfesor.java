@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 
 import LearningManagementSystem.mainManagementSystem.*;
 import LearningManagementSystem.mainManagementSystem.activities.*;
+import LearningManagementSystem.mainManagementSystem.activities.activityElements.PreguntaMultiple;
 import LearningManagementSystem.mainManagementSystem.activities.activityElements.Review;
 // import LearningManagementSystem.console.*;
 // import LearningManagementSystem.console.ConsolaBasica;
@@ -163,10 +164,26 @@ public class consolaProfesor extends ConsolaBasica {
 
                     Actividad quiz = nuevoLearningPath.addQuiz(nombreActividad ,  descripcionActividad,  objetivoActividad,  dificultadActividad, tiempoEstimadoActividad, fechaCierreActividad, obligatoriaActividad, creadorActividad, calificionMinima);
 
+
+                    // Quiz quiz = nuevoLearningPath.addQuiz(nombreActividad ,  descripcionActividad,  objetivoActividad,  dificultadActividad, tiempoEstimadoActividad, fechaCierreActividad, obligatoriaActividad, creadorActividad, calificionMinima);
                     int i = 0;
                     while(i < numeroPreguntas){
                         String enunciadoPregunta = pedirCadenaAlUsuario("Digite la pregunta " + (i+1));
                         String retroalimentacion = pedirCadenaAlUsuario("Digite la retroalimentación de la pregunta " + (i+1));
+
+                        PreguntaMultiple pregunta = new PreguntaMultiple(enunciadoPregunta, retroalimentacion, false);
+                        String[] claves = {"A", "B", "C", "D"};
+
+                        for (String clave : claves) {
+                            String opcion = pedirCadenaAlUsuario("Digite la opción " + clave + " para la pregunta " + (i + 1));
+                            pregunta.addRespuesta(clave, opcion);
+                        }
+                        String claveCorrecta = pedirCadenaAlUsuario("Digite la clave de la respuesta correcta (A, B, C, o D)");
+                        pregunta.setRespuestaCorrecta(claveCorrecta);
+
+                        ((Quiz) quiz).agregarPregunta(pregunta);
+
+                        
                         nuevoLearningPath.addPregunta(quiz, enunciadoPregunta, retroalimentacion,false);
                         i++;
                     }
